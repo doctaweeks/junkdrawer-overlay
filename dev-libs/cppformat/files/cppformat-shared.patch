@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c51acd6..8aa007d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2,6 +2,8 @@ message(STATUS "CMake version: ${CMAKE_VERSION}")
+ 
+ cmake_minimum_required(VERSION 2.6)
+ 
++SET(BUILD_SHARED_LIBS ON)
++
+ # Set the default CMAKE_BUILD_TYPE to Release.
+ # This should be done before the project command since the latter can set
+ # CMAKE_BUILD_TYPE itself (it does so for nmake).
