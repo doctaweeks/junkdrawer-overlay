@@ -40,7 +40,7 @@ src_compile() {
 		myconf="${myconf} WITH_IPV6=1"
 	fi
 
-	if use websocket; then
+	if use websockets; then
 		myconf="${myconf} WITH_WEBSOCKET=1"
 	fi
 
