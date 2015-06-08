@@ -1,0 +1,60 @@
+diff --git a/configure.ac b/configure.ac
+index 72e6083..d0aaa9b 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -115,6 +115,8 @@ AS_IF([test "x$enable_shmapi" != xno],
+ 
+ AC_DEFINE([DEFAULT_CONFIG], ["/etc/umurmur.conf"], [Default config])
+ 
++LIBCAP_NG_PATH
++
+ # Checks for header files.
+ AC_FUNC_ALLOCA
+ AC_CHECK_HEADERS([arpa/inet.h fcntl.h inttypes.h limits.h netinet/tcp.h stddef.h stdint.h stdlib.h string.h sys/socket.h sys/time.h syslog.h unistd.h sys/poll.h], [], [AC_MSG_ERROR([missing a required header])])
+diff --git a/src/Makefile.am b/src/Makefile.am
+index d8f476f..ed6c46e 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -28,6 +28,7 @@
+ #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ bin_PROGRAMS=umurmurd
+ umurmurd_SOURCES=client.c main.c messages.c pds.c server.c log.c conf.c crypt.c timer.c messagehandler.c channel.c Mumble.pb-c.c voicetarget.c ban.c util.c
++umurmurd_LDADD=$(CAPNG_LDADD)
+ 
+ if USE_OPENSSL
+ umurmurd_SOURCES+=ssli_openssl.c
+diff --git a/src/main.c b/src/main.c
+index a18363d..88957ab 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -57,6 +57,9 @@
+ #include "config.h"
+ #include "sharedmemory.h"
+ #include "ban.h"
++#ifdef HAVE_LIBCAP_NG
++#include <cap-ng.h>
++#endif
+ 
+ char system_string[64], version_string[64];
+ int bindport;
+@@ -149,6 +152,12 @@ static void switch_user(void)
+ 		gid = grp->gr_gid;
+ 	}
+ 
++#ifdef HAVE_LIBCAP_NG
++	capng_clear(CAPNG_SELECT_BOTH);
++	capng_update(CAPNG_ADD, CAPNG_EFFECTIVE|CAPNG_PERMITTED, CAP_SYS_NICE);
++	if (capng_change_id(pwd->pw_uid, gid, CAPNG_INIT_SUPP_GRP|CAPNG_CLEAR_BOUNDING))
++		Log_fatal("capng_change_id() failed: %s", strerror(errno));
++#else
+ 	if (initgroups(pwd->pw_name, gid))
+ 		Log_fatal("initgroups() failed: %s", strerror(errno));
+ 
+@@ -163,6 +172,7 @@ static void switch_user(void)
+ 	if (!grp)
+ 		Log_fatal("getgrgid() failed: %s", strerror(errno));
+ 
++#endif
+ 	Log_info("Switch to user '%s' group '%s'", pwd->pw_name, grp->gr_name);
+ }
+ 
