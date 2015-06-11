@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit cmake-utils
+inherit base cmake-utils
 
 DESCRIPTION="An open-source implementation of library for reading CASC storage from Blizzard games since 2014"
 HOMEPAGE="http://www.zezula.net/en/casc/main.html"
@@ -24,6 +24,8 @@ DEPEND="app-arch/bzip2
 		sys-libs/zlib
 		system-libtomcrypt? ( dev-libs/libtomcrypt )"
 RDEPEND="${DEPEND}"
+
+PATCHES=( "${FILESDIR}/libcasc-9999-fix-broken-error.patch" )
 
 src_configure() {
 	local mycmakeargs=(
