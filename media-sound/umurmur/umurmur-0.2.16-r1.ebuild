@@ -32,6 +32,7 @@ DOC_CONTENTS="
 PATCHES=(
 	"${FILESDIR}/${P}-libcap-ng.patch"
 	"${FILESDIR}/${P}-per-channel-count.patch"
+	"${FILESDIR}/${P}-shm-crash-fix.patch"
 )
 
 pkg_setup() {
