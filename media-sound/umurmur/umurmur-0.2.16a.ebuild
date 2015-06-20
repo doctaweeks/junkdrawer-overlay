@@ -30,9 +30,8 @@ DOC_CONTENTS="
 	https://github.com/umurmur/umurmur/wiki/Configuration "
 
 PATCHES=(
-	"${FILESDIR}/${P}-libcap-ng.patch"
-	"${FILESDIR}/${P}-per-channel-count.patch"
-	"${FILESDIR}/${P}-shm-crash-fix.patch"
+	"${FILESDIR}/${PN}-0.2.16-libcap-ng.patch"
+	"${FILESDIR}/${PN}-0.2.16-per-channel-count.patch"
 )
 
 pkg_setup() {
