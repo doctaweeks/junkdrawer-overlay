@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/umurmur/umurmur-0.2.16.ebuild,v 1.3 2015/05/27 11:09:37 ago Exp $
+# $Header: $
 
 EAPI=5
 
