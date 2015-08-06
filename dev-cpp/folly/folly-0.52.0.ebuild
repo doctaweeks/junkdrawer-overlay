@@ -25,7 +25,7 @@ DEPEND="dev-libs/double-conversion
 		dev-libs/openssl:*
 		dev-cpp/gflags
 		dev-cpp/glog
-		>=dev-libs/boost-1.2.0[context]
+		>=dev-libs/boost-1.51.0[context,threads]
 		app-arch/lz4
 		app-arch/snappy
 		sys-libs/zlib
