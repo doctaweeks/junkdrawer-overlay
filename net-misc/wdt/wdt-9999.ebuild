@@ -21,9 +21,9 @@ LICENSE="BSD"
 SLOT="0"
 IUSE="test"
 
-RDEPEND="dev-cpp/folly
+RDEPEND=">=dev-cpp/folly-0.52.0-r1
 		dev-cpp/glog
-		dev-cpp/gflags"
+		>=dev-cpp/gflags-2.1.2"
 DEPEND="${RDEPEND}
 		test? ( dev-cpp/gmock )"
 
