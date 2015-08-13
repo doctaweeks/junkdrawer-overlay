@@ -100,7 +100,7 @@ index d606a5c..a75b9bf 100644
  
  ### Install rules
  
--install(TARGETS wdt wdtlib wdtlib_min folly4wdt CONFIGURATIONS Release
+-install(TARGETS wdt wdtlib wdtlib_min folly4wdt
 +install(TARGETS wdt wdtlib wdtlib_min
    RUNTIME DESTINATION bin
    LIBRARY DESTINATION lib
