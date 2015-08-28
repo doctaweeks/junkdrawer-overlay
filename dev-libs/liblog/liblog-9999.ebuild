@@ -5,7 +5,7 @@
 EAPI=5
 
 AUTOTOOLS_AUTORECONF=1
-inherit autotools autotools-utils
+inherit autotools-utils
 
 DESCRIPTION="a dead simple library for outputting to a file, console, and/or syslog simultaneously"
 HOMEPAGE="https://github.com/doctaweeks/liblog"
