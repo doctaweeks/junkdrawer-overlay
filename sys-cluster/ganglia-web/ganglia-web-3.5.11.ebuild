@@ -19,7 +19,8 @@ RDEPEND="
 	${DEPEND}
 	${WEBAPP_DEPEND}
 	>=sys-cluster/ganglia-3.3.7[-minimal]
-	dev-lang/php[gd,xml,ctype,cgi]
+	dev-lang/php[gd,xml,ctype]
+	virtual/httpd-php
 	media-fonts/dejavu"
 
 src_configure() {
