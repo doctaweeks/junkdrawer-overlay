@@ -5,7 +5,7 @@
 EAPI=5
 
 CMAKE_MIN_VERSION=3.2.0
-inherit cmake-utils eutils
+inherit cmake-utils
 
 DESCRIPTION="Warp speed Data Transfer aims to transfer data between systems as fast as possible"
 HOMEPAGE="https://www.facebook.com/WdtOpenSource"
@@ -14,7 +14,7 @@ if [[ $PV == "9999" ]]; then
 	EGIT_REPO_URI="https://github.com/facebook/wdt.git"
 else
 	KEYWORDS="~amd64"
-	SRC_URI=""
+	SRC_URI="https://github.com/facebook/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
 LICENSE="BSD"
@@ -27,9 +27,7 @@ RDEPEND=">=dev-cpp/folly-0.52.0-r1
 DEPEND="${RDEPEND}
 		test? ( dev-cpp/gmock )"
 
-src_prepare() {
-	epatch "${FILESDIR}/wdt-9999-use-shared-folly.diff"
-}
+PATCHES=( "${FILESDIR}/wdt-1.16.1508311-use-shared-folly.diff" )
 
 src_configure() {
 	local mycmakeargs=(
