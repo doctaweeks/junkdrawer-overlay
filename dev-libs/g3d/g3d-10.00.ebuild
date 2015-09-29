@@ -23,7 +23,7 @@ RDEPEND="dev-libs/libzip
 		virtual/glu
 		media-libs/freeimage
 		>=media-libs/glfw-3.0
-		media-gfx/assimp
+		media-libs/assimp
 		net-libs/enet:1.3
 		net-libs/civetweb
 		media-gfx/qrencode
