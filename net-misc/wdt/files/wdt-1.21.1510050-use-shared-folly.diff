@@ -1,10 +1,12 @@
---- CMakeLists.txt	2015-09-01 03:19:34.000000000 -0400
-+++ CMakeLists.txt	2015-09-04 12:07:22.803236745 -0400
-@@ -43,32 +43,8 @@
+--- CMakeLists.txt	2015-10-21 12:46:28.518508405 -0400
++++ CMakeLists.txt	2015-10-21 12:51:30.254252733 -0400
+@@ -43,34 +43,10 @@
  # So hardcoding for now:
  #set(CMAKE_BUILD_TYPE Debug)
  set(CMAKE_BUILD_TYPE Release)
 -set(CMAKE_CXX_FLAGS "-msse4.2")
+ #set(CMAKE_CXX_FLAGS "-msse4.2 -Wextra -Wsign-compare -Wunused-variable")
+ #set(CMAKE_CXX_FLAGS "-msse4.2 -Wextra -Wsign-compare -Wunused-variable -Wconversion -Wsign-conversion")
  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "_bin/wdt")
  
 -# Check that we have the Folly source tree
@@ -33,7 +35,7 @@
  # WDT's library proper - comes from: ls -1 *.cpp | grep -iv test
  add_library(wdtlib_min
  ClientSocket.cpp
-@@ -111,10 +87,13 @@
+@@ -113,10 +89,13 @@
  # Gflags
  find_path(GFLAGS_INCLUDE_DIR gflags/gflags.h)
  find_library(GFLAGS_LIBRARY gflags)
@@ -48,7 +50,7 @@
    ${GLOG_LIBRARY}
    ${GFLAGS_LIBRARY}
    ${Boost_LIBRARIES}
-@@ -132,54 +111,22 @@
+@@ -134,54 +113,22 @@
  check_function_exists(sync_file_range HAS_SYNC_FILE_RANGE)
  check_function_exists(posix_memalign HAS_POSIX_MEMALIGN)
  # C based check (which fail with the c++ setting thereafter...)
@@ -104,7 +106,7 @@
  include_directories(${GLOG_INCLUDE_DIR})
  include_directories(${GFLAGS_INCLUDE_DIR})
  
-@@ -190,7 +137,7 @@
+@@ -192,7 +139,7 @@
  
  ### Install rules
  
