@@ -1,0 +1,208 @@
+diff --git a/manpage/en-eix.1.in b/manpage/en-eix.1.in
+index b260c09..1671cf2 100644
+--- a/manpage/en-eix.1.in
++++ b/manpage/en-eix.1.in
+@@ -1264,6 +1264,14 @@ property according to the local or default configuration, respectively.
+ This must occur only in I<VARIABLE> in the context of version printing.
+ It returns 1 or empty depending on whether there is a corresponding *.tbz2 file for the version.
+ .TP
++.B isxpakbinary
++This must occur only in I<VARIABLE> in the context of version printing.
++It returns 1 or empty depending on whether there is at least one corresponding *.xpak file for the version.
++.TP
++.B xpakbinarycount
++This must occur only in I<VARIABLE> in the context of version printing.
++This returns the number of *.xpak fileis for the version or empty if there are none.
++.TP
+ .BR restrict ", " restrictfetch ", " restrictmirror ", " restrictprimaryuri ", " restrictbincheck ", " restrictstrip ", " restricttest ", " restrictuserpriv ", " restrictinstalledsources ", " restrictbindist ", " restrictparallel
+ This must occur only in I<VARIABLE> in the context of version printing.
+ It returns 1 or empty depending on whether some or the corresponding B<RESTRICT> attribute is set for the version.
+diff --git a/src/eixrc/defaults.cc b/src/eixrc/defaults.cc
+index 3d02320..c92257a 100644
+--- a/src/eixrc/defaults.cc
++++ b/src/eixrc/defaults.cc
+@@ -1621,6 +1621,10 @@ AddOption(STRING, "TAG_BINARY",
+ 	"\\{tbz2}", _(
+ 	"Tag for versions with *.tbz2. This is only used for delayed substitution."));
+ 
++AddOption(STRING, "TAG_XPAKBINARY",
++	"\\{xpak}x", _(
++	"Tag for versions with *.xpak. This is only used for delayed substitution."));
++
+ AddOption(STRING, "TAG_RESTRICT_FETCH",
+ 	"f", _(
+ 	"Tag for RESTRICT=fetch. This is only used for delayed substitution."));
+@@ -2041,9 +2045,11 @@ AddOption(STRING, "FORMAT_PROPRESTRICT",
+ 
+ AddOption(STRING, "FORMAT_BINARY",
+ 	"%{!NO_BINARY}"
+-		"{isbinary}"
++		"{isxpakbinary}"
++			"<$sep>{!*sep}(%{COLOR_BINARY})%{TAG_XPAKBINARY}<xpakbinarycount>(%{COLOR_RESET})"
++		"{else}{isbinary}"
+ 			"<$sep>{!*sep}(%{COLOR_BINARY})%{TAG_BINARY}(%{COLOR_RESET})"
+-		"{}"
++		"{}{}"
+ 	"%{}", _(
+ 	"This variable is only used for delayed substitution.\n"
+ 	"It defines the format of the PROPERTIES and RESTRICT of a version\n"
+diff --git a/src/output/formatstring-print.cc b/src/output/formatstring-print.cc
+index dcbcb2b..c734184 100644
+--- a/src/output/formatstring-print.cc
++++ b/src/output/formatstring-print.cc
+@@ -43,6 +43,7 @@
+ using std::map;
+ using std::pair;
+ using std::string;
++using std::to_string;
+ 
+ using std::cerr;
+ using std::endl;
+@@ -460,6 +461,8 @@ class Scanner {
+ 			prop_ver("use", &PrintFormat::VER_USE);
+ 			prop_ver("virtual", &PrintFormat::VER_VIRTUAL);
+ 			prop_ver("isbinary", &PrintFormat::VER_ISBINARY);
++			prop_ver("isxpakbinary", &PrintFormat::VER_ISXPAKBINARY);
++			prop_ver("xpakbinarycount", &PrintFormat::VER_XPAKBINARYCOUNT);
+ 			prop_ver("restrict", &PrintFormat::VER_RESTRICT);
+ 			prop_ver("restrictfetch", &PrintFormat::VER_RESTRICTFETCH);
+ 			prop_ver("restrictmirror", &PrintFormat::VER_RESTRICTMIRROR);
+@@ -783,7 +786,7 @@ void PrintFormat::PKG_LICENSES(OutputString *s, Package *package) const {
+ 
+ void PrintFormat::PKG_BINARY(OutputString *s, Package *package) const {
+ 	for(Package::const_iterator it(package->begin()); likely(it != package->end()); ++it) {
+-		if(it->have_bin_pkg(portagesettings, package)) {
++		if(it->have_bin_pkg(portagesettings, package) > 0) {
+ 			s->set_one();
+ 			return;
+ 		}
+@@ -1249,6 +1252,20 @@ void PrintFormat::VER_ISBINARY(OutputString *s, Package *package) const {
+ 	}
+ }
+ 
++void PrintFormat::VER_ISXPAKBINARY(OutputString *s, Package *package) const {
++	if(ver_version()->have_xpak_bin_pkg(portagesettings, package) > 0) {
++		s->set_one();
++	}
++}
++
++void PrintFormat::VER_XPAKBINARYCOUNT(OutputString *s, Package *package) const {
++	int count = ver_version()->have_xpak_bin_pkg(portagesettings, package);
++	if(count > 0) {
++		s->assign_smart(to_string(count));
++		return;
++	}
++}
++
+ const ExtendedVersion *PrintFormat::ver_restrict(Package *package) const {
+ 	if(version_variables->isinst) {
+ 		InstVersion *i(version_variables->instver());
+diff --git a/src/output/formatstring.h b/src/output/formatstring.h
+index f3942a5..0009df0 100644
+--- a/src/output/formatstring.h
++++ b/src/output/formatstring.h
+@@ -308,6 +308,8 @@ class PrintFormat {
+ 		void VER_USE0(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
+ 		void VER_VIRTUAL(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
+ 		void VER_ISBINARY(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
++		void VER_ISXPAKBINARY(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
++		void VER_XPAKBINARYCOUNT(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
+ 		const ExtendedVersion *ver_restrict(Package *package) const ATTRIBUTE_NONNULL_;
+ 		void ver_restrict(OutputString *s, Package *package, ExtendedVersion::Restrict r) const ATTRIBUTE_NONNULL_;
+ 		void VER_RESTRICT(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
+diff --git a/src/portage/extendedversion.h b/src/portage/extendedversion.h
+index 6757dc1..ffa2a5f 100644
+--- a/src/portage/extendedversion.h
++++ b/src/portage/extendedversion.h
+@@ -31,6 +31,7 @@ class ExtendedVersion : public BasicVersion {
+ 			HAVEBINPKG_NO      = 0x01U,
+ 			HAVEBINPKG_YES     = 0x02U;
+ 		mutable HaveBinPkg have_bin_pkg_m;  // mutable: it is just a cache
++		mutable int have_xpak_bin_pkg_m;
+ 
+ 	public:
+ 		typedef uint16_t Restrict;
+@@ -81,6 +82,7 @@ class ExtendedVersion : public BasicVersion {
+ 
+ 		ExtendedVersion() :
+ 			have_bin_pkg_m(HAVEBINPKG_UNKNOWN),
++			have_xpak_bin_pkg_m(-1),
+ 			restrictFlags(RESTRICT_NONE),
+ 			propertiesFlags(PROPERTIES_NONE),
+ 			overlay_key(0), priority(0) {
+@@ -120,6 +122,8 @@ class ExtendedVersion : public BasicVersion {
+ 
+ 		bool have_bin_pkg(const PortageSettings *ps, const Package *pkg) const;
+ 
++		int have_xpak_bin_pkg(const PortageSettings *ps, const Package *pkg) const;
++
+ 		static eix::SignedBool compare(const ExtendedVersion& left, const ExtendedVersion& right) ATTRIBUTE_PURE;
+ };
+ 
+diff --git a/src/portage/extendedversion_bin.cc b/src/portage/extendedversion_bin.cc
+index e89e52f..cf4d994 100644
+--- a/src/portage/extendedversion_bin.cc
++++ b/src/portage/extendedversion_bin.cc
+@@ -18,6 +18,7 @@
+ #include "eixTk/stringtypes.h"
+ #include "eixTk/stringutils.h"
+ #include "eixTk/sysutils.h"
++#include "eixTk/utils.h"
+ #include "portage/conf/portagesettings.h"
+ #include "portage/extendedversion.h"
+ #include "portage/package.h"
+@@ -129,3 +130,32 @@ bool ExtendedVersion::have_bin_pkg(const PortageSettings *ps, const Package *pkg
+ 	}
+ 	return true;
+ }
++
++int ExtendedVersion::have_xpak_bin_pkg(const PortageSettings *ps, const Package *pkg) const {
++	if (have_xpak_bin_pkg_m >= 0)
++		return have_xpak_bin_pkg_m;
++
++	const string& s((*ps)["PKGDIR"]);
++	if (s.empty()) {
++		have_xpak_bin_pkg_m = 0;
++		return 0;
++	}
++
++	const string pkgs = s + "/" + pkg->category + "/" + pkg->name + "/";
++	const string pkg_search = pkgs + pkg->name + "-" + getFull();
++
++	int count;
++	WordVec bin_packages;
++	if (!pushback_files(pkgs, &bin_packages, NULLPTR, 1)) {
++		have_xpak_bin_pkg_m = 0;
++		return 0;
++	} else {
++		for(WordVec::const_iterator it(bin_packages.begin());
++			it != bin_packages.end(); ++it) {
++			if (pkg_search.size() <= (*it).size() && equal(pkg_search.begin(), pkg_search.end(), (*it).begin())) {
++				count++;
++			}
++		}
++		return count;
++	}
++}
+diff --git a/src/search/packagetest.cc b/src/search/packagetest.cc
+index 063d97a..5c7f660 100644
+--- a/src/search/packagetest.cc
++++ b/src/search/packagetest.cc
+@@ -941,7 +941,7 @@ bool PackageTest::match(PackageReader *pkg) const {
+ 		get_p(&p, pkg);
+ 		bool found(false);
+ 		for(Package::iterator it(p->begin()); it != p->end(); ++it) {
+-			if(unlikely(it->have_bin_pkg(portagesettings, p))) {
++			if(unlikely(it->have_bin_pkg(portagesettings, p) || it->have_xpak_bin_pkg(portagesettings, p) > 0)) {
+ 				found = true;
+ 				break;
+ 			}
+@@ -953,7 +953,7 @@ bool PackageTest::match(PackageReader *pkg) const {
+ 			}
+ 			for(InstVec::iterator it(installed_versions->begin());
+ 				likely(it != installed_versions->end()); ++it) {
+-				if(unlikely(it->have_bin_pkg(portagesettings, p))) {
++				if(unlikely(it->have_bin_pkg(portagesettings, p) || it->have_xpak_bin_pkg(portagesettings, p) > 0)) {
+ 					found = true;
+ 					break;
+ 				}
