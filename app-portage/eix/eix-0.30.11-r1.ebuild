@@ -34,7 +34,7 @@ pkg_setup() {
 
 src_prepare() {
 	sed -i -e "s'/'${EPREFIX}/'" -- "${S}"/tmpfiles.d/eix.conf
-	epatch "${FILESFIR}/${P}-binpkg-multi-instance-support.diff"
+	epatch "${FILESDIR}/${P}-binpkg-multi-instance-support.diff"
 	epatch_user
 }
 
