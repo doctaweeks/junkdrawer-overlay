@@ -1,53 +1,321 @@
+diff --git a/AUTHORS b/AUTHORS
+index 2c747df..1c6c827 100644
+--- a/AUTHORS
++++ b/AUTHORS
+@@ -51,4 +51,5 @@ tzopik <tzopik at gmail.com>
+ Vikraman <vikraman@gentoo.org>
+ Javier Villavicencio <the_paya at gentoo.org>
+ Артём Воротников <skybon at gmail.com> (Russian translation)
++Daniel M. Weeks <dan at danweeks.net> (Binpkg multi instance support)
+ Michael Yang <yangofzeal at gmail.com>
+diff --git a/manpage/de-eix.1.in b/manpage/de-eix.1.in
+index 804d5fa..55c2688 100644
+--- a/manpage/de-eix.1.in
++++ b/manpage/de-eix.1.in
+@@ -576,11 +576,11 @@ Findet nur Pakete aus der world-Datei.
+ Findet nur Pakete aus world_set.
+ .TP
+ .BR --binary
+-Findet nur Pakete mit einem Binärfile (*.tbz2) in PKGDIR.
++Findet nur Pakete mit einer Binärdatei (*.tbz2 oder *.xpak) in PKGDIR.
+ Die Version des Binärfiles muss mit mindestens einer vorhandenen oder einer installierten Version übereinstimmen.
+ (Falls keine Version vorhanden ist, kann das Paket ebenfalls nicht gefunden werden).
+-Nur die reine Existenz eines entsprechenden *.tbz2-files wird überprüft:
+-Ob Portage die Datei tatsächlich benutzen kann, hängt auch von Meta-Daten innerhalb der *.tbz2-Datei ab (wie etwa USE settings), was von eix nicht beachtet wird.
++Nur die reine Existenz einer entsprechenden Datei mit *.tbz2 oder *.xpak wird überprüft:
++Ob Portage die Datei tatsächlich benutzen kann, hängt auch von Meta-Daten innerhalb dieser Datei ab (wie etwa USE settings), was von eix nicht beachtet wird.
+ .TP
+ .B --nonvirtual
+ Findet nur Pakete mit mindestens einer Version aus dem Hauptbaum oder einem nicht-virtuellen Overlay.
+@@ -1018,11 +1018,13 @@ Dies ist Version 3.14p, die in den Slot "GNAT-3.14p" installiert wird.
+ .B 2.0.0_rc1-r6
+ Dies ist Version 2.0.0_rc1-r6, und der SLOT ist leer oder "0".
+ .TP
+-.B 1.0*ilvs^fmpbstuidP{tbz2}
++.B 1.0*ilvs^fmpbstuidP{tbz2,pak:2}
+ Dies ist Version 1.0, und gesetzt sind
+ PROPERTIES="interactive live virtual set" sowie
+ RESTRICT="fetch mirror primaryuri binchecks strip test userpriv installsources bindist parallel".
+-Darüberhinaus existiert eine *.tbz2 Datei (Binärpaket) für diese Version in B<PKGDIR>.
++Darüberhinaus existiert eine *.tbz2 und zwei *.xpak-Dateien
++(Binärpakete ohne bzw. mit FEATURES==binpkg-multi-instance)
++für diese Version in B<PKGDIR>.
+ .TP
+ .B 5.0-r3(5.0R3)^f "   oder   " 5.0-r3:5.0R3^f
+ Dies ist Version 5.0-r3, die in Slot 5.0R3 installiert wird, und die RESTRICT=fetch hat.
+@@ -1289,7 +1291,23 @@ lokelen bzw. Standard-Konfiguration) die entsprechend Stabilitätseigenschaft ha
+ .TP
+ .B isbinary
+ Dies darf nur in I<VARIABLE> im Zusammenhang von Versionsausgaben benutzt werden.
+-Dies ist 1 oder leer, je nachdem ob eine entsprechende *.tbz2-Datei für die Version existiert.
++Dies ist 1 oder leer, je nachdem ob eine entsprechende Datei mit *.tbz2 oder *.xpak für die Version existiert.
++.TP
++.B istbz
++Dies darf nur in I<VARIABLE> im Zusammenhang von Versionsausgaben benutzt werden.
++Dies ist 1 oder leer, je nachdem ob eine entsprechende Datei mit *.tbz2 für die Version existiert.
++.TP
++.B ispak
++Dies darf nur in I<VARIABLE> im Zusammenhang von Versionsausgaben benutzt werden.
++Dies ist 1 oder leer, je nachdem ob eine entsprechende Datei mit *.xpak für die Version existiert.
++.TP
++.B ismultipak
++Dies darf nur in I<VARIABLE> im Zusammenhang von Versionsausgaben benutzt werden.
++Dies ist 1 oder leer, je nachdem ob mindestens zwei Dateien mit *.xpak für die Version existieren.
++.TP
++.B pakcount
++Dies darf nur in I<VARIABLE> im Zusammenhang von Versionsausgaben benutzt werden.
++Es enthält die Anzahl der Dateien mit *.xpak für die Version. Falls keine existiert, ist es leer.
+ .TP
+ .BR restrict ", " restrictfetch ", " restrictmirror ", " restrictprimaryuri ", " restrictbincheck ", " restrictstrip ", " restricttest ", " restrictuserpriv ", " restrictinstalledsources ", " restrictbindist ", " restrictparallel
+ Dies darf nur in I<VARIABLE> im Zusammenhang von Versionsausgaben benutzt werden.
 diff --git a/manpage/en-eix.1.in b/manpage/en-eix.1.in
-index b260c09..1671cf2 100644
+index b260c09..f5e4dc6 100644
 --- a/manpage/en-eix.1.in
 +++ b/manpage/en-eix.1.in
-@@ -1264,6 +1264,14 @@ property according to the local or default configuration, respectively.
+@@ -557,11 +557,11 @@ This only matches packages from the world file.
+ This only matches packages from world_set.
+ .TP
+ .BR --binary
+-Only match packages with a binary file (*.tbz2) in PKGDIR.
++Only match packages with a binary file (*.tbz2 or *.xpak) in PKGDIR.
+ The version of the binary file must either match the version of an available version or of an installed version.
+ (However, note that if no version is available, the package cannot be found either).
+-Just the existence of the corresponding *.tbz2 file is checked:
+-Whether portage can actually use the file depends also on metadata within the *.tbz2 file (like USE settings) which is not considered by eix.
++Just the existence of the corresponding *.tbz2 or *.xpak file is checked:
++Whether portage can actually use the file depends also on metadata within that file (like USE settings) which is not considered by eix.
+ .TP
+ .B --nonvirtual
+ Only match packages with at least one version from the main tree or a non-virtual overlay.
+@@ -993,11 +993,13 @@ This is version 3.14p which will be installed into the slot "GNAT-3.14p".
+ .B 2.0.0_rc1-r6
+ This is version 2.0.0_rc1-r6, and SLOT is either empty or "0".
+ .TP
+-.B 1.0*ilvs^fmpbstuidP{tbz2}
++.B 1.0*ilvs^fmpbstuidP{tbz2,pak:2}
+ This is version 1.0 which is subject to
+ PROPERTIES="interactive live virtual set" as well as
+ RESTRICT="fetch mirror primaryuri binchecks strip test userpriv installsources bindist parallel"
+-Moreover, a *.tbz2 file (binary package) exists for that version in B<PKGDIR>.
++Moreover, a *.tbz2 and two *.xpak files (binary packages without or with
++FEATURES=binpkg-multi-instance, respectively) exist for that version
++in B<PKGDIR>.
+ .TP
+ .B 5.0-r3(5.0R3)^f "    or    " 5.0-r3:5.0R3^f
+ This is version 5.0-r3 which will be installed into SLOT 5.0R3 and has
+@@ -1262,8 +1264,24 @@ property according to the local or default configuration, respectively.
+ .TP
+ .B isbinary
  This must occur only in I<VARIABLE> in the context of version printing.
++It returns 1 or empty depending on whether there is a corresponding *.tbz2 or *.xpak file for the version.
++.TP
++.B istbz
++This must occur only in I<VARIABLE> in the context of version printing.
  It returns 1 or empty depending on whether there is a corresponding *.tbz2 file for the version.
  .TP
-+.B isxpakbinary
++.B ispak
 +This must occur only in I<VARIABLE> in the context of version printing.
 +It returns 1 or empty depending on whether there is at least one corresponding *.xpak file for the version.
 +.TP
-+.B xpakbinarycount
++.B ismultipak
 +This must occur only in I<VARIABLE> in the context of version printing.
-+This returns the number of *.xpak fileis for the version or empty if there are none.
++It returns 1 or empty depending on whether there are at least two corresponding *.xpak files for the version.
++.TP
++.B pakcount
++This must occur only in I<VARIABLE> in the context of version printing.
++It returns the number of *.xpak files for the version or empty if there are none.
 +.TP
  .BR restrict ", " restrictfetch ", " restrictmirror ", " restrictprimaryuri ", " restrictbincheck ", " restrictstrip ", " restricttest ", " restrictuserpriv ", " restrictinstalledsources ", " restrictbindist ", " restrictparallel
  This must occur only in I<VARIABLE> in the context of version printing.
  It returns 1 or empty depending on whether some or the corresponding B<RESTRICT> attribute is set for the version.
+@@ -2230,8 +2248,9 @@ If true, eix and eix-diff will use B<--care>.
+ .BR USE_BUILD_TIME " " (true / false)
+ Whether to use the BUILD_TIME entry (if it exists) of the portage database
+ instead of the directory timestamp (which usually is the installation time).
+-The difference is usually only important for packages installed from .tbz2,
+-but in most cases the build time is more relevant (it is also more reliable).
++The difference is usually only important for packages installed from *.tbz2
++or *.xpak files, but in most cases the build time is more relevant
++(it is also more reliable).
+ Unfortunately, the build time is available only for packages built and emerged
+ with >=portage-2.2_rc63; you can use B<eix-installed [no-]buildtime> to check
+ for which versions this is (not) the case.
+diff --git a/manpage/ru-eix.1.in b/manpage/ru-eix.1.in
+index 4aa9099..024ce2d 100644
+--- a/manpage/ru-eix.1.in
++++ b/manpage/ru-eix.1.in
+@@ -555,11 +555,11 @@ This only matches packages from the world file.
+ This only matches packages from world_set.
+ .TP
+ .BR --binary
+-Only match packages with a binary file (*.tbz2) in PKGDIR.
++Only match packages with a binary file (*.tbz2 or *.xpak) in PKGDIR.
+ The version of the binary file must either match the version of an available version or of an installed version.
+ (However, note that if no version is available, the package cannot be found either).
+-Just the existence of the corresponding *.tbz2 file is checked:
+-Whether portage can actually use the file depends also on metadata within the *.tbz2 file (like USE settings) which is not considered by eix.
++Just the existence of the corresponding *.tbz2 or *.xpak file is checked:
++Whether portage can actually use the file depends also on metadata within that file (like USE settings) which is not considered by eix.
+ .TP
+ .B --nonvirtual
+ Only match packages with at least one version from the main tree or a non-virtual overlay.
+@@ -991,11 +991,13 @@ This is version 3.14p which will be installed into the slot "GNAT-3.14p".
+ .B 2.0.0_rc1-r6
+ This is version 2.0.0_rc1-r6, and SLOT is either empty or "0".
+ .TP
+-.B 1.0*ilvs^fmpbstuidP{tbz2}
++.B 1.0*ilvs^fmpbstuidP{tbz2,pak:2}
+ This is version 1.0 which is subject to
+ PROPERTIES="interactive live virtual set" as well as
+ RESTRICT="fetch mirror primaryuri binchecks strip test userpriv installsources bindist parallel"
+-Moreover, a *.tbz2 file (binary package) exists for that version in B<PKGDIR>.
++Moreover, a *.tbz2 and two *.xpak files (binary packages without or with
++FEATURES=binpkg-multi-instance, respectively) exist for that version
++in B<PKGDIR>.
+ .TP
+ .B 5.0-r3(5.0R3)^f "    or    " 5.0-r3:5.0R3^f
+ This is version 5.0-r3 which will be installed into SLOT 5.0R3 and has
+@@ -1260,8 +1262,24 @@ property according to the local or default configuration, respectively.
+ .TP
+ .B isbinary
+ This must occur only in I<VARIABLE> in the context of version printing.
++It returns 1 or empty depending on whether there is a corresponding *.tbz2 or *.xpak file for the version.
++.TP
++.B istbz
++This must occur only in I<VARIABLE> in the context of version printing.
+ It returns 1 or empty depending on whether there is a corresponding *.tbz2 file for the version.
+ .TP
++.B ispak
++This must occur only in I<VARIABLE> in the context of version printing.
++It returns 1 or empty depending on whether there is at least one corresponding *.xpak file for the version.
++.TP
++.B ismultipak
++This must occur only in I<VARIABLE> in the context of version printing.
++It returns 1 or empty depending on whether there are at least two corresponding *.xpak files for the version.
++.TP
++.B pakcount
++This must occur only in I<VARIABLE> in the context of version printing.
++It returns the number of *.xpak files for the version or empty if there are none.
++.TP
+ .BR restrict ", " restrictfetch ", " restrictmirror ", " restrictprimaryuri ", " restrictbincheck ", " restrictstrip ", " restricttest ", " restrictuserpriv ", " restrictinstalledsources ", " restrictbindist ", " restrictparallel
+ This must occur only in I<VARIABLE> in the context of version printing.
+ It returns 1 or empty depending on whether some or the corresponding B<RESTRICT> attribute is set for the version.
+@@ -2228,8 +2246,9 @@ If true, eix and eix-diff will use B<--care>.
+ .BR USE_BUILD_TIME " " (true / false)
+ Whether to use the BUILD_TIME entry (if it exists) of the portage database
+ instead of the directory timestamp (which usually is the installation time).
+-The difference is usually only important for packages installed from .tbz2,
+-but in most cases the build time is more relevant (it is also more reliable).
++The difference is usually only important for packages installed from *.tbz2
++or *.xpak files, but in most cases the build time is more relevant
++(it is also more reliable).
+ Unfortunately, the build time is available only for packages built and emerged
+ with >=portage-2.2_rc63; you can use B<eix-installed [no-]buildtime> to check
+ for which versions this is (not) the case.
+diff --git a/src/eix.cc b/src/eix.cc
+index 0e85c11..3f023df 100644
+--- a/src/eix.cc
++++ b/src/eix.cc
+@@ -178,7 +178,7 @@ static void dump_help() {
+ "    --selected-file       Match packages of world file.\n"
+ "    --selected-set        Match packages of a world set.\n"
+ "    --selected            Match packages of @selected (world file or set).\n"
+-"    --binary              Match packages with *.tbz2 files.\n"
++"    --binary              Match packages with *.tbz2 or *.xpak files.\n"
+ "    --nonvirtual                     Match packages from nonvirtual overlays.\n"
+ "    --virtual                        Match packages from virtual overlays.\n"
+ "    -O, --overlay                    Match packages from overlays.\n"
 diff --git a/src/eixrc/defaults.cc b/src/eixrc/defaults.cc
-index 3d02320..c92257a 100644
+index 3d02320..cdff920 100644
 --- a/src/eixrc/defaults.cc
 +++ b/src/eixrc/defaults.cc
-@@ -1621,6 +1621,10 @@ AddOption(STRING, "TAG_BINARY",
- 	"\\{tbz2}", _(
- 	"Tag for versions with *.tbz2. This is only used for delayed substitution."));
+@@ -1448,8 +1448,20 @@ AddOption(STRING, "COLOR_SLOTS",
+ 	"Color for slots. This is only used for delayed substitution."));
  
-+AddOption(STRING, "TAG_XPAKBINARY",
-+	"\\{xpak}x", _(
-+	"Tag for versions with *.xpak. This is only used for delayed substitution."));
+ AddOption(STRING, "COLOR_BINARY",
++	"blue,1;%{BG0S}|27,1;%{BG1}|blue,1;%{BG2}|27,1;%{BG3}|27,1", _(
++	"Color for braces for binaries. This is only used for delayed substitution."));
 +
++AddOption(STRING, "COLOR_TBZ",
+ 	"blue,1;%{BG0S}|39,1;%{BG1}|blue,1;%{BG2}|39,1;%{BG3}|39,1", _(
+-	"Color for versions with *.tbz2. This is only used for delayed substitution."));
++	"Color for tag for *.tbz2. This is only used for delayed substitution."));
++
++AddOption(STRING, "COLOR_PAK",
++	"blue,1;%{BG0S}|45,1;%{BG1}|blue,1;%{BG2}|45,1;%{BG3}|45,1", _(
++	"Color for tag for *.xpak. This is only used for delayed substitution."));
++
++AddOption(STRING, "COLOR_PAKCOUNT",
++	"purple,1;%{BG0S}|97,1;%{BG1}|blue,1;%{BG2}|97,1;%{BG3}|97,1", _(
++	"Color for number of *.xpak. This is only used for delayed substitution."));
+ 
+ AddOption(STRING, "COLOR_RESTRICT",
+ 	"red;%{BG0S}|99;%{BG1}|red;%{BG2}|53;%{BG3}|99", _(
+@@ -1617,9 +1629,17 @@ AddOption(STRING, "FORMAT_NOBEST_CHANGE",
+ 	"This variable is only used for delayed substitution.\n"
+ 	"It defines what to print after \"->\" if there is no installable."));
+ 
+-AddOption(STRING, "TAG_BINARY",
+-	"\\{tbz2}", _(
+-	"Tag for versions with *.tbz2. This is only used for delayed substitution."));
++AddOption(STRING, "TAG_TBZ",
++	"tbz2", _(
++	"Tag for *.tbz2. This is only used for delayed substitution."));
++
++AddOption(STRING, "TAG_PAK",
++	"xpak", _(
++	"Tag for *.xpak. This is only used for delayed substitution."));
++
++AddOption(STRING, "TAG_MULTIPAK",
++	":", _(
++	"Tag for multiple *.xpak. This is only used for delayed substitution."));
+ 
  AddOption(STRING, "TAG_RESTRICT_FETCH",
  	"f", _(
- 	"Tag for RESTRICT=fetch. This is only used for delayed substitution."));
-@@ -2041,9 +2045,11 @@ AddOption(STRING, "FORMAT_PROPRESTRICT",
+@@ -2040,15 +2060,37 @@ AddOption(STRING, "FORMAT_PROPRESTRICT",
+ 	"and resets the color."));
  
  AddOption(STRING, "FORMAT_BINARY",
- 	"%{!NO_BINARY}"
+-	"%{!NO_BINARY}"
 -		"{isbinary}"
-+		"{isxpakbinary}"
-+			"<$sep>{!*sep}(%{COLOR_BINARY})%{TAG_XPAKBINARY}<xpakbinarycount>(%{COLOR_RESET})"
-+		"{else}{isbinary}"
- 			"<$sep>{!*sep}(%{COLOR_BINARY})%{TAG_BINARY}(%{COLOR_RESET})"
--		"{}"
-+		"{}{}"
- 	"%{}", _(
+-			"<$sep>{!*sep}(%{COLOR_BINARY})%{TAG_BINARY}(%{COLOR_RESET})"
++	"%{!NO_BINARY}{isbinary}"
++		"<$sep>{!*sep}(%{COLOR_BINARY})\\{"
++		"{istbz}"
++			"%{FORMAT_TBZ}"
++			"{ispak}(%{COLOR_BINARY}),{}"
+ 		"{}"
+-	"%{}", _(
++		"(%{COLOR_RESET})"
++		"{ispak}"
++			"%{FORMAT_PAK}"
++		"{}"
++		"(%{COLOR_BINARY})}(%{COLOR_RESET})"
++	"{}%{}", _(
  	"This variable is only used for delayed substitution.\n"
  	"It defines the format of the PROPERTIES and RESTRICT of a version\n"
+ 	"and resets the color."));
+ 
++AddOption(STRING, "FORMAT_TBZ",
++	"(%{COLOR_TBZ})%{TAG_TBZ}(%{COLOR_RESET})", _(
++	"This variable is only used for delayed substitution.\n"
++	"It defines the format for versions with *.tbz2."));
++
++AddOption(STRING, "FORMAT_PAK",
++	"(%{COLOR_PAK})%{TAG_PAK}"
++	"{ismultipak}"
++		"%{TAG_MULTIPAK}"
++		"(%{COLOR_PAKCOUNT})<pakcount>"
++	"{}"
++	"(%{COLOR_RESET})", _(
++	"This variable is only used for delayed substitution.\n"
++	"It defines the format for versions with *.xpak."));
++
+ AddOption(STRING, "FORMAT_SLOT",
+ 	"(%{COLOR_SLOTS})\\(<slot>\\)(%{COLOR_RESET})", _(
+ 	"This variable is only used for delayed substitution.\n"
 diff --git a/src/output/formatstring-print.cc b/src/output/formatstring-print.cc
-index dcbcb2b..c734184 100644
+index dcbcb2b..d7f1dcb 100644
 --- a/src/output/formatstring-print.cc
 +++ b/src/output/formatstring-print.cc
 @@ -43,6 +43,7 @@
@@ -58,39 +326,43 @@ index dcbcb2b..c734184 100644
  
  using std::cerr;
  using std::endl;
-@@ -460,6 +461,8 @@ class Scanner {
+@@ -460,6 +461,10 @@ class Scanner {
  			prop_ver("use", &PrintFormat::VER_USE);
  			prop_ver("virtual", &PrintFormat::VER_VIRTUAL);
  			prop_ver("isbinary", &PrintFormat::VER_ISBINARY);
-+			prop_ver("isxpakbinary", &PrintFormat::VER_ISXPAKBINARY);
-+			prop_ver("xpakbinarycount", &PrintFormat::VER_XPAKBINARYCOUNT);
++			prop_ver("istbz", &PrintFormat::VER_ISTBZ);
++			prop_ver("ispak", &PrintFormat::VER_ISPAK);
++			prop_ver("ismultipak", &PrintFormat::VER_ISMULTIPAK);
++			prop_ver("pakcount", &PrintFormat::VER_PAKCOUNT);
  			prop_ver("restrict", &PrintFormat::VER_RESTRICT);
  			prop_ver("restrictfetch", &PrintFormat::VER_RESTRICTFETCH);
  			prop_ver("restrictmirror", &PrintFormat::VER_RESTRICTMIRROR);
-@@ -783,7 +786,7 @@ void PrintFormat::PKG_LICENSES(OutputString *s, Package *package) const {
- 
- void PrintFormat::PKG_BINARY(OutputString *s, Package *package) const {
- 	for(Package::const_iterator it(package->begin()); likely(it != package->end()); ++it) {
--		if(it->have_bin_pkg(portagesettings, package)) {
-+		if(it->have_bin_pkg(portagesettings, package) > 0) {
- 			s->set_one();
- 			return;
- 		}
-@@ -1249,6 +1252,20 @@ void PrintFormat::VER_ISBINARY(OutputString *s, Package *package) const {
+@@ -1249,6 +1254,31 @@ void PrintFormat::VER_ISBINARY(OutputString *s, Package *package) const {
  	}
  }
  
-+void PrintFormat::VER_ISXPAKBINARY(OutputString *s, Package *package) const {
-+	if(ver_version()->have_xpak_bin_pkg(portagesettings, package) > 0) {
++void PrintFormat::VER_ISTBZ(OutputString *s, Package *package) const {
++	if(ver_version()->have_tbz_pkg(portagesettings, package)) {
 +		s->set_one();
 +	}
 +}
 +
-+void PrintFormat::VER_XPAKBINARYCOUNT(OutputString *s, Package *package) const {
-+	int count = ver_version()->have_xpak_bin_pkg(portagesettings, package);
-+	if(count > 0) {
-+		s->assign_smart(to_string(count));
-+		return;
++void PrintFormat::VER_ISPAK(OutputString *s, Package *package) const {
++	if(ver_version()->num_pak_pkg(portagesettings, package) != 0) {
++		s->set_one();
++	}
++}
++
++void PrintFormat::VER_ISMULTIPAK(OutputString *s, Package *package) const {
++	if(ver_version()->num_pak_pkg(portagesettings, package) > 1) {
++		s->set_one();
++	}
++}
++
++void PrintFormat::VER_PAKCOUNT(OutputString *s, Package *package) const {
++	ExtendedVersion::CountBinPkg count(ver_version()->num_pak_pkg(portagesettings, package));
++	if(count != 0) {
++		s->assign_fast(to_string(count));
 +	}
 +}
 +
@@ -98,52 +370,77 @@ index dcbcb2b..c734184 100644
  	if(version_variables->isinst) {
  		InstVersion *i(version_variables->instver());
 diff --git a/src/output/formatstring.h b/src/output/formatstring.h
-index f3942a5..0009df0 100644
+index f3942a5..88799d3 100644
 --- a/src/output/formatstring.h
 +++ b/src/output/formatstring.h
-@@ -308,6 +308,8 @@ class PrintFormat {
+@@ -308,6 +308,10 @@ class PrintFormat {
  		void VER_USE0(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
  		void VER_VIRTUAL(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
  		void VER_ISBINARY(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
-+		void VER_ISXPAKBINARY(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
-+		void VER_XPAKBINARYCOUNT(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
++		void VER_ISTBZ(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
++		void VER_ISPAK(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
++		void VER_ISMULTIPAK(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
++		void VER_PAKCOUNT(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
  		const ExtendedVersion *ver_restrict(Package *package) const ATTRIBUTE_NONNULL_;
  		void ver_restrict(OutputString *s, Package *package, ExtendedVersion::Restrict r) const ATTRIBUTE_NONNULL_;
  		void VER_RESTRICT(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
+diff --git a/src/portage/extendedversion.cc b/src/portage/extendedversion.cc
+index 05e2c61..6fea2f0 100644
+--- a/src/portage/extendedversion.cc
++++ b/src/portage/extendedversion.cc
+@@ -43,8 +43,10 @@ const ExtendedVersion::Properties
+ 
+ const ExtendedVersion::HaveBinPkg
+ 	ExtendedVersion::HAVEBINPKG_UNKNOWN,
+-	ExtendedVersion::HAVEBINPKG_NO,
+-	ExtendedVersion::HAVEBINPKG_YES;
++	ExtendedVersion::HAVEBINPKG_TBZ_NO,
++	ExtendedVersion::HAVEBINPKG_TBZ_YES,
++	ExtendedVersion::HAVEBINPKG_TBZ,
++	ExtendedVersion::HAVEBINPKG_PAK;
+ 
+ string ExtendedVersion::get_longfullslot() const {
+ 	return (subslotname.empty() ? (slotname.empty() ? "0" : slotname) :
 diff --git a/src/portage/extendedversion.h b/src/portage/extendedversion.h
-index 6757dc1..ffa2a5f 100644
+index 6757dc1..15e18c5 100644
 --- a/src/portage/extendedversion.h
 +++ b/src/portage/extendedversion.h
-@@ -31,6 +31,7 @@ class ExtendedVersion : public BasicVersion {
- 			HAVEBINPKG_NO      = 0x01U,
- 			HAVEBINPKG_YES     = 0x02U;
+@@ -24,13 +24,19 @@ class Package;
+ class PortageSettings;
+ 
+ class ExtendedVersion : public BasicVersion {
++	public:
++		typedef uint16_t CountBinPkg;
++
+ 	private:
+ 		typedef eix::UChar HaveBinPkg;
+ 		static CONSTEXPR HaveBinPkg
+ 			HAVEBINPKG_UNKNOWN = 0x00U,
+-			HAVEBINPKG_NO      = 0x01U,
+-			HAVEBINPKG_YES     = 0x02U;
++			HAVEBINPKG_TBZ_NO  = 0x01U,
++			HAVEBINPKG_TBZ_YES = 0x02U,
++			HAVEBINPKG_TBZ     = HAVEBINPKG_TBZ_NO|HAVEBINPKG_TBZ_YES,
++			HAVEBINPKG_PAK     = 0x04U;
  		mutable HaveBinPkg have_bin_pkg_m;  // mutable: it is just a cache
-+		mutable int have_xpak_bin_pkg_m;
++		mutable CountBinPkg count_pak_m;
  
  	public:
  		typedef uint16_t Restrict;
-@@ -81,6 +82,7 @@ class ExtendedVersion : public BasicVersion {
- 
- 		ExtendedVersion() :
- 			have_bin_pkg_m(HAVEBINPKG_UNKNOWN),
-+			have_xpak_bin_pkg_m(-1),
- 			restrictFlags(RESTRICT_NONE),
- 			propertiesFlags(PROPERTIES_NONE),
- 			overlay_key(0), priority(0) {
-@@ -120,6 +122,8 @@ class ExtendedVersion : public BasicVersion {
+@@ -119,6 +125,8 @@ class ExtendedVersion : public BasicVersion {
+ 		}
  
  		bool have_bin_pkg(const PortageSettings *ps, const Package *pkg) const;
++		bool have_tbz_pkg(const PortageSettings *ps, const Package *pkg) const;
++		CountBinPkg num_pak_pkg(const PortageSettings *ps, const Package *pkg) const;
  
-+		int have_xpak_bin_pkg(const PortageSettings *ps, const Package *pkg) const;
-+
  		static eix::SignedBool compare(const ExtendedVersion& left, const ExtendedVersion& right) ATTRIBUTE_PURE;
  };
- 
 diff --git a/src/portage/extendedversion_bin.cc b/src/portage/extendedversion_bin.cc
-index e89e52f..cf4d994 100644
+index e89e52f..7cb347d 100644
 --- a/src/portage/extendedversion_bin.cc
 +++ b/src/portage/extendedversion_bin.cc
-@@ -18,6 +18,7 @@
+@@ -18,10 +18,12 @@
  #include "eixTk/stringtypes.h"
  #include "eixTk/stringutils.h"
  #include "eixTk/sysutils.h"
@@ -151,58 +448,71 @@ index e89e52f..cf4d994 100644
  #include "portage/conf/portagesettings.h"
  #include "portage/extendedversion.h"
  #include "portage/package.h"
-@@ -129,3 +130,32 @@ bool ExtendedVersion::have_bin_pkg(const PortageSettings *ps, const Package *pkg
+ 
++using std::equal;
+ using std::map;
+ using std::string;
+ 
+@@ -111,21 +113,57 @@ ExtendedVersion::Properties ExtendedVersion::calcProperties(const string& str) {
+ }
+ 
+ bool ExtendedVersion::have_bin_pkg(const PortageSettings *ps, const Package *pkg) const {
+-	switch(have_bin_pkg_m) {
++	return (have_tbz_pkg(ps, pkg) || (num_pak_pkg(ps, pkg) != 0));
++}
++
++bool ExtendedVersion::have_tbz_pkg(const PortageSettings *ps, const Package *pkg) const {
++	switch(have_bin_pkg_m & HAVEBINPKG_TBZ) {
+ 		case HAVEBINPKG_UNKNOWN: {
+ 				const string& s((*ps)["PKGDIR"]);
+ 				if((s.empty()) || !is_file((s + "/" + pkg ->category + "/" + pkg->name + "-" + getFull() + ".tbz2").c_str())) {
+-					have_bin_pkg_m = HAVEBINPKG_NO;
++					have_bin_pkg_m |= HAVEBINPKG_TBZ_NO;
+ 					return false;
+ 				}
+-				have_bin_pkg_m = HAVEBINPKG_YES;
++				have_bin_pkg_m |= HAVEBINPKG_TBZ_YES;
+ 			}
+ 			break;
+-		case HAVEBINPKG_NO:
++		case HAVEBINPKG_TBZ_NO:
+ 			return false;
+ 		default:
+-		// case HAVEBINPKG_YES;
++		// case HAVEBINPKG_TBZ_YES:
+ 			break;
  	}
  	return true;
  }
 +
-+int ExtendedVersion::have_xpak_bin_pkg(const PortageSettings *ps, const Package *pkg) const {
-+	if (have_xpak_bin_pkg_m >= 0)
-+		return have_xpak_bin_pkg_m;
-+
++ExtendedVersion::CountBinPkg ExtendedVersion::num_pak_pkg(const PortageSettings *ps, const Package *pkg) const {
++	if(likely((have_bin_pkg_m & HAVEBINPKG_PAK) != HAVEBINPKG_UNKNOWN)) {
++		return count_pak_m;
++	}
++	have_bin_pkg_m |= HAVEBINPKG_PAK;
++	count_pak_m = 0;
 +	const string& s((*ps)["PKGDIR"]);
-+	if (s.empty()) {
-+		have_xpak_bin_pkg_m = 0;
++	if(unlikely(s.empty())) {
 +		return 0;
 +	}
-+
 +	const string pkgs = s + "/" + pkg->category + "/" + pkg->name + "/";
-+	const string pkg_search = pkgs + pkg->name + "-" + getFull();
-+
-+	int count;
 +	WordVec bin_packages;
-+	if (!pushback_files(pkgs, &bin_packages, NULLPTR, 1)) {
-+		have_xpak_bin_pkg_m = 0;
++	if(unlikely(!pushback_files(pkgs, &bin_packages, NULLPTR, 1))) {
 +		return 0;
-+	} else {
-+		for(WordVec::const_iterator it(bin_packages.begin());
-+			it != bin_packages.end(); ++it) {
-+			if (pkg_search.size() <= (*it).size() && equal(pkg_search.begin(), pkg_search.end(), (*it).begin())) {
-+				count++;
-+			}
-+		}
-+		return count;
 +	}
++	const string pkg_search = pkgs + pkg->name + "-" + getFull() + "-";
++	for(WordVec::const_iterator it(bin_packages.begin());
++		it != bin_packages.end(); ++it) {
++		const string &name(*it);
++		string::size_type i(pkg_search.size());
++		if((i > name.size()) || (strncmp(pkg_search.c_str(), name.c_str(), i) != 0)) {
++			continue;
++		}
++		for(; (i != name.size()) && isdigit(name[i], localeC); ++i) {
++		}
++		if((i + 5 == name.size()) && (strncasecmp(".xpak", name.c_str() + i, 5) == 0)) {
++			++count_pak_m;
++		}
++	}
++	return count_pak_m;
 +}
-diff --git a/src/search/packagetest.cc b/src/search/packagetest.cc
-index 063d97a..5c7f660 100644
---- a/src/search/packagetest.cc
-+++ b/src/search/packagetest.cc
-@@ -941,7 +941,7 @@ bool PackageTest::match(PackageReader *pkg) const {
- 		get_p(&p, pkg);
- 		bool found(false);
- 		for(Package::iterator it(p->begin()); it != p->end(); ++it) {
--			if(unlikely(it->have_bin_pkg(portagesettings, p))) {
-+			if(unlikely(it->have_bin_pkg(portagesettings, p) || it->have_xpak_bin_pkg(portagesettings, p) > 0)) {
- 				found = true;
- 				break;
- 			}
-@@ -953,7 +953,7 @@ bool PackageTest::match(PackageReader *pkg) const {
- 			}
- 			for(InstVec::iterator it(installed_versions->begin());
- 				likely(it != installed_versions->end()); ++it) {
--				if(unlikely(it->have_bin_pkg(portagesettings, p))) {
-+				if(unlikely(it->have_bin_pkg(portagesettings, p) || it->have_xpak_bin_pkg(portagesettings, p) > 0)) {
- 					found = true;
- 					break;
- 				}
