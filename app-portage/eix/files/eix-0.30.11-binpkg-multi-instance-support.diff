@@ -1,5 +1,4 @@
-diff --git a/AUTHORS b/AUTHORS
-index 2c747df..1c6c827 100644
+unchanged:
 --- a/AUTHORS
 +++ b/AUTHORS
 @@ -51,4 +51,5 @@ tzopik <tzopik at gmail.com>
@@ -8,8 +7,7 @@ index 2c747df..1c6c827 100644
  Артём Воротников <skybon at gmail.com> (Russian translation)
 +Daniel M. Weeks <dan at danweeks.net> (Binpkg multi instance support)
  Michael Yang <yangofzeal at gmail.com>
-diff --git a/manpage/de-eix.1.in b/manpage/de-eix.1.in
-index 804d5fa..55c2688 100644
+unchanged:
 --- a/manpage/de-eix.1.in
 +++ b/manpage/de-eix.1.in
 @@ -576,11 +576,11 @@ Findet nur Pakete aus der world-Datei.
@@ -68,8 +66,7 @@ index 804d5fa..55c2688 100644
  .TP
  .BR restrict ", " restrictfetch ", " restrictmirror ", " restrictprimaryuri ", " restrictbincheck ", " restrictstrip ", " restricttest ", " restrictuserpriv ", " restrictinstalledsources ", " restrictbindist ", " restrictparallel
  Dies darf nur in I<VARIABLE> im Zusammenhang von Versionsausgaben benutzt werden.
-diff --git a/manpage/en-eix.1.in b/manpage/en-eix.1.in
-index b260c09..f5e4dc6 100644
+unchanged:
 --- a/manpage/en-eix.1.in
 +++ b/manpage/en-eix.1.in
 @@ -557,11 +557,11 @@ This only matches packages from the world file.
@@ -140,8 +137,7 @@ index b260c09..f5e4dc6 100644
  Unfortunately, the build time is available only for packages built and emerged
  with >=portage-2.2_rc63; you can use B<eix-installed [no-]buildtime> to check
  for which versions this is (not) the case.
-diff --git a/manpage/ru-eix.1.in b/manpage/ru-eix.1.in
-index 4aa9099..024ce2d 100644
+unchanged:
 --- a/manpage/ru-eix.1.in
 +++ b/manpage/ru-eix.1.in
 @@ -555,11 +555,11 @@ This only matches packages from the world file.
@@ -212,8 +208,7 @@ index 4aa9099..024ce2d 100644
  Unfortunately, the build time is available only for packages built and emerged
  with >=portage-2.2_rc63; you can use B<eix-installed [no-]buildtime> to check
  for which versions this is (not) the case.
-diff --git a/src/eix.cc b/src/eix.cc
-index 0e85c11..3f023df 100644
+unchanged:
 --- a/src/eix.cc
 +++ b/src/eix.cc
 @@ -178,7 +178,7 @@ static void dump_help() {
@@ -225,24 +220,23 @@ index 0e85c11..3f023df 100644
  "    --nonvirtual                     Match packages from nonvirtual overlays.\n"
  "    --virtual                        Match packages from virtual overlays.\n"
  "    -O, --overlay                    Match packages from overlays.\n"
-diff --git a/src/eixrc/defaults.cc b/src/eixrc/defaults.cc
-index 3d02320..cdff920 100644
---- a/src/eixrc/defaults.cc
+diff -u b/src/eixrc/defaults.cc b/src/eixrc/defaults.cc
+--- b/src/eixrc/defaults.cc
 +++ b/src/eixrc/defaults.cc
-@@ -1448,8 +1448,20 @@ AddOption(STRING, "COLOR_SLOTS",
+@@ -1448,8 +1448,20 @@
  	"Color for slots. This is only used for delayed substitution."));
  
  AddOption(STRING, "COLOR_BINARY",
-+	"blue,1;%{BG0S}|27,1;%{BG1}|blue,1;%{BG2}|27,1;%{BG3}|27,1", _(
++	"blue,1;%{BG0S}|21,1;%{BG1}|blue,1;%{BG2}|21,1;%{BG3}|21,1", _(
 +	"Color for braces for binaries. This is only used for delayed substitution."));
 +
 +AddOption(STRING, "COLOR_TBZ",
- 	"blue,1;%{BG0S}|39,1;%{BG1}|blue,1;%{BG2}|39,1;%{BG3}|39,1", _(
--	"Color for versions with *.tbz2. This is only used for delayed substitution."));
++	"blue,1;%{BG0S}|27,1;%{BG1}|blue,1;%{BG2}|27,1;%{BG3}|27,1", _(
 +	"Color for tag for *.tbz2. This is only used for delayed substitution."));
 +
 +AddOption(STRING, "COLOR_PAK",
-+	"blue,1;%{BG0S}|45,1;%{BG1}|blue,1;%{BG2}|45,1;%{BG3}|45,1", _(
+ 	"blue,1;%{BG0S}|39,1;%{BG1}|blue,1;%{BG2}|39,1;%{BG3}|39,1", _(
+-	"Color for versions with *.tbz2. This is only used for delayed substitution."));
 +	"Color for tag for *.xpak. This is only used for delayed substitution."));
 +
 +AddOption(STRING, "COLOR_PAKCOUNT",
@@ -251,7 +245,7 @@ index 3d02320..cdff920 100644
  
  AddOption(STRING, "COLOR_RESTRICT",
  	"red;%{BG0S}|99;%{BG1}|red;%{BG2}|53;%{BG3}|99", _(
-@@ -1617,9 +1629,17 @@ AddOption(STRING, "FORMAT_NOBEST_CHANGE",
+@@ -1617,9 +1629,17 @@
  	"This variable is only used for delayed substitution.\n"
  	"It defines what to print after \"->\" if there is no installable."));
  
@@ -272,7 +266,7 @@ index 3d02320..cdff920 100644
  
  AddOption(STRING, "TAG_RESTRICT_FETCH",
  	"f", _(
-@@ -2040,15 +2060,37 @@ AddOption(STRING, "FORMAT_PROPRESTRICT",
+@@ -2040,15 +2060,37 @@
  	"and resets the color."));
  
  AddOption(STRING, "FORMAT_BINARY",
@@ -314,8 +308,7 @@ index 3d02320..cdff920 100644
  AddOption(STRING, "FORMAT_SLOT",
  	"(%{COLOR_SLOTS})\\(<slot>\\)(%{COLOR_RESET})", _(
  	"This variable is only used for delayed substitution.\n"
-diff --git a/src/output/formatstring-print.cc b/src/output/formatstring-print.cc
-index dcbcb2b..d7f1dcb 100644
+unchanged:
 --- a/src/output/formatstring-print.cc
 +++ b/src/output/formatstring-print.cc
 @@ -43,6 +43,7 @@
@@ -369,8 +362,7 @@ index dcbcb2b..d7f1dcb 100644
  const ExtendedVersion *PrintFormat::ver_restrict(Package *package) const {
  	if(version_variables->isinst) {
  		InstVersion *i(version_variables->instver());
-diff --git a/src/output/formatstring.h b/src/output/formatstring.h
-index f3942a5..88799d3 100644
+unchanged:
 --- a/src/output/formatstring.h
 +++ b/src/output/formatstring.h
 @@ -308,6 +308,10 @@ class PrintFormat {
@@ -384,8 +376,7 @@ index f3942a5..88799d3 100644
  		const ExtendedVersion *ver_restrict(Package *package) const ATTRIBUTE_NONNULL_;
  		void ver_restrict(OutputString *s, Package *package, ExtendedVersion::Restrict r) const ATTRIBUTE_NONNULL_;
  		void VER_RESTRICT(OutputString *s, Package *package) const ATTRIBUTE_NONNULL_;
-diff --git a/src/portage/extendedversion.cc b/src/portage/extendedversion.cc
-index 05e2c61..6fea2f0 100644
+unchanged:
 --- a/src/portage/extendedversion.cc
 +++ b/src/portage/extendedversion.cc
 @@ -43,8 +43,10 @@ const ExtendedVersion::Properties
@@ -401,8 +392,7 @@ index 05e2c61..6fea2f0 100644
  
  string ExtendedVersion::get_longfullslot() const {
  	return (subslotname.empty() ? (slotname.empty() ? "0" : slotname) :
-diff --git a/src/portage/extendedversion.h b/src/portage/extendedversion.h
-index 6757dc1..15e18c5 100644
+unchanged:
 --- a/src/portage/extendedversion.h
 +++ b/src/portage/extendedversion.h
 @@ -24,13 +24,19 @@ class Package;
@@ -436,8 +426,7 @@ index 6757dc1..15e18c5 100644
  
  		static eix::SignedBool compare(const ExtendedVersion& left, const ExtendedVersion& right) ATTRIBUTE_PURE;
  };
-diff --git a/src/portage/extendedversion_bin.cc b/src/portage/extendedversion_bin.cc
-index e89e52f..7cb347d 100644
+unchanged:
 --- a/src/portage/extendedversion_bin.cc
 +++ b/src/portage/extendedversion_bin.cc
 @@ -18,10 +18,12 @@
