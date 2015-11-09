@@ -10,9 +10,9 @@ DESCRIPTION="Embedded C/C++ web server"
 HOMEPAGE="https://github.com/bel2125/civetweb"
 if [ $PV == 9999 ]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/bel2125/civetweb"
+	EGIT_REPO_URI="https://github.com/civetweb/civetweb"
 else
-	SRC_URI="https://github.com/bel2125/${PN}/archive/v${PV}.tar.gz"
+	SRC_URI="https://github.com/civetweb/${PN}/archive/v${PV}.tar.gz"
 	KEYWORDS="~amd64"
 fi
 
