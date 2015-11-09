@@ -1,0 +1,27 @@
+--- config.old	2015-01-25 12:11:24.173856169 +0100
++++ config	2015-01-25 12:13:04.803517454 +0100
+@@ -140,13 +140,13 @@
+ 
+ # Rights backend
+ # Value: None | authenticated | owner_only | owner_write | from_file | custom
+-#type = None
++type = owner_only
+ 
+ # Custom rights handler
+ #custom_handler =
+ 
+ # File for rights management from_file
+-#file = ~/.config/radicale/rights
++file = /etc/radicale/rights
+ 
+ 
+ [storage]
+@@ -163,7 +163,7 @@
+ #custom_handler =
+ 
+ # Folder for storing local collections, created if not present
+-#filesystem_folder = ~/.config/radicale/collections
++filesystem_folder = /var/lib/radicale/collections
+ 
+ # Database URL for SQLAlchemy
+ # dialect+driver://user:password@host/dbname[?key=value..]
