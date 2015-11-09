@@ -73,4 +73,7 @@
 			Use the optimized math library (<pkg>dev-libs/tomsfastmath</pkg>)
 		</flag>
 	</use>
+	<upstream>
+		<remote-id type="github">libtom/libtomcrypt</remote-id>
+	</upstream>
 </pkgmetadata>

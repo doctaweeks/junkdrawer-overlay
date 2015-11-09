@@ -10,4 +10,7 @@
 	</use>
 	<longdescription lang="en">
 	</longdescription>
+	<upstream>
+		<remote-id type="github">gvvaughan/slingshot</remote-id>
+	</upstream>
 </pkgmetadata>

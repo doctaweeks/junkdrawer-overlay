@@ -12,4 +12,7 @@
     limited solely to doing RSA or DH. It's generic enough to be used for other 
     projects such as ECC as well.
 	</longdescription>
+	<upstream>
+		<remote-id type="github">libtom/tomsfastmath</remote-id>
+	</upstream>
 </pkgmetadata>

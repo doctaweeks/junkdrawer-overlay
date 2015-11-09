@@ -7,4 +7,7 @@
 	</maintainer>
 	<longdescription lang="en">
 	</longdescription>
+	<upstream>
+		<remote-id type="github">ganglia/ganglia-web</remote-id>
+	</upstream>
 </pkgmetadata>

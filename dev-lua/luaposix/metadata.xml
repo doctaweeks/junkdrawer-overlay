@@ -10,4 +10,7 @@
 	</use>
 	<longdescription lang="en">
 	</longdescription>
+	<upstream>
+		<remote-id type="github">luaposix/luaposix</remote-id>
+	</upstream>
 </pkgmetadata>

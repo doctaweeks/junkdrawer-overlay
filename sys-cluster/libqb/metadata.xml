@@ -7,4 +7,7 @@
 	</maintainer>
 	<longdescription lang="en">
 	</longdescription>
+	<upstream>
+		<remote-id type="github">ClusterLabs/libqb</remote-id>
+	</upstream>
 </pkgmetadata>

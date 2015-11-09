@@ -10,4 +10,7 @@
 	</use>
 	<longdescription lang="en">
 	</longdescription>
+	<upstream>
+		<remote-id type="github">stevedonovan/LDoc</remote-id>
+	</upstream>
 </pkgmetadata>

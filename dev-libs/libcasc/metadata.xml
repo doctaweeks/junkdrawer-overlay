@@ -7,6 +7,9 @@
 	</maintainer>
 	<longdescription lang="en">
 	</longdescription>
+	<upstream>
+		<remote-id type="github">ladislav-zezula/CascLib</remote-id>
+	</upstream>
 	<use>
 		<flag name="system-libtomcrypt">Use the system-wide
 			<pkg>dev-libs/libtomcrypt</pkg>instead of bundled.</flag>
