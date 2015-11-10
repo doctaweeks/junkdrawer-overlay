@@ -20,5 +20,5 @@ IUSE=""
 
 RESTRICT="test" # network-heavy test which provably fail in restricted environments
 
-RDEPEND="virtual/dnspython[${PYTHON_USEDEP}]
+RDEPEND="virtual/python-dnspython[${PYTHON_USEDEP}]
 	dev-python/ipaddr[${PYTHON_USEDEP}]"
