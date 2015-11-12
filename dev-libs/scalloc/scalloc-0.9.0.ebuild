@@ -11,7 +11,7 @@ if [[ $PV == "9999" ]]; then
 	EGIT_REPO_URI="https://github.com/cksystemsgroup/scalloc"
 else
 	SRC_URI="https://github.com/cksystemsgroup/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS=""
+	KEYWORDS="~amd64"
 fi
 
 LICENSE="BSD-2"
