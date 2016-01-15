@@ -1,0 +1,2 @@
+# pam causes install or runtime failures
+net-im/ejabberd
