@@ -13,10 +13,10 @@ SRC_URI="https://github.com/wb2osz/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="gps"
 
-DEPEND="x11-misc/makedepend"
-RDEPEND=""
+DEPEND="gps? ( sci-geosciences/gpsd )"
+RDEPEND="${DEPEND}"
 
 src_prepare() {
 	epatch "${FILESDIR}/${P}-cflags.patch"
