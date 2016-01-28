@@ -4,23 +4,24 @@
 
 EAPI=5
 
-inherit git-r3 cmake-utils
+inherit cmake-utils
 
 DESCRIPTION="Navigation-mesh Toolset for Games"
 HOMEPAGE="http://digestingduck.blogspot.com"
 
 if [ $PV == 9999 ]; then
-	EGIT_REPO_URI="https://github.com/memononen/recastnavigation.git"
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 else
-	SRC_URI=""
+	SRC_URI="https://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="~amd64"
 fi
 
 LICENSE="recastnavigation"
 SLOT="0"
-KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/$P-cmake.patch" )
+PATCHES=( "${FILESDIR}/$PN-cmake.patch" )
