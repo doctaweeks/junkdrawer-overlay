@@ -6,7 +6,7 @@ EAPI=5
 
 inherit cmake-utils wxwidgets
 
-DESCRIPTION="Libraries and utilities to use digital signatures for amateur radio QSL"
+DESCRIPTION="TrustedQSL log signing for the ARRL Logbook of the World (LoTW)"
 HOMEPAGE="http://sourceforge.net/projects/trustedqsl/"
 SRC_URI="mirror://sourceforge/trustedqsl/TrustedQSL/v${PV}/${P}.tar.gz"
 
@@ -22,6 +22,8 @@ DEPEND="sys-libs/zlib
 		net-misc/curl
 		x11-libs/wxGTK:="
 RDEPEND="${DEPEND}"
+
+DOCS=(AUTHORS.txt README LICENSE.txt)
 
 src_configure() {
 	local mycmakeargs=(
