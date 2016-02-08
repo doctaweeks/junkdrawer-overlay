@@ -4,10 +4,10 @@
 
 EAPI=5
 
-inherit autotools base systemd eutils readme.gentoo user
+inherit autotools systemd eutils readme.gentoo user
 
 DESCRIPTION="Minimalistic Murmur (Mumble server)"
-HOMEPAGE="http://code.google.com/p/umurmur/ https://github.com/umurmur/umurmur"
+HOMEPAGE="https://code.google.com/p/umurmur/ https://github.com/umurmur/umurmur"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD"
@@ -40,7 +40,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	base_src_prepare
 	eautoreconf
 }
 
@@ -90,7 +89,7 @@ pkg_postinst() {
 		elog
 		elog "Because you have enabled PolarSSL support, umurmurd will use a"
 		elog "predefined test-certificate and key if none are configured, which"
-		elog "is insecure. See http://code.google.com/p/umurmur/wiki/Installing02x#Installing_uMurmur_with_PolarSSL_support"
+		elog "is insecure. See https://code.google.com/p/umurmur/wiki/Installing02x#Installing_uMurmur_with_PolarSSL_support"
 		elog "for more information on how to create your certificate and key"
 	fi
 }
