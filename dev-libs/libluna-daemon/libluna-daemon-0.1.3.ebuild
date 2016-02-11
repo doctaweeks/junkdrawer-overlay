@@ -22,5 +22,6 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE="static-libs"
 
-DEPEND="sys-libs/libcap-ng"
-RDEPEND="${DEPEND}"
+RDEPEND="sys-libs/libcap-ng"
+DEPEND="${RDEPEND}
+		virtual/pkgconfig"
