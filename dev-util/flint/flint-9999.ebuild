@@ -4,7 +4,10 @@
 
 EAPI=5
 
-inherit autotools
+DLANG_VERSION_RANGE="2.066-2.067"
+DLANG_PACKAGE_TYPE="single"
+
+inherit autotools dlang
 
 DESCRIPTION="An open-source lint program for C++ developed by, and used at Facebook"
 HOMEPAGE="https://github.com/facebook/flint"
@@ -20,8 +23,7 @@ LICENSE="Boost-1.0"
 SLOT="0"
 IUSE=""
 
-DEPEND="dev-cpp/folly
-		dev-lang/dmd"
+DEPEND="dev-cpp/folly"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
