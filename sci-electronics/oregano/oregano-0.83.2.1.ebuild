@@ -9,7 +9,7 @@ PYTHON_REQ_USE='threads(+)'
 
 inherit eutils fdo-mime gnome2-utils python-any-r1 waf-utils
 
-DESCRIPTION="Oregano is an application for schematic capture and simulation of electrical circuits"
+DESCRIPTION="An application for schematic capture and simulation of electrical circuits"
 HOMEPAGE="https://ahoi.io/project/oregano"
 SRC_URI="https://github.com/drahnr/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
