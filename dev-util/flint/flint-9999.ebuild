@@ -10,10 +10,10 @@ DLANG_PACKAGE_TYPE="single"
 inherit autotools dlang
 
 DESCRIPTION="An open-source lint program for C++ developed by, and used at Facebook"
-HOMEPAGE="https://github.com/facebook/flint"
+HOMEPAGE="https://github.com/facebookarchive/flint"
 if [ ${PV} == 9999 ]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/facebook/${PN}.git"
+	EGIT_REPO_URI="https://github.com/facebookarchive/${PN}.git"
 else
 	SRC_URI=""
 	KEYWORDS="~amd64"
