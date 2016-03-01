@@ -1,0 +1,56 @@
+diff -ru icestorm-9999.orig/icemulti/Makefile icestorm-9999/icemulti/Makefile
+--- icestorm-9999.orig/icemulti/Makefile	2016-03-01 14:21:34.236846895 -0500
++++ icestorm-9999/icemulti/Makefile	2016-03-01 14:23:23.107637496 -0500
+@@ -1,6 +1,6 @@
+ include ../config.mk
+ LDLIBS = -lm -lstdc++
+-CXXFLAGS = -MD -O0 -ggdb -Wall -std=c++11
++override CXXFLAGS += -std=c++11
+ 
+ all: icemulti$(EXE)
+ 
+diff -ru icestorm-9999.orig/icepack/Makefile icestorm-9999/icepack/Makefile
+--- icestorm-9999.orig/icepack/Makefile	2016-03-01 14:21:34.236846895 -0500
++++ icestorm-9999/icepack/Makefile	2016-03-01 14:23:13.875079268 -0500
+@@ -1,6 +1,6 @@
+ include ../config.mk
+ LDLIBS = -lm -lstdc++
+-CXXFLAGS = -MD -O0 -ggdb -Wall -std=c++11 -I/usr/local/include
++override CXXFLAGS += -std=c++11
+ MXEGCC = /usr/local/src/mxe/usr/bin/i686-pc-mingw32-gcc
+ 
+ all: icepack$(EXE) iceunpack$(EXE)
+diff -ru icestorm-9999.orig/icepll/Makefile icestorm-9999/icepll/Makefile
+--- icestorm-9999.orig/icepll/Makefile	2016-03-01 14:21:34.236846895 -0500
++++ icestorm-9999/icepll/Makefile	2016-03-01 14:24:00.211862083 -0500
+@@ -1,6 +1,6 @@
+ include ../config.mk
+ LDLIBS = -lm -lstdc++
+-CXXFLAGS = -MD -O0 -ggdb -Wall -std=c++11 -I/usr/local/include
++override CXXFLAGS += -std=c++11
+ 
+ all: icepll$(EXE)
+ 
+diff -ru icestorm-9999.orig/iceprog/Makefile icestorm-9999/iceprog/Makefile
+--- icestorm-9999.orig/iceprog/Makefile	2016-03-01 14:21:34.236846895 -0500
++++ icestorm-9999/iceprog/Makefile	2016-03-01 14:23:49.459376582 -0500
+@@ -1,6 +1,6 @@
+ include ../config.mk
+-LDLIBS = -L/usr/local/lib -lm
+-CFLAGS = -MD -O0 -ggdb -Wall -std=c99 -I/usr/local/include
++LDLIBS = -lm
++override CFLAGS += -std=c99
+ 
+ LDLIBS += $(shell for pkg in libftdi libftdi1; do $(PKG_CONFIG) --silence-errors --libs $$pkg && exit; done; echo -lftdi; )
+ CFLAGS += $(shell for pkg in libftdi libftdi1; do $(PKG_CONFIG) --silence-errors --cflags $$pkg && exit; done; )
+diff -ru icestorm-9999.orig/icetime/Makefile icestorm-9999/icetime/Makefile
+--- icestorm-9999.orig/icetime/Makefile	2016-03-01 14:21:34.236846895 -0500
++++ icestorm-9999/icetime/Makefile	2016-03-01 14:22:08.563204400 -0500
+@@ -1,6 +1,6 @@
+ include ../config.mk
+ LDLIBS = -lm -lstdc++
+-CXXFLAGS = -MD -O0 -ggdb -Wall -std=c++11 -I/usr/local/include -DPREFIX='"$(PREFIX)"'
++override CXXFLAGS += -std=c++11 -DPREFIX='"$(PREFIX)"'
+ 
+ all: icetime$(EXE)
+ 

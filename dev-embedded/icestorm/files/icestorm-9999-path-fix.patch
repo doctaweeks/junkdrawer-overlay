@@ -1,0 +1,13 @@
+diff --git a/icebox/icebox_vlog.py b/icebox/icebox_vlog.py
+index a956e8f..6616220 100755
+--- a/icebox/icebox_vlog.py
++++ b/icebox/icebox_vlog.py
+@@ -367,7 +367,7 @@ def seg_to_net(seg, default=None):
+ 
+ if lookup_symbols:
+     text_func.append("// Debug Symbols")
+-    with open("/usr/local/share/icebox/chipdb-%s.txt" % ic.device, "r") as f:
++    with open("/usr/share/icebox/chipdb-%s.txt" % ic.device, "r") as f:
+         current_net = -1
+         exported_names = dict()
+         for line in f:
