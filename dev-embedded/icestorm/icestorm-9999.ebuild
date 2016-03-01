@@ -4,7 +4,8 @@
 
 EAPI="6"
 
-inherit eutils git-r3 toolchain-funcs
+PYTHON_COMPAT=( python{3_3,3_4,3_5} )
+inherit eutils git-r3 python-any-r1 toolchain-funcs
 
 DESCRIPTION="IceStorm - tools for analyzing and creating bitstreams for Lattice iCE40 FPGAs"
 HOMEPAGE="http://www.clifford.at/icestorm/"
@@ -17,7 +18,7 @@ IUSE="ftdi"
 
 RDEPEND="ftdi? ( dev-embedded/libftdi:= )"
 DEPEND="
-		>=dev-lang/python-3
+		${PYTHON_DEPS}
 		virtual/pkgconfig
 		${RDEPEND}"
 
