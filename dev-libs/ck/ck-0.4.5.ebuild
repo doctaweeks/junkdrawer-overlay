@@ -6,7 +6,7 @@ EAPI=5
 
 DESCRIPTION="Concurrency primitives, safe memory reclamation and non-blocking data structures"
 HOMEPAGE="http://concurrencykit.org/"
-SRC_URI="http://concurrencykit.org/releases/ck-0.4.5.tar.gz"
+SRC_URI="http://concurrencykit.org/releases/${P}.tar.gz"
 
 LICENSE="ck"
 SLOT="0"
