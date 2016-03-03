@@ -5,7 +5,7 @@
 EAPI=5
 
 [[ "${PV}" = *9999* ]] && live=git-r3
-inherit ${live}
+inherit ${live} eutils
 
 DESCRIPTION="Lua bindings for POSIX APIs"
 HOMEPAGE="https://github.com/luaposix/luaposix"
@@ -15,7 +15,7 @@ else
 	SRC_URI="https://github.com/luaposix/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
-KEYWORDS=""
+KEYWORDS="~amd64"
 LICENSE="MIT"
 SLOT="0"
 
@@ -29,20 +29,18 @@ DEPEND="${DEPEND}
 	>=dev-lua/LDoc-1.4.2
 	dev-lua/slingshot
 	sys-apps/help2man
-	dev-libs/gnulib
 	dev-lang/perl"
 
 DOCS=( "README.md" "NEWS.md" )
 
 src_prepare() {
-	rmdir gnulib || die
-	ln -s "${EPREFIX}"/usr/share/gnulib . || die
+	epatch "${FILESDIR}/${P}-remove-gnulib.patch"
 
 	rmdir slingshot || die
 	ln -s "${EPREFIX}"/usr/share/slingshot . || die
 
 	# WARNING: Order matters! Slingshot options are processed first and are ignored otherwise!
-	./bootstrap --skip-rock-checks --skip-git --skip-po --gnulib-srcdir=/usr/share/gnulib || die
+	./bootstrap --skip-rock-checks --skip-git --skip-po || die
 }
 
 src_configure() {
