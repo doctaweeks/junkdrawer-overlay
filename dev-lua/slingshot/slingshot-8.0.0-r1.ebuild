@@ -5,7 +5,7 @@
 EAPI=5
 
 [[ "${PV}" = *9999* ]] && live=git-r3
-inherit ${live}
+inherit ${live} eutils
 
 DESCRIPTION="Slingshot releases rocks! Build framework for Lua"
 HOMEPAGE="http://github.com/gvvaughan/slingshot"
@@ -30,6 +30,8 @@ DEPEND="!luajit? ( || ( dev-lang/lua:5.2 dev-lang/lua:5.1 >=dev-lang/lua-5.1:0 )
 DOCS=( "README.md" "NEWS.md" )
 
 src_prepare() {
+	epatch "${FILESDIR}/${P}-import-gnulib.patch"
+
 	sed -re 's/\$\(luaexecdir\)/$(DESTDIR)$(luaexecdir)/g' -i Makefile.am || die
 
 	# WARNING: Order matters! Slingshot options are processed first and are ignored otherwise!
