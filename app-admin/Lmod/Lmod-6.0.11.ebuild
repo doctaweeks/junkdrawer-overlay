@@ -4,7 +4,7 @@
 
 EAPI=5
 
-DESCRIPTION="Lmod: An Environment Module System based on Lua, Reads TCL Modules, Supports a Software Hierarchy "
+DESCRIPTION="A Lua-based environment module system supporting TCL and software hierarchy"
 HOMEPAGE="http://www.tacc.utexas.edu/tacc-projects/lmod"
 SRC_URI="https://github.com/TACC/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 

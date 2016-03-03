@@ -6,7 +6,7 @@ EAPI=5
 
 inherit findlib
 
-DESCRIPTION="Generates optimized boilerplate OCaml code for JSON and Biniou IO from type definitions"
+DESCRIPTION="Generates OCaml JSON (de)serializers and validators from ATD type definitions"
 HOMEPAGE="https://mjambon.github.io/atdgen-doc"
 SRC_URI="https://github.com/mjambon/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="BSD"

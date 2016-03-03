@@ -6,7 +6,7 @@ EAPI=5
 
 inherit cmake-utils
 
-DESCRIPTION="An open-source implementation of library for reading CASC storage from Blizzard games since 2014"
+DESCRIPTION="Library for reading CASC storage from Blizzard games since 2014"
 HOMEPAGE="http://www.zezula.net/en/casc/main.html"
 if [ $PV == 9999 ]; then
 	inherit git-r3
