@@ -25,13 +25,12 @@ RDEPEND=""
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-shared.patch"
-	epatch "${FILESDIR}/${PN}-configure.patch"
 }
 
 src_configure() {
 	local mycmakeargs=(
-		$(cmake-utils_use_build doc DOC)
-		$(cmake-utils_use_build test TESTS)
+		$(cmake-utils_use doc FMT_DOC)
+		$(cmake-utils_use test FMT_TEST)
 	)
 
 	cmake-utils_src_configure
