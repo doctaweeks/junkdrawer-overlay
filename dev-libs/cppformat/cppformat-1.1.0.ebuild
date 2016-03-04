@@ -8,7 +8,7 @@ inherit cmake-utils
 
 DESCRIPTION="Small, safe and fast formatting library for C++"
 HOMEPAGE="http://cppformat.github.io"
-if [ $PV == 9999 ]; then
+if [[ $PV == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/cppformat/cppformat.git"
 else

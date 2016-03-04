@@ -8,7 +8,7 @@ inherit autotools
 
 DESCRIPTION="An open-source C++ library developed and used at Facebook"
 HOMEPAGE="https://github.com/facebook/folly"
-if [ ${PV} == 9999 ]; then
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/facebook/folly.git"
 else

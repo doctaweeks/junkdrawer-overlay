@@ -8,7 +8,7 @@ inherit cmake-utils
 
 DESCRIPTION="ZeroMQ 'highlevel' C++ bindings"
 HOMEPAGE="https://github.com/zeromq/zmqpp"
-if [ $PV == 9999 ]; then
+if [[ $PV == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/zeromq/zmqpp.git"
 else

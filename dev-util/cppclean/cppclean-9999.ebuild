@@ -10,7 +10,7 @@ inherit distutils-r1
 
 DESCRIPTION="Find problems in C++ source that slow development of large code bases"
 HOMEPAGE="https://github.com/myint/cppclean"
-if [ ${PV} == 9999 ]; then
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/myint/cppclean.git"
 else

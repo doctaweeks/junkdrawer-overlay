@@ -10,7 +10,7 @@ inherit distutils-r1
 DESCRIPTION="Python wrapper for librtlsdr (a driver for Realtek RTL2832U based SDR's)"
 HOMEPAGE="https://github.com/roger-/pyrtlsdr"
 
-if [ ${PV} == "9999" ]; then
+if [[ ${PV} == "9999" ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://github.com/roger-/${PN}.git"
 else

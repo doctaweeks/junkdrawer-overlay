@@ -9,7 +9,7 @@ inherit autotools-utils git-r3
 DESCRIPTION="A command queue"
 HOMEPAGE="https://github.com/RPI-HPC/cq"
 
-if [ ${PV} -eq 9999 ]; then
+if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/RPI-HPC/${PN}"
 	AUTOTOOLS_AUTORECONF=1
 else

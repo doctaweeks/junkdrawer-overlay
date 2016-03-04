@@ -9,7 +9,7 @@ inherit cmake-utils
 DESCRIPTION="Navigation-mesh Toolset for Games"
 HOMEPAGE="http://digestingduck.blogspot.com"
 
-if [ $PV == 9999 ]; then
+if [[ $PV == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 else

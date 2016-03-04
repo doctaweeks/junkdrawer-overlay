@@ -8,7 +8,7 @@ inherit cmake-utils
 
 DESCRIPTION="C++ language binding library integrating ZeroMQ with Boost Asio"
 HOMEPAGE="https://github.com/zeromq/azmq"
-if [ ${PV} -eq 9999 ]; then
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/zeromq/azmq.git"
 	KEYWORDS=""
