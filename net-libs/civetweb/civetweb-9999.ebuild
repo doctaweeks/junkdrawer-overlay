@@ -7,7 +7,7 @@ EAPI=5
 inherit eutils
 
 DESCRIPTION="Embedded C/C++ web server"
-HOMEPAGE="https://github.com/bel2125/civetweb"
+HOMEPAGE="https://github.com/civetweb/civetweb"
 if [[ $PV == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/civetweb/civetweb"
