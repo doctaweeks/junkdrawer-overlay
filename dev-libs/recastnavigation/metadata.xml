@@ -6,6 +6,6 @@
 		<name>Daniel M. Weeks</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">memononen/recastnavigation</remote-id>
+		<remote-id type="github">recastnavigation/recastnavigation</remote-id>
 	</upstream>
 </pkgmetadata>
