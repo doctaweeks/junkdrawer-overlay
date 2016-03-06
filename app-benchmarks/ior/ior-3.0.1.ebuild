@@ -9,12 +9,12 @@ AT_M4DIR="config"
 inherit autotools-utils
 
 DESCRIPTION="Parallel filesystem I/O benchmark"
-HOMEPAGE="https://github.com/chaos/ior"
+HOMEPAGE="https://github.com/LLNL/ior"
 if [[ $PV == "9999" ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/chaos/ior.git"
+	EGIT_REPO_URI="https://github.com/LLNL/ior.git"
 else
-	SRC_URI="https://github.com/chaos/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/LLNL/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"
 fi
 

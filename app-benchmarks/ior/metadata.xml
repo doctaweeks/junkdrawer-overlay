@@ -8,6 +8,6 @@
 	<longdescription lang="en">
 	</longdescription>
 	<upstream>
-		<remote-id type="github">chaos/ior</remote-id>
+		<remote-id type="github">LLNL/ior</remote-id>
 	</upstream>
 </pkgmetadata>
