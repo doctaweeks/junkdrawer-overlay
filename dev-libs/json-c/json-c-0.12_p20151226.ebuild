@@ -5,6 +5,7 @@
 EAPI=5
 
 AUTOTOOLS_AUTORECONF=true
+AT_M4DIR="autoconf-archive/m4"
 
 inherit autotools-multilib git-r3
 
