@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer>
+		<email>dan@danweeks.net</email>
+		<name>Daniel M. Weeks</name>
+	</maintainer>
+	<use>
+		<flag name="pcap">
+			Build the RADIUS sniffer which requires <pkg>net-libs/libpcap</pkg>.
+		</flag>
+	</use>
+</pkgmetadata>
