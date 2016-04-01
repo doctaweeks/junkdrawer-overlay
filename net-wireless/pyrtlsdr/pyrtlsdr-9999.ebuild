@@ -25,3 +25,5 @@ IUSE=""
 RDEPEND="net-wireless/rtl-sdr"
 DEPEND="${RDEPEND}
 		dev-python/setuptools[${PYTHON_USEDEP}]"
+
+PATCHES=( "${FILESDIR}/${PN}-0.2.1-no-pandoc.diff" )
