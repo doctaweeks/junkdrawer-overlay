@@ -23,4 +23,5 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="net-wireless/rtl-sdr"
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+		dev-python/setuptools[${PYTHON_USEDEP}]"
