@@ -60,7 +60,7 @@ src_compile() {
 }
 
 src_install() {
-	dolib libcivetweb.so
+	dolib libcivetweb.so*
 	insinto /usr/include
 	doins include/civetweb.h
 }
