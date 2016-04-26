@@ -23,11 +23,12 @@ SLOT="0"
 IUSE="static-libs"
 
 DEPEND="dev-libs/double-conversion
-		dev-libs/libevent
+		<dev-libs/libevent-2.1
 		dev-libs/openssl:*
 		dev-cpp/gflags
 		dev-cpp/glog
 		>=dev-libs/boost-1.51.0[context,threads]
+		<dev-libs/boost-1.59[context,threads]
 		app-arch/lz4
 		app-arch/snappy
 		sys-libs/zlib
