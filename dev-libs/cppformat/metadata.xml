@@ -8,6 +8,6 @@
 	<longdescription lang="en">
 	</longdescription>
 	<upstream>
-		<remote-id type="github">cppformat/cppformat</remote-id>
+		<remote-id type="github">fmtlib/fmt</remote-id>
 	</upstream>
 </pkgmetadata>
