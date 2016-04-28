@@ -16,7 +16,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/ganglia/monitor-core"
 	KEYWORDS=""
 else
-	SRC_URI="https://github.com/ganglia/monitor-core/archive/${PV}.tar.gz -> {$P}.tar.gz"
+	SRC_URI="https://github.com/ganglia/monitor-core/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~ppc ~x86"
 	S="${WORKDIR}/monitor-core-${PV}"
 fi

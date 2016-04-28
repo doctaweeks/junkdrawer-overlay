@@ -11,7 +11,7 @@ inherit autotools distutils-r1 eutils multilib systemd
 
 DESCRIPTION="A scalable distributed monitoring system for clusters and grids"
 HOMEPAGE="http://ganglia.sourceforge.net/"
-SRC_URI="https://github.com/ganglia/monitor-core/archive/${PV}.tar.gz -> {$P}.tar.gz"
+SRC_URI="https://github.com/ganglia/monitor-core/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="BSD"
 
 SLOT="0"
