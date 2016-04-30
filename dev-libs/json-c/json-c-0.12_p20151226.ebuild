@@ -24,6 +24,7 @@ RDEPEND="
 		!<=app-emulation/emul-linux-x86-baselibs-20140406-r3
 		!app-emulation/emul-linux-x86-baselibs[-abi_x86_32(-)]
 	)"
+DEPEND="doc? ( app-doc/doxygen )"
 
 # tests break otherwise
 AUTOTOOLS_IN_SOURCE_BUILD=1
@@ -36,6 +37,11 @@ src_prepare() {
 src_test() {
 	export USE_VALGRIND=0 VERBOSE=1
 	autotools-multilib_src_test
+}
+
+src_compile() {
+	autotools-multilib_src_compile
+	use doc && doxygen Doxyfile
 }
 
 src_install() {
