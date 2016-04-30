@@ -1,0 +1,8 @@
+--- a/setup.py	2016-04-01 12:55:58.546943924 -0400
++++ b/setup.py	2016-04-01 12:56:12.992267493 -0400
+@@ -79,5 +79,4 @@
+                  'Topic :: Utilities'],
+     license='GPLv3',
+     keywords='radio librtlsdr rtlsdr sdr',
+-    setup_requires=['setuptools-markdown'],
+     packages=['rtlsdr'])
