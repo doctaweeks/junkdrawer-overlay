@@ -6,6 +6,7 @@
 		<name>Daniel M. Weeks</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">Pylons/webtest</remote-id>
 		<remote-id type="pypi">WebTest</remote-id>
 	</upstream>
 </pkgmetadata>
