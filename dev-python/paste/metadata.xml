@@ -15,6 +15,7 @@
 	(PEP 333) interface, and should be compatible with other middleware based on
 	those interfaces.</longdescription>
 	<upstream>
+		<remote-id type="bitbucket">ianb/paste</remote-id>
 		<remote-id type="pypi">Paste</remote-id>
 	</upstream>
 </pkgmetadata>
