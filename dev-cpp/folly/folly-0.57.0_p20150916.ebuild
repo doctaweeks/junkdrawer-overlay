@@ -25,6 +25,7 @@ DEPEND="dev-libs/double-conversion
 		dev-cpp/gflags
 		dev-cpp/glog
 		>=dev-libs/boost-1.51.0[context,threads]
+		<dev-libs/boost-1.61.0[context,threads]
 		app-arch/lz4
 		app-arch/snappy
 		sys-libs/zlib
