@@ -20,8 +20,8 @@ IUSE="doc infiniband ssl static-libs"
 RDEPEND="!sys-cluster/heartbeat
 	ssl? ( dev-libs/nss )
 	infiniband? (
-		sys-infiniband/libibverbs
-		sys-infiniband/librdmacm
+		sys-fabric/libibverbs
+		sys-fabric/librdmacm
 	)"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
