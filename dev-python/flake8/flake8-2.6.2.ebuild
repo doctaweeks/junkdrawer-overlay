@@ -34,14 +34,11 @@ DEPEND="${RDEPEND}
 	)"
 PDEPEND="
 	>=dev-python/mccabe-0.2.1[${PYTHON_USEDEP}]
-	<dev-python/mccabe-0.5[${PYTHON_USEDEP}]"
+	<dev-python/mccabe-0.6[${PYTHON_USEDEP}]"
 
 python_prepare_all() {
 	# This tests requires / assumes this version is already installed.
 	sed -e 's:test_register_extensions:_&:' -i flake8/tests/test_engine.py || die
-
-	# Gentoo has flake8 support restored in >=pep8-1.6.2-r1.
-	sed -e 's:, != 1.6.2::' -i setup.py || die
 
 	distutils-r1_python_prepare_all
 }
