@@ -30,6 +30,12 @@ pkg_setup() {
 	webapp_pkg_setup
 }
 
+src_prepare() {
+	if [[ ${PV} == 9999 ]]; then
+		find -name '\.git*' -exec rm -rf {} \;
+	fi
+}
+
 src_install() {
 	webapp_src_preinst
 
