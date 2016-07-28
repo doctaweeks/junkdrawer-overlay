@@ -11,7 +11,7 @@ if [[ $PV == "9999" ]]; then
 	EGIT_REPO_URI="https://github.com/cksystemsgroup/scalloc"
 else
 	SRC_URI="https://github.com/cksystemsgroup/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS=""
+	KEYWORDS="~amd64"
 fi
 
 LICENSE="BSD-2"
@@ -21,17 +21,17 @@ IUSE="debug"
 DEPEND="dev-util/gyp"
 RDEPEND=""
 
-if use debug; then
-	BUILDTYPE=Debug
-else
-	BUILDTYPE=Release
-fi
-
 src_configure() {
-	gyp --depth=. scalloc.gyp
+	gyp --depth=. scalloc.gyp || die
 }
 
 src_compile() {
+	if use debug; then
+		BUILDTYPE=Debug
+	else
+		BUILDTYPE=Release
+	fi
+
 	BUILDTYPE=$BUILDTYPE make
 }
 

@@ -21,17 +21,17 @@ IUSE="debug"
 DEPEND="dev-util/gyp"
 RDEPEND=""
 
-if use debug; then
-	BUILDTYPE=Debug
-else
-	BUILDTYPE=Release
-fi
-
 src_configure() {
-	gyp --depth=. scalloc.gyp
+	gyp --depth=. scalloc.gyp || die
 }
 
 src_compile() {
+	if use debug; then
+		BUILDTYPE=Debug
+	else
+		BUILDTYPE=Release
+	fi
+
 	BUILDTYPE=$BUILDTYPE make
 }
 
