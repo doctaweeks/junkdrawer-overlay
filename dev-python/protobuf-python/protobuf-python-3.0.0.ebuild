@@ -16,7 +16,7 @@ HOMEPAGE="https://github.com/google/protobuf/ https://developers.google.com/prot
 SRC_URI="https://github.com/google/protobuf/archive/v${MY_PV}.tar.gz -> protobuf-${PV}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="0/10b4"
+SLOT="0/10"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-linux ~arm-linux ~x86-linux ~x64-macos ~x86-macos"
 IUSE=""
 
