@@ -15,7 +15,7 @@ SRC_URI="https://github.com/xelerance/${PN}/archive/v${MY_PV}.tar.gz -> ${MY_P}.
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~mips ~ppc ppc64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="dnsretry"
 
 DEPEND="net-libs/libpcap"
