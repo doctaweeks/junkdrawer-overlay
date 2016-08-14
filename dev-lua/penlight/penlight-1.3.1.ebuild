@@ -7,6 +7,8 @@ EAPI=5
 [[ "${PV}" = *9999* ]] && live=git-r3
 inherit toolchain-funcs ${live}
 
+MY_PN=Penlight
+
 DESCRIPTION="Generally useful pure Lua modules"
 HOMEPAGE="https://github.com/stevedonovan/Penlight"
 if [[ "${PV}" = *9999* ]] ; then
@@ -26,6 +28,8 @@ RDEPEND="!luajit? ( >=dev-lang/lua-5.1 )
 	dev-lua/luafilesystem"
 
 DOCS=( "README.md" "CHANGES.md" )
+
+S="${WORKDIR}/${MY_PN}-${PV}"
 
 src_install() {
 	local lua=lua

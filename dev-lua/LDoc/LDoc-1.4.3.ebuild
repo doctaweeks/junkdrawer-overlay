@@ -25,7 +25,7 @@ IUSE="luajit"
 DEPEND="!luajit? ( || ( dev-lang/lua:5.1 >=dev-lang/lua-5.1:0 ) )
 	luajit? ( dev-lang/luajit:2 )"
 RDEPEND="${DEPEND}
-	dev-lua/Penlight"
+	dev-lua/penlight"
 
 DOCS=( "readme.md" "changes.md" )
 
