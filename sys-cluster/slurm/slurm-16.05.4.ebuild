@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="git://github.com/SchedMD/slurm.git"
-	INHERIT_GIT="git-2"
+	INHERIT_GIT="git-r3"
 	SRC_URI=""
 	KEYWORDS=""
 else
@@ -18,19 +18,19 @@ else
 	fi
 	MY_P="${PN}-${MY_PV}"
 	INHERIT_GIT=""
-	SRC_URI="http://www.schedmd.com/download/total/${MY_P}.tar.bz2"
+	SRC_URI="http://www.schedmd.com/download/latest/${MY_P}.tar.bz2"
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_P}"
 fi
 
-inherit autotools base eutils pam perl-module user ${INHERIT_GIT}
+inherit autotools eutils pam perl-module user prefix ${INHERIT_GIT}
 
 DESCRIPTION="SLURM: A Highly Scalable Resource Manager"
 HOMEPAGE="http://www.schedmd.com"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="lua maui multiple-slurmd +munge mysql pam perl postgres ssl static-libs torque ypbind"
+IUSE="lua multiple-slurmd +munge mysql pam perl ssl static-libs torque"
 
 DEPEND="
 	!sys-cluster/torque
@@ -38,16 +38,13 @@ DEPEND="
 	!net-analyzer/sinfo
 	mysql? ( virtual/mysql )
 	munge? ( sys-auth/munge )
-	ypbind? ( net-nds/ypbind )
 	pam? ( virtual/pam )
-	postgres? ( dev-db/postgresql )
-	ssl? ( dev-libs/openssl )
-	lua? ( dev-lang/lua )
+	ssl? ( dev-libs/openssl:0= )
+	lua? ( dev-lang/lua:0= )
 	!lua? ( !dev-lang/lua )
 	>=sys-apps/hwloc-1.1.1-r1"
 RDEPEND="${DEPEND}
-	dev-libs/libcgroup
-	maui? ( sys-cluster/maui[slurm] )"
+	dev-libs/libcgroup"
 
 REQUIRED_USE="torque? ( perl )"
 
@@ -57,8 +54,7 @@ LIBSLURMDB_PERL_S="${WORKDIR}/${P}/contribs/perlapi/libslurmdb/perl"
 RESTRICT="primaryuri"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-2.5.4-nogtk.patch"
-	"${FILESDIR}/${PN}-2.6.9-python3.patch"
+	"${FILESDIR}/${P}-disable-sview.patch"
 )
 
 src_unpack() {
@@ -75,37 +71,26 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Gentoo uses /sys/fs/cgroup instead of /cgroup
-	# FIXME: Can the "^/cgroup" and "\([ =\"]\)/cgroup" patterns be merged?
-	sed \
-		-e 's|\([ =\"]\)/cgroup|\1/sys/fs/cgroup|g' \
-		-e "s|^/cgroup|/sys/fs/cgroup|g" \
-		-i "${S}/doc/man/man5/cgroup.conf.5" \
-		-i "${S}/etc/cgroup.release_common.example" \
-		-i "${S}/src/common/xcgroup_read_config.c" \
-			|| die "Can't sed /cgroup for /sys/fs/cgroup"
-	# and pids should go to /var/run/slurm
-	sed -e 's:/var/run/slurmctld.pid:/var/run/slurm/slurmctld.pid:g' \
-		-e 's:/var/run/slurmd.pid:/var/run/slurm/slurmd.pid:g' \
+	if [ ${#PATCHES[0]} -ne 0 ]; then
+		epatch ${PATCHES[@]}
+	fi
+	eapply_user
+	# pids should go to /var/run/slurm
+	sed -e "s:/var/run/slurmctld.pid:${EPREFIX}/var/run/slurm/slurmctld.pid:g" \
+		-e "s:/var/run/slurmd.pid:${EPREFIX}/var/run/slurm/slurmd.pid:g" \
 		-i "${S}/etc/slurm.conf.example" \
 			|| die "Can't sed for /var/run/slurmctld.pid"
 	# also state dirs are in /var/spool/slurm
-	sed -e 's:StateSaveLocation=*.:StateSaveLocation=/var/spool/slurm:g' \
-		-e 's:SlurmdSpoolDir=*.:SlurmdSpoolDir=/var/spool/slurm/slurmd:g' \
+	sed -e "s:StateSaveLocation=*.:StateSaveLocation=${EPREFIX}/var/spool/slurm:g" \
+		-e "s:SlurmdSpoolDir=*.:SlurmdSpoolDir=${EPREFIX}/var/spool/slurm/slurmd:g" \
 		-i "${S}/etc/slurm.conf.example" \
 			|| die "Can't sed ${S}/etc/slurm.conf.example for StateSaveLocation=*. or SlurmdSpoolDir=*"
 	# and tmp should go to /var/tmp/slurm
 	sed -e 's:/tmp:/var/tmp:g' \
 		-i "${S}/etc/slurm.conf.example" \
 			|| die "Can't sed for StateSaveLocation=*./tmp"
-	# disable sview since it need gtk+
-	sed -e '/sview/d' \
-		-i configure.ac
-	sed -e 's:sview::g' \
-		-i src/Makefile.am
-	# apply patches
-	epatch "${PATCHES[@]}"
-	elibtoolize
+
+	hprefixify auxdir/{ax_check_zlib,x_ac_{lz4,ofed,munge}}.m4
 	eautoreconf
 }
 
@@ -118,7 +103,6 @@ src_configure() {
 			)
 	use pam && myconf+=( --with-pam_dir=$(getpam_mod_dir) )
 	use mysql || myconf+=( --without-mysql_config )
-	use postgres || myconf+=( --without-pg_config )
 	econf "${myconf[@]}" \
 		$(use_enable pam) \
 		$(use_with ssl) \
@@ -147,7 +131,7 @@ src_configure() {
 
 src_compile() {
 	default
-	use pam && emake -C contribs/pam || die
+	use pam && emake -C contribs/pam
 	if use perl ; then
 		cd "${LIBSLURM_PERL_S}"
 		S="${LIBSLURM_PERL_S}" perl-module_src_compile
@@ -156,13 +140,13 @@ src_compile() {
 		cd "${S}"
 	fi
 	if use torque ; then
-		emake -C contribs/torque || die
+		emake -C contribs/torque
 	fi
 }
 
 src_install() {
 	default
-	use pam && emake DESTDIR="${D}" -C contribs/pam install || die
+	use pam && emake DESTDIR="${D}" -C contribs/pam install
 	if use perl; then
 		cd "${LIBSLURM_PERL_S}"
 		S="${LIBSLURM_PERL_S}" perl-module_src_install
@@ -171,7 +155,7 @@ src_install() {
 		cd "${S}"
 	fi
 	if use torque; then
-		emake DESTDIR="${D}" -C contribs/torque || die
+		emake DESTDIR="${D}" -C contribs/torque
 		rm -f "${ED}/usr/bin/mpiexec" || die
 	fi
 	use static-libs || find "${ED}" -name '*.la' -exec rm {} +
@@ -187,29 +171,26 @@ src_install() {
 	doexe etc/cgroup.release_common.example
 	doexe etc/slurm.epilog.clean
 	# install init.d files
-	newinitd "${FILESDIR}/slurmd.initd" slurmd
-	newinitd "${FILESDIR}/slurmctld.initd" slurmctld
-	newinitd "${FILESDIR}/slurmdbd.initd" slurmdbd
+	newinitd "$(prefixify_ro "${FILESDIR}/slurmd.initd")" slurmd
+	newinitd "$(prefixify_ro "${FILESDIR}/slurmctld.initd")" slurmctld
+	newinitd "$(prefixify_ro "${FILESDIR}/slurmdbd.initd")" slurmdbd
 	# install conf.d files
 	newconfd "${FILESDIR}/slurm.confd" slurm
 	# Install logrotate file
 	insinto /etc/logrotate.d
-	newins "${FILESDIR}/logrotate" slurm || die
+	newins "${FILESDIR}/logrotate" slurm
 	# cgroups support
 	exeinto /etc/slurm/cgroup
 	doexe etc/cgroup.release_common.example
-	mv "${D}"/etc/slurm/cgroup/cgroup.release_common.example "${D}"/etc/slurm/cgroup/release_common || die "Can't move cgroup.release_common.example"
-	ln -s release_common "${D}"/etc/slurm/cgroup/release_cpuset  || die "Can't create symbolic link release_cpuset"
-	ln -s release_common "${D}"/etc/slurm/cgroup/release_devices || die "Can't create symbolic link release_devices"
-	ln -s release_common "${D}"/etc/slurm/cgroup/release_freezer || die "Can't create symbolic link release_freezer"
+	mv "${ED}"/etc/slurm/cgroup/{cgroup.release_common.example,release_common} || die "Can't move cgroup.release_common.example"
+	ln -s release_common "${ED}"/etc/slurm/cgroup/release_cpuset  || die "Can't create symbolic link release_cpuset"
+	ln -s release_common "${ED}"/etc/slurm/cgroup/release_devices || die "Can't create symbolic link release_devices"
+	ln -s release_common "${ED}"/etc/slurm/cgroup/release_freezer || die "Can't create symbolic link release_freezer"
 }
 
 pkg_preinst() {
 	if use munge; then
-		sed -i 's,\(SLURM_USE_MUNGE=\).*,\11,' "${D}"etc/conf.d/slurm || die
-	fi
-	if use ypbind; then
-		sed -i 's,\(SLURM_USE_YPBIND=\).*,\11,' "${D}"etc/conf.d/slurm || die
+		sed -i 's,\(SLURM_USE_MUNGE=\).*,\11,' "${ED}"etc/conf.d/slurm || die
 	fi
 }
 
@@ -221,12 +202,12 @@ create_folders_and_fix_permissions() {
 
 pkg_postinst() {
 	paths=(
-		/var/${PN}/checkpoint
-		/var/${PN}
-		/var/spool/${PN}/slurmd
-		/var/spool/${PN}
-		/var/run/${PN}
-		/var/log/${PN}
+		"${EROOT}"var/${PN}/checkpoint
+		"${EROOT}"var/${PN}
+		"${EROOT}"var/spool/${PN}/slurmd
+		"${EROOT}"var/spool/${PN}
+		"${EROOT}"var/run/${PN}
+		"${EROOT}"var/log/${PN}
 		/var/tmp/${PN}/${PN}d
 		/var/tmp/${PN}
 		)
