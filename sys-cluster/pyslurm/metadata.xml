@@ -8,6 +8,6 @@
 	<longdescription lang="en">
 	</longdescription>
 	<upstream>
-		<remote-id type="github">PySlurm/pyslrm</remote-id>
+		<remote-id type="github">PySlurm/pyslurm</remote-id>
 	</upstream>
 </pkgmetadata>
