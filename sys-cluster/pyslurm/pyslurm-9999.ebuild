@@ -8,8 +8,9 @@ PYTHON_COMPAT=( python2_7 )
 inherit distutils-r1
 
 DESCRIPTION="Python interface to Slurm"
-HOMEPAGE="https://github.com/PySlurm/pyslrm"
-if [ ${PV} == 9999 ]; then
+HOMEPAGE="https://github.com/PySlurm/pyslurm"
+
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/PySlurm/${PN}"
 else
