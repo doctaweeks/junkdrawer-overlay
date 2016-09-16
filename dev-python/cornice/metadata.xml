@@ -8,6 +8,6 @@
 	<longdescription lang="en">
 	</longdescription>
 	<upstream>
-		<remote-id type="github">mozilla-services/cornice</remote-id>
+		<remote-id type="github">Cornices/cornice</remote-id>
 	</upstream>
 </pkgmetadata>
