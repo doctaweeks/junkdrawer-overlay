@@ -23,11 +23,19 @@ IUSE="test"
 
 RDEPEND=">=dev-cpp/folly-0.52.0-r1
 		dev-cpp/glog
-		>=dev-cpp/gflags-2.1.2"
+		>=dev-cpp/gflags-2.1.2
+		dev-libs/openssl:0"
 DEPEND="${RDEPEND}
 		test? ( dev-cpp/gmock )"
 
-PATCHES=( "${FILESDIR}/wdt-1.21.1510050-use-shared-folly.diff" )
+PATCHES=( "${FILESDIR}/wdt-9999-use-shared-folly.diff" )
+
+S="${WORKDIR}/wdt"
+
+src_unpack() {
+	git-r3_src_unpack
+	mv "${P}" "wdt"
+}
 
 src_configure() {
 	local mycmakeargs=(
