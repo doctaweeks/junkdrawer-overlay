@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=5
 
 AUTOTOOLS_AUTORECONF=1
 
 inherit autotools-utils
 
 DESCRIPTION="A tool from HP for measuring web server performance"
-HOMEPAGE="http://code.google.com/p/httperf/"
+HOMEPAGE="https://github.com/httperf/httperf"
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/httperf/${PN}.git"
@@ -20,9 +20,10 @@ fi
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="debug"
+IUSE="debug libressl"
 
-DEPEND="dev-libs/openssl"
-RDEPEND="${DEPEND}"
+RDEPEND="!libressl? ( dev-libs/openssl:0= )
+	libressl? ( dev-libs/libressl:0= )"
+DEPEND="${RDEPEND}"
 
 DOCS=( AUTHORS ChangeLog NEWS README.md TODO )
