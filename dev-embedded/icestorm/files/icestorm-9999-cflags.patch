@@ -31,18 +31,25 @@ diff -ru icestorm-9999.orig/icepll/Makefile icestorm-9999/icepll/Makefile
  
  all: icepll$(EXE)
  
-diff -ru icestorm-9999.orig/iceprog/Makefile icestorm-9999/iceprog/Makefile
---- icestorm-9999.orig/iceprog/Makefile	2016-03-01 14:21:34.236846895 -0500
-+++ icestorm-9999/iceprog/Makefile	2016-03-01 14:23:49.459376582 -0500
-@@ -1,6 +1,6 @@
+--- icestorm-9999/iceprog/Makefile.orig	2016-10-07 12:23:10.415703819 -0400
++++ icestorm-9999/iceprog/Makefile	2016-10-07 12:23:49.732879014 -0400
+@@ -1,12 +1,12 @@
  include ../config.mk
--LDLIBS = -L/usr/local/lib -lm
--CFLAGS = -MD -O0 -ggdb -Wall -std=c99 -I/usr/local/include
-+LDLIBS = -lm
-+override CFLAGS += -std=c99
  
- LDLIBS += $(shell for pkg in libftdi libftdi1; do $(PKG_CONFIG) --silence-errors --libs $$pkg && exit; done; echo -lftdi; )
- CFLAGS += $(shell for pkg in libftdi libftdi1; do $(PKG_CONFIG) --silence-errors --cflags $$pkg && exit; done; )
+ ifneq ($(shell uname -s),Darwin)
+-  LDLIBS = -L/usr/local/lib -lm
+-  CFLAGS = -MD -O0 -ggdb -Wall -std=c99 -I/usr/local/include
++  LDLIBS = -lm
++  override CFLAGS += -std=c99
+ else
+   LIBFTDI_NAME = $(shell $(PKG_CONFIG) --exists libftdi1 && echo ftdi1 || echo ftdi)
+-  LDLIBS = -L/usr/local/lib -l$(LIBFTDI_NAME) -lm
+-  CFLAGS = -MD -O0 -ggdb -Wall -std=c99 -I/usr/local/include
++  LDLIBS = -l$(LIBFTDI_NAME) -lm
++  override CFLAGS += -std=c99
+ endif
+ 
+ ifeq ($(STATIC),1) 
 diff -ru icestorm-9999.orig/icetime/Makefile icestorm-9999/icetime/Makefile
 --- icestorm-9999.orig/icetime/Makefile	2016-03-01 14:21:34.236846895 -0500
 +++ icestorm-9999/icetime/Makefile	2016-03-01 14:22:08.563204400 -0500
