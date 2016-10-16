@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-inherit cmake-multilib multilib systemd
+inherit cmake-multilib flag-o-matic multilib systemd
 
 DESCRIPTION="Run OpenGL applications remotely with full 3D hardware acceleration"
 HOMEPAGE="http://www.virtualgl.org/"
@@ -39,6 +39,10 @@ RDEPEND="
 	) )
 "
 DEPEND="${RDEPEND}"
+
+pkg_setup() {
+	append-ldflags $(no-as-needed)
+}
 
 src_prepare() {
 	# Use /var/lib, bug #428122
