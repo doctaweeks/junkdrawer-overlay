@@ -16,7 +16,7 @@ SRC_URI="mirror://sourceforge/${PN}/files/${PV}/${MY_P}.tar.gz"
 SLOT="0"
 LICENSE="LGPL-2.1 wxWinLL-3.1 FLTK"
 KEYWORDS="~amd64 ~x86"
-IUSE="libressl ssl"
+IUSE="libressl ssl +xv"
 
 RDEPEND="
 	ssl? (
@@ -26,14 +26,14 @@ RDEPEND="
 	media-libs/libjpeg-turbo[${MULTILIB_USEDEP}]
 	x11-libs/libX11[${MULTILIB_USEDEP}]
 	x11-libs/libXext[${MULTILIB_USEDEP}]
-	x11-libs/libXv[${MULTILIB_USEDEP}]
+	xv? ( x11-libs/libXv[${MULTILIB_USEDEP}] )
 	virtual/glu[${MULTILIB_USEDEP}]
 	virtual/opengl[${MULTILIB_USEDEP}]
 	amd64? ( abi_x86_32? (
 		>=media-libs/libjpeg-turbo-1.3.0-r3[abi_x86_32]
 		>=x11-libs/libX11-1.6.2[abi_x86_32]
 		>=x11-libs/libXext-1.3.2[abi_x86_32]
-		>=x11-libs/libXv-1.0.10[abi_x86_32]
+		xv? ( >=x11-libs/libXv-1.0.10[abi_x86_32] )
 		>=virtual/glu-9.0-r1[abi_x86_32]
 		>=virtual/opengl-7.0-r1[abi_x86_32]
 	) )
@@ -56,6 +56,7 @@ src_configure() {
 	abi_configure() {
 		local mycmakeargs=(
 			$(cmake-utils_use ssl VGL_USESSL)
+			$(cmake-utils_use xv VGL_USEXV)
 			-DVGL_DOCDIR=/usr/share/doc/"${PF}"
 			-DTJPEG_INCLUDE_DIR=/usr/include
 			-DVGL_LIBDIR=/usr/$(get_libdir)
