@@ -16,7 +16,7 @@ SRC_URI="mirror://sourceforge/${PN}/files/${PV}/${MY_P}.tar.gz"
 SLOT="0"
 LICENSE="LGPL-2.1 wxWinLL-3.1 FLTK"
 KEYWORDS="~amd64 ~x86"
-IUSE="libressl ssl +xv"
+IUSE="libressl +server ssl +xv"
 
 RDEPEND="
 	ssl? (
@@ -58,6 +58,7 @@ src_configure() {
 	abi_configure() {
 		local mycmakeargs=(
 			$(cmake-utils_use ssl VGL_USESSL)
+			$(cmake-utils_use server VGL_BUILDSERVER)
 			$(cmake-utils_use xv VGL_USEXV)
 			-DVGL_DOCDIR=/usr/share/doc/"${PF}"
 			-DTJPEG_INCLUDE_DIR=/usr/include

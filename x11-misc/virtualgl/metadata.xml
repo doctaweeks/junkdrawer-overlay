@@ -13,4 +13,7 @@
 		<remote-id type="sourceforge">virtualgl</remote-id>
 		<remote-id type="github">VirtualGL/virtualgl</remote-id>
 	</upstream>
+	<use>
+		<flag name="server">Build the server libraries of virtualgl</flag>
+	</use>
 </pkgmetadata>
