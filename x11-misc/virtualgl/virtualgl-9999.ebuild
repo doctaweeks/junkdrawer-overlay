@@ -13,7 +13,7 @@ EGIT_REPO_URI="https://github.com/VirtualGL/virtualgl.git"
 
 SLOT="0"
 LICENSE="LGPL-2.1 wxWinLL-3.1 FLTK"
-IUSE="libressl +server ssl +xv"
+IUSE="debug libressl +server ssl +xv"
 
 RDEPEND="
 	ssl? (
@@ -51,6 +51,10 @@ src_prepare() {
 
 src_configure() {
 	abi_configure() {
+		if use debug ; then
+			CMAKE_BUILD_TYPE="Debug"
+		fi
+
 		local mycmakeargs=(
 			$(cmake-utils_use ssl VGL_USESSL)
 			$(cmake-utils_use server VGL_BUILDSERVER)
