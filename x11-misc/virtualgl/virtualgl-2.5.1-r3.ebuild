@@ -45,7 +45,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}-revert-ansys.patch"
+	epatch "${FILESDIR}/${P}-fix-deadyet.patch"
 
 	# Use /var/lib, bug #428122
 	sed -e "s#/etc/opt#/var/lib#g" -i doc/unixconfig.txt doc/index.html doc/advancedopengl.txt \
@@ -95,9 +95,4 @@ src_install() {
 
 	# Remove license files, bug 536284
 	rm "${D}"/usr/share/doc/${PF}/{LGPL.txt*,LICENSE*} || die
-}
-
-pkg_postinst() {
-	ewarn "This version of ${PN} reverts a buggy upstream patch for ANSYS HFSS."
-	ewarn "If you need that patch please install the previous revision."
 }
