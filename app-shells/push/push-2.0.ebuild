@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="4"
+EAPI=6
 inherit vcs-snapshot
 
 DESCRIPTION="A POSIX shell function to treat a variable like an array, quoting args"
@@ -16,6 +16,6 @@ IUSE=""
 
 src_install() {
 	insinto /usr/bin
-	doins push.sh
+	doins bin/push.sh
 	dodoc README
 }
