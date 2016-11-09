@@ -15,4 +15,7 @@
 		<flag name="numa">Enable numactl to allow binding processes to CPUs</flag>
 		<flag name="vt">Enable bundled VampirTrace support</flag>
 	</use>
+	<upstream>
+		<remote-id type="github">open-mpi/ompi</remote-id>
+	</upstream>
 </pkgmetadata>
