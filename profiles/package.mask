@@ -5,3 +5,8 @@
 # 
 # NOTE: Please add your entry at the top!
 #
+
+# Daniel M. Weeks <dan@danweeks.net> (20 Dec 2016)
+# 0.12.1 was created as a separate branch
+# latest 0.12.0 builds are more up-to-date
+=dev-libs/json-c-0.12.1
