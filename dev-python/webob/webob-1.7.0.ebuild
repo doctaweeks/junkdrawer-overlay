@@ -9,8 +9,7 @@ PYTHON_COMPAT=( python{2_7,3_4,3_5} pypy )
 inherit distutils-r1 versionator
 
 MY_PN=WebOb
-MY_PV=${PV/_/}
-MY_P=${MY_PN}-${MY_PV}
+MY_P=${MY_PN}-${PV}
 
 DESCRIPTION="WSGI request and response object"
 HOMEPAGE="http://webob.org/ https://pypi.python.org/pypi/WebOb"
