@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="openmp"
 
-DEPEND="sci-libs/fftw:3.0
+DEPEND="sci-libs/fftw:3.0[threads]
 	>=media-libs/hamlib-3
 	dev-qt/qtmultimedia:5
 	dev-qt/qtwidgets:5
