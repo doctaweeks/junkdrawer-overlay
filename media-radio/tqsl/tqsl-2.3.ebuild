@@ -8,7 +8,7 @@ inherit cmake-utils wxwidgets
 
 DESCRIPTION="TrustedQSL log signing for the ARRL Logbook of the World (LoTW)"
 HOMEPAGE="http://sourceforge.net/projects/trustedqsl/"
-SRC_URI="mirror://sourceforge/trustedqsl/TrustedQSL/v${PV}/${P}.tar.gz"
+SRC_URI="http://www.arrl.org/files/file/LoTW%20Instructions/${P}.tar.gz"
 
 LICENSE="tqsl"
 SLOT="0"
