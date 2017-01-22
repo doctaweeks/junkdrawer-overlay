@@ -4,16 +4,15 @@
 
 EAPI=6
 
-inherit cmake-utils subversion toolchain-funcs
+inherit cmake-utils toolchain-funcs
 
 DESCRIPTION="Weak signal communication software"
 HOMEPAGE="http://physics.princeton.edu/pulsar/k1jt/index.html"
-
-ESVN_REPO_URI="http://svn.code.sf.net/p/wsjt/wsjt/branches/wsjtx"
+SRC_URI="mirror://sourceforge/wsjt/${P}.tgz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE="doc openmp"
 
 CDEPEND="sci-libs/fftw:3.0[threads]
@@ -26,14 +25,23 @@ DEPEND="${CDEPEND}
 	doc? ( dev-ruby/asciidoctor )"
 RDEPEND="${CDEPEND}"
 
+CMAKE_USE_DIR="${S}/src/${PN}"
+
 pkg_pretend() {
 	if use openmp ; then
 		tc-has-openmp || die "Please switch to an openmp compatible compiler"
 	fi
 }
 
+src_unpack() {
+	default
+	cd "${S}"/src
+	unpack ./${PN}.tgz
+}
+
 src_prepare() {
-	epatch "${FILESDIR}/${PN}-1.7.0-hamlib-fixes.diff"
+	cd "${S}"/src/${PN}
+	epatch "${FILESDIR}"/${P}-hamlib-fixes.diff
 	default
 }
 
