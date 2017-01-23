@@ -26,7 +26,7 @@ DEPEND="!luajit? ( || ( dev-lang/lua:5.2 dev-lang/lua:5.1 >=dev-lang/lua-5.1:0 )
 RDEPEND="${DEPEND}
 	!luajit? ( || ( dev-lang/lua:5.2 dev-lua/LuaBitOp ) )"
 DEPEND="${DEPEND}
-	>=dev-lua/LDoc-1.4.2
+	>=dev-lua/ldoc-1.4.2
 	dev-lua/slingshot
 	sys-apps/help2man
 	dev-lang/perl"
