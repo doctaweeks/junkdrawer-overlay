@@ -1,1 +1,2 @@
 move dev-lua/LDoc dev-lua/ldoc
+move dev-libs/ck dev-libs/concurrencykit
