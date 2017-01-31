@@ -1,0 +1,26 @@
+From e5cf2083dd7ed2deb5a7665ffbcf81d6e87edc52 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Thu, 2 Feb 2017 14:33:26 -0500
+Subject: [PATCH] Fix libzmq linking
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f985521..97b88fa 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -15,7 +15,7 @@ set(pslite_INCLUDE_DIR_L "" )
+ # ---[ zmq
+ include("cmake/External/zmq.cmake")
+ include_directories(pslite ${ZMQ_INCLUDE_DIRS})
+-list(APPEND pslite_LINKER_LIBS_L ${ZMQ_LIBRARIES})
++list(APPEND pslite_LINKER_LIBS ${ZMQ_LIBRARIES})
+ 
+ # ---[ Google-protobuf
+ include(cmake/ProtoBuf.cmake)
+-- 
+Daniel M. Weeks
+
