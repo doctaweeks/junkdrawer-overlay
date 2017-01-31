@@ -28,7 +28,7 @@ RDEPEND=">=dev-cpp/folly-0.52.0-r1
 DEPEND="${RDEPEND}
 		test? ( dev-cpp/gmock )"
 
-PATCHES=( "${FILESDIR}/wdt-9999-use-shared-folly.diff" )
+PATCHES=( "${FILESDIR}/wdt-1.27.1612021-use-shared-folly.diff" )
 
 S="${WORKDIR}/wdt"
 
