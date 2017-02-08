@@ -1,0 +1,15 @@
+--- a/CMakeLists.txt	2017-02-01 20:57:55.482651168 -0500
++++ b/CMakeLists.txt	2017-02-01 21:49:14.210651168 -0500
+@@ -43,12 +43,6 @@
+     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -ggdb3")
+   endif(NDEBUG)
+   set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS})
+-  if(SUPPORT_CXX11)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+-  endif()
+-  if(SUPPORT_MSSE2)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2")
+-  endif()
+ endif(MSVC)
+ 
+ if(EXISTS ${PROJECT_SOURCE_DIR}/mshadow/cmake)

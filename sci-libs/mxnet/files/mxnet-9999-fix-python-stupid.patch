@@ -1,0 +1,47 @@
+From ade84995a6206d1ff507c972eda528b5e9bb70b7 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Thu, 2 Feb 2017 16:36:07 -0500
+Subject: [PATCH] Fix python stupid
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ python/mxnet/base.py | 3 +--
+ python/setup.py      | 2 --
+ 2 files changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/python/mxnet/base.py b/python/mxnet/base.py
+index 2f67f90b..3a7ddf40 100644
+--- a/python/mxnet/base.py
++++ b/python/mxnet/base.py
+@@ -31,8 +31,7 @@ class MXNetError(Exception):
+ 
+ def _load_lib():
+     """Load libary by searching possible path."""
+-    lib_path = libinfo.find_lib_path()
+-    lib = ctypes.CDLL(lib_path[0], ctypes.RTLD_GLOBAL)
++    lib = ctypes.CDLL("libmxnet.so", ctypes.RTLD_GLOBAL)
+     # DMatrix functions
+     lib.MXGetLastError.restype = ctypes.c_char_p
+     return lib
+diff --git a/python/setup.py b/python/setup.py
+index f52b123f..a1c97924 100644
+--- a/python/setup.py
++++ b/python/setup.py
+@@ -18,7 +18,6 @@ libinfo_py = os.path.join(CURRENT_DIR, 'mxnet/libinfo.py')
+ libinfo = {'__file__': libinfo_py}
+ exec(compile(open(libinfo_py, "rb").read(), libinfo_py, 'exec'), libinfo, libinfo)
+ 
+-LIB_PATH = libinfo['find_lib_path']()
+ __version__ = libinfo['__version__']
+ 
+ 
+@@ -71,6 +70,5 @@ setup(name='mxnet',
+           'mxnet', 'mxnet.module', 'mxnet._ctypes',
+           'mxnet._cy2', 'mxnet._cy3', 'mxnet.notebook'
+           ],
+-      data_files=[('mxnet', [LIB_PATH[0]])],
+       url='https://github.com/dmlc/mxnet',
+       ext_modules=config_cython())
+-- 
+Daniel M. Weeks
+
