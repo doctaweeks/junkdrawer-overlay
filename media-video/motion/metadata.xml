@@ -8,6 +8,6 @@
 	<longdescription lang="en">
 	</longdescription>
 	<upstream>
-		<remote-id type="sourceforge">motion</remote-id>
+		<remote-id type="github">Motion-Project/motion</remote-id>
 	</upstream>
 </pkgmetadata>
