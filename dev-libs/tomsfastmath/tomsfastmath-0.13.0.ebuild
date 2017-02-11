@@ -6,14 +6,18 @@ EAPI="5"
 
 inherit eutils toolchain-funcs multilib
 
+MY_PV=${PV%\.0}
+
 DESCRIPTION="portable fixed precision math library geared towards doing one thing very fast"
 HOMEPAGE="http://libtom.net/"
-SRC_URI="http://libtom.net/files/tfm-${PV}.tar.bz2"
+SRC_URI="https://github.com/libtom/${PN}/releases/download/v${PV}/tfm-${MY_PV}.tar.bz2 -> ${P}.tar.bz2"
 
 LICENSE="WTFPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~ppc ~x86"
 IUSE=""
+
+S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_prepare() {
 	sed -i \
