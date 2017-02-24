@@ -10,9 +10,9 @@ DESCRIPTION="Small, safe and fast formatting library for C++"
 HOMEPAGE="http://fmtlib.net"
 if [[ $PV == 9999 ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/cppformat/cppformat.git"
+	EGIT_REPO_URI="https://github.com/fmtlib/fmt.git"
 else
-	SRC_URI="https://github.com/cppformat/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/fmtlib/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"
 fi
 

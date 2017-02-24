@@ -1,2 +1,3 @@
 move dev-lua/LDoc dev-lua/ldoc
 move dev-libs/ck dev-libs/concurrencykit
+move dev-libs/cppformat dev-libs/fmt
