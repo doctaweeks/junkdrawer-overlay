@@ -5,15 +5,15 @@
 EAPI="6"
 
 PYTHON_COMPAT=( python{3_4,3_5} )
-inherit eutils git-r3 python-any-r1
+inherit eutils python-any-r1
 
 DESCRIPTION="Yosys - Yosys Open SYnthesis Suite"
 HOMEPAGE="http://www.clifford.at/icestorm/"
 LICENSE="ISC"
-EGIT_REPO_URI="https://github.com/cliffordwolf/yosys.git"
+SRC_URI="https://github.com/cliffordwolf/${PN}/archive/${P}.tar.gz"
 
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE=""
 
 RDEPEND="
@@ -30,6 +30,8 @@ DEPEND="
 	sys-apps/gawk
 	virtual/pkgconfig
 	${RDEPEND}"
+
+S="${WORKDIR}/${PN}-${P}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-0.7-prefix.patch
