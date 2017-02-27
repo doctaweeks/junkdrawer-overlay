@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>dan@danweeks.net</email>
+		<name>Daniel M. Weeks</name>
+	</maintainer>
+	<longdescription lang="en">
+		Concurrency primitives, safe memory reclamation mechanisms and non-blocking (including lock-free) data structures designed to aid in the research, design and implementation of high performance concurrent systems.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">concurrencykit/ck</remote-id>
+	</upstream>
+</pkgmetadata>
