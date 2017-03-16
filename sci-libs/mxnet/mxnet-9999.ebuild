@@ -5,7 +5,7 @@ EAPI=6
 
 PYTHON_COMPAT=( python{2_7,3_4} )
 DISTUTILS_OPTIONAL=1
-inherit cmake-utils distutils-r1 git-r3
+inherit cmake-utils eutils distutils-r1 git-r3
 
 DESCRIPTION="Flexible and Efficient Library for Deep Learning"
 HOMEPAGE="http://mxnet.io/"
@@ -20,6 +20,7 @@ IUSE="cuda distributed opencv openmp python"
 RDEPEND="sci-libs/dmlc-core
 	sci-libs/nnvm
 	sci-libs/atlas
+	cuda? ( dev-util/nvidia-cuda-toolkit )
 	distributed? ( sci-libs/ps-lite )
 	opencv? ( media-libs/opencv )
 	python? ( ${PYTHON_DEPS} dev-python/numpy[${PYTHON_USEDEP}] )"
@@ -29,11 +30,23 @@ REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 PATCHES=( "${FILESDIR}/${P}-build-fix.patch" "${FILESDIR}/${P}-fix-python-stupid.patch" )
 
+pkg_setup() {
+	lsmod|grep -q '^nvidia_uvm'
+	if [ $? -ne 0 ] || [ ! -c /dev/nvidia-uvm ]; then
+		eerror "Please run: \"nvidia-modprobe -u -c 0\" before attempting to install ${PN}."
+		eerror "Otherwise the hardware autodetect will fail and all architecture modules will be built."
+	fi
+}
+
 src_prepare() {
 	default
 	if use python; then
 		cd python
 		distutils-r1_src_prepare
+	fi
+	if use cuda; then
+		cd mshadow
+		epatch "${FILESDIR}/${P}-fix-c++11.patch"
 	fi
 }
 

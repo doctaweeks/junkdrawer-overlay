@@ -1,0 +1,29 @@
+From d3fc7753ad51966d53c00a57bf0899ddfd38d9a7 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Wed, 15 Mar 2017 17:52:48 -0400
+Subject: [PATCH] Partially revert "Fix warnings, build adjustments in CMake"
+
+This brings back the C++11 flag for nvcc.
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ cmake/Cuda.cmake | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/cmake/Cuda.cmake b/cmake/Cuda.cmake
+index 35eb7ad..f571efe 100644
+--- a/cmake/Cuda.cmake
++++ b/cmake/Cuda.cmake
+@@ -164,6 +164,9 @@ macro(mshadow_cuda_compile objlist_variable)
+   endforeach()
+   if(UNIX OR APPLE)
+     list(APPEND CUDA_NVCC_FLAGS -Xcompiler -fPIC)
++    if(SUPPORT_CXX11)
++      list(APPEND CUDA_NVCC_FLAGS -Xcompiler -fPIC --std=c++11)
++    endif()
+   endif()
+ 
+   if(APPLE)
+-- 
+Daniel M. Weeks
+
