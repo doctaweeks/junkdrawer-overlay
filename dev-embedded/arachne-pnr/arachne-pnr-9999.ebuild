@@ -17,7 +17,10 @@ IUSE=""
 RDEPEND="dev-embedded/icestorm"
 DEPEND="${RDEPEND}"
 
-src_prepare() {
-	epatch "${FILESDIR}"/${P}-path-fix.patch
-	eapply_user
+src_compile() {
+	emake PREFIX=/usr
+}
+
+src_install() {
+	emake DESTDIR="${D}" PREFIX=/usr install
 }
