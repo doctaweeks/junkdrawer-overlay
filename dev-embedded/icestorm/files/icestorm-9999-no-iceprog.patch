@@ -1,36 +1,22 @@
+From 867470f8ed261c54f810ea4e73fe63e9ce302b62 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Mon, 20 Mar 2017 16:51:37 -0400
+Subject: [PATCH 3/3] No iceprog
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/Makefile b/Makefile
-index ea451fe..5a9b6cd 100644
+index 79e7a7f..2c22b3b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3,7 +3,6 @@ include config.mk
- all:
- 	$(MAKE) -C icebox
- 	$(MAKE) -C icepack
--	$(MAKE) -C iceprog
- 	$(MAKE) -C icemulti
- 	$(MAKE) -C icepll
- 	# $(MAKE) -C icetime
-@@ -11,7 +10,6 @@ all:
- clean:
- 	$(MAKE) -C icebox clean
- 	$(MAKE) -C icepack clean
--	$(MAKE) -C iceprog clean
- 	$(MAKE) -C icemulti clean
- 	$(MAKE) -C icepll clean
- 	# $(MAKE) -C icetime clean
-@@ -19,7 +17,6 @@ clean:
- install:
- 	$(MAKE) -C icebox install
- 	$(MAKE) -C icepack install
--	$(MAKE) -C iceprog install
- 	$(MAKE) -C icemulti install
- 	$(MAKE) -C icepll install
- 	# $(MAKE) -C icetime install
-@@ -27,7 +24,6 @@ install:
- uninstall:
- 	$(MAKE) -C icebox uninstall
- 	$(MAKE) -C icepack uninstall
--	$(MAKE) -C iceprog uninstall
- 	$(MAKE) -C icemulti uninstall
- 	$(MAKE) -C icepll uninstall
- 	# $(MAKE) -C icetime uninstall
+@@ -1,6 +1,6 @@
+ include config.mk
+ 
+-SUBDIRS = icebox icepack iceprog icemulti icepll icetime icebram
++SUBDIRS = icebox icepack icemulti icepll icetime icebram
+ 
+ all clean install uninstall:
+ 	for dir in $(SUBDIRS); do \

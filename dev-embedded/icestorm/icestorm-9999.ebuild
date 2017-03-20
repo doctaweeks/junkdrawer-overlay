@@ -22,8 +22,8 @@ DEPEND="
 		${RDEPEND}"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-path-fix.patch
-	epatch "${FILESDIR}"/${P}-cflags.patch
+	epatch "${FILESDIR}"/${P}-prefix.patch
+	epatch "${FILESDIR}"/${P}-flags.patch
 	if ! use ftdi; then
 		epatch "${FILESDIR}"/${P}-no-iceprog.patch
 	fi
