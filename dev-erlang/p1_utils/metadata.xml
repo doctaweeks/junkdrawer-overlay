@@ -9,4 +9,7 @@
 		p1_utils is an application containing ProcessOne modules and tools that
 		are leveraged in other development projects.
 	</longdescription>
+	<upstream>
+		<remote-id type="github">processone/p1_utils</remote-id>
+	</upstream>
 </pkgmetadata>
