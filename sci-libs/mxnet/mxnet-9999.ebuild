@@ -48,6 +48,10 @@ src_prepare() {
 		cd "${S}"/mshadow
 		epatch "${FILESDIR}/${P}-fix-c++11.patch"
 	fi
+	if use distributed; then
+		cd "${S}"
+		epatch "${FILESDIR}/${P}-link-shared-zmq.patch"
+	fi
 }
 
 src_configure() {

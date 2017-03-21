@@ -1,0 +1,26 @@
+From 27dd06da1b3c8557406ad2f00752d9886f8eed56 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Mon, 20 Mar 2017 23:08:54 -0400
+Subject: [PATCH] Link shared zmq
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ba011da8..dddf824c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -153,7 +153,7 @@ if(USE_DIST_KVSTORE)
+   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/ps-lite/CMakeLists.txt)
+     add_subdirectory("ps-lite")
+   else()
+-    set(pslite_LINKER_LIBS protobuf zmq-static pslite)
++    set(pslite_LINKER_LIBS protobuf zmq pslite)
+   endif()
+ endif()
+ 
+-- 
+Daniel M. Weeks
+
