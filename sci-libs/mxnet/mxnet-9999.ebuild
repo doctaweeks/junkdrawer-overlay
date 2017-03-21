@@ -41,11 +41,11 @@ pkg_setup() {
 src_prepare() {
 	default
 	if use python; then
-		cd python
+		cd "${S}"/python
 		distutils-r1_src_prepare
 	fi
 	if use cuda; then
-		cd mshadow
+		cd "${S}"/mshadow
 		epatch "${FILESDIR}/${P}-fix-c++11.patch"
 	fi
 }
