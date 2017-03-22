@@ -13,7 +13,7 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="dev-lua/luaposix
-		dev-lua/luafilesystem"
+		>=dev-lua/luafilesystem-1.6.2"
 RDEPEND="${DEPEND}"
 
 pkg_postinst() {
