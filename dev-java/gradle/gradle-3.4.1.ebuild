@@ -9,8 +9,8 @@ MY_MAJOR_PV="$(get_version_component_range 1-2)"
 
 DESCRIPTION="A project automation and build tool with a Groovy based DSL"
 SRC_URI="
-	http://services.gradle.org/distributions/${P}-src.zip
-	http://services.gradle.org/distributions/${PN}-${MY_MAJOR_PV}-bin.zip
+	https://services.gradle.org/distributions/${P}-src.zip
+	https://services.gradle.org/distributions/${PN}-${MY_MAJOR_PV}-bin.zip
 "
 HOMEPAGE="http://www.gradle.org/"
 LICENSE="Apache-2.0"
