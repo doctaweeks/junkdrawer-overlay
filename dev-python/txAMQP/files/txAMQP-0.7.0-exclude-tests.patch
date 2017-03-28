@@ -1,0 +1,26 @@
+From 6eacbc98df67bced6ad4374406af34953a6d09ac Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Tue, 28 Mar 2017 16:29:56 -0400
+Subject: [PATCH] Exclude tests from install
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index a85c306..2844901 100644
+--- a/setup.py
++++ b/setup.py
+@@ -23,7 +23,7 @@ except ImportError:
+         'txamqp.contrib.thrift': 'src/txamqp/contrib/thrift',
+     }
+ else:
+-    setupdict['packages'] = find_packages('src')
++    setupdict['packages'] = find_packages('src', exclude=['txamqp.test'])
+     setupdict['package_dir'] = { '': 'src' }
+     setupdict['install_requires'] = ['Twisted']
+         
+-- 
+Daniel M. Weeks
+
