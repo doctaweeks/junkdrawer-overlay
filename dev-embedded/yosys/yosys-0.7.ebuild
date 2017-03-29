@@ -40,4 +40,5 @@ src_prepare() {
 
 src_configure() {
 	emake config-gcc
+	echo "ENABLE_ABC := 0" >> "${S}/Makefile.conf"
 }
