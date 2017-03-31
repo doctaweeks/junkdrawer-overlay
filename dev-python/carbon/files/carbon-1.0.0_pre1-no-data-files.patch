@@ -1,0 +1,34 @@
+diff --git a/setup.py b/setup.py
+index d1871d8..845fe78 100644
+--- a/setup.py
++++ b/setup.py
+@@ -50,21 +50,6 @@ else:
+   from distutils.core import setup
+   setup_kwargs = dict()
+ 
+-
+-storage_dirs = [ ('storage/ceres', []), ('storage/whisper',[]),
+-                 ('storage/lists',[]), ('storage/log',[]),
+-                 ('storage/rrd',[]) ]
+-conf_files = [ ('conf', glob('conf/*.example')) ]
+-
+-install_files = storage_dirs + conf_files
+-
+-# Let's include redhat init scripts, despite build platform
+-# but won't put them in /etc/init.d/ automatically anymore
+-init_scripts = [ ('examples/init.d', ['distro/redhat/init.d/carbon-cache',
+-                                      'distro/redhat/init.d/carbon-relay',
+-                                      'distro/redhat/init.d/carbon-aggregator']) ]
+-install_files += init_scripts
+-
+ try:
+     setup(
+       name='carbon',
+@@ -79,7 +64,6 @@ try:
+       package_dir={'' : 'lib'},
+       scripts=glob('bin/*'),
+       package_data={ 'carbon' : ['*.xml'] },
+-      data_files=install_files,
+       install_requires=['Twisted', 'txAMQP'],
+       classifiers=(
+         'Intended Audience :: Developers',
