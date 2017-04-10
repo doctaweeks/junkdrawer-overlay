@@ -41,8 +41,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}-fix-deadyet.patch"
-
 	# Use /var/lib, bug #428122
 	sed -e "s#/etc/opt#/var/lib#g" -i doc/unixconfig.txt doc/index.html doc/advancedopengl.txt \
 		server/vglrun.in server/vglgenkey server/vglserver_config || die
