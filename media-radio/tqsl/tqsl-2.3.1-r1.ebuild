@@ -24,6 +24,8 @@ RDEPEND="${DEPEND}"
 
 DOCS=(AUTHORS.txt README LICENSE.txt)
 
+PATCHES=( "${FILESDIR}/${P}-fix-lib-suffix.patch" )
+
 src_configure() {
 	local mycmakeargs=(
 		$(cmake-utils_use_build tools ALL_EXTRAPROGS)
