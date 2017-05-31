@@ -18,6 +18,8 @@ IUSE="openmp"
 DEPEND=""
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${P}-shared.patch" "${FILESDIR}/${P}-no-doc.patch" )
+
 pkg_pretend() {
 	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
 }
@@ -33,11 +35,4 @@ src_configure() {
 	)
 
 	cmake-utils_src_configure
-}
-
-src_install() {
-	doheader -r include/dmlc
-
-	cd "${BUILD_DIR}"
-	dolib.so libdmlccore.so
 }

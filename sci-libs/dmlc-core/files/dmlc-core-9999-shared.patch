@@ -1,0 +1,26 @@
+From e19381cdfbd7411f2311810239d11f8c5d4efc03 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Wed, 31 May 2017 09:10:41 -0400
+Subject: [PATCH] Shared lib
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0b3b3ec..00ff1a3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -130,7 +130,7 @@ if(INSTALL_INCLUDE_DIR)
+ endif()
+ 
+ # ---[ Install the archive static lib and header files
+-install(TARGETS dmlc ARCHIVE DESTINATION lib) 
++install(TARGETS dmlc DESTINATION lib)
+ install(DIRECTORY include DESTINATION .)
+ install(DIRECTORY doc DESTINATION .)
+ 
+-- 
+Daniel M. Weeks
+

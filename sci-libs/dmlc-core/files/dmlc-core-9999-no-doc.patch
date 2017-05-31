@@ -1,0 +1,25 @@
+From fec9f9a18d122baa863a8d2f37281840d1e125ec Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Wed, 31 May 2017 09:40:49 -0400
+Subject: [PATCH 2/2] No doc
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 00ff1a3..3392a72 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -132,7 +132,6 @@ endif()
+ # ---[ Install the archive static lib and header files
+ install(TARGETS dmlc DESTINATION lib)
+ install(DIRECTORY include DESTINATION .)
+-install(DIRECTORY doc DESTINATION .)
+ 
+ # ---[ Linter target
+ if(MSVC)
+-- 
+Daniel M. Weeks
+
