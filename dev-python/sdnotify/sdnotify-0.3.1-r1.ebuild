@@ -18,3 +18,5 @@ KEYWORDS="~amd64 ~x86"
 RDEPEND=""
 DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]"
+
+PATCHES=("${FILESDIR}/${PN}-no-doc.patch")
