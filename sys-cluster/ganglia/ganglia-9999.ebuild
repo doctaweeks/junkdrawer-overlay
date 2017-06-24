@@ -25,7 +25,7 @@ LICENSE="BSD"
 SLOT="0"
 IUSE="minimal pcre python examples"
 
-DEPEND="dev-libs/confuse
+DEPEND="dev-libs/confuse:=
 	dev-libs/expat
 	>=dev-libs/apr-1.0
 	!dev-db/firebird
