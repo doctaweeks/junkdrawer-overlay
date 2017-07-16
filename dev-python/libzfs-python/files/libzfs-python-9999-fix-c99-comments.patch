@@ -1,0 +1,25 @@
+From 27c51c6c2d4b2ac6622b21edafcc0f460a4db166 Mon Sep 17 00:00:00 2001
+From: Kevin Kelley <kelleyk@kelleyk.net>
+Date: Wed, 9 Dec 2015 09:01:50 -0800
+Subject: [PATCH] Resolve cffi error message complaining that C++-style
+ comments are not permitted in ISO C90 code.
+
+---
+ libzfs/bindings/fake-includes/_fake_typedefs.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libzfs/bindings/fake-includes/_fake_typedefs.h b/libzfs/bindings/fake-includes/_fake_typedefs.h
+index 6b53f1d..094293d 100644
+--- a/libzfs/bindings/fake-includes/_fake_typedefs.h
++++ b/libzfs/bindings/fake-includes/_fake_typedefs.h
+@@ -128,8 +128,8 @@ typedef int int_fast64_t;
+ typedef int uint_fast64_t;
+ 
+ /* C99 integer types capable of holding object pointers */
+-// typedef int intptr_t;
+-// typedef int uintptr_t;
++/* typedef int intptr_t; */
++/* typedef int uintptr_t; */
+ 
+ /* C99 greatest-width integer types */
+ typedef int intmax_t;

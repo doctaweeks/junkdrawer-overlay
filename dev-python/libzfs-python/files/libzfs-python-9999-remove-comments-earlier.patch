@@ -1,0 +1,37 @@
+From 49c37542b49d537ad9d2944102f9bfd5ef05ecf3 Mon Sep 17 00:00:00 2001
+From: Kevin Kelley <kelleyk@kelleyk.net>
+Date: Wed, 9 Dec 2015 08:57:09 -0800
+Subject: [PATCH] Remove comment lines earlier in process_headers() to fix an
+ issue preventing the bindings from working with zfsonlinux 0.6.5.3-1 headers.
+
+---
+ libzfs/manager.py | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/libzfs/manager.py b/libzfs/manager.py
+index 61a18fe..3afeb80 100644
+--- a/libzfs/manager.py
++++ b/libzfs/manager.py
+@@ -235,16 +235,18 @@ def process_headers(self, output):  # NOQA
+         function_blacklist = self._merge_with_environ(self.DEFAULT_FUNCTION_BLACKLIST,
+                                                       'LIBZFS_FUNCTION_BLACKLIST',
+                                                       'blacklist')
++
++        # Remove blank lines and those that contain only #-style or //-style comments.
++        output = '\n'.join(s for s in output.splitlines()
++                           if not re.match(r'^\s*(#|//|$)', s))
++        
+         # First we reduce enums to a single line, and replace all tabs with spaces
+         output = output.replace(',\n', ', ').replace('\n}', '}').replace('\t', ' ')
+         # Now we remove double newlines and double spaces
+         output = re.sub('\s\s+', ' ', re.sub('\n\n+', '\n', output))
++        
+         previous = None
+         for line in output.splitlines():
+-            if not line:
+-                continue
+-            if line.startswith('# ') or line.startswith('//'):  # Comments
+-                continue
+             if previous:
+                 line = previous + ' ' + line
+                 previous = None

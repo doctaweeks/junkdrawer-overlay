@@ -21,5 +21,7 @@ SLOT="0"
 IUSE=""
 
 DEPEND="sys-fs/zfs
-	dev-python/cffi"
+	dev-python/cffi[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
+
+PATCHES=( "$FILESDIR/${P}-remove-comments-earlier.patch" "$FILESDIR/${P}-fix-c99-comments.patch" "$FILESDIR/${P}-fix-comment-regex.patch" )
