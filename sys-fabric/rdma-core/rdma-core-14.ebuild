@@ -5,7 +5,7 @@ EAPI=6
 
 inherit cmake-utils
 
-DESCRIPTION="DMA core userspace libraries and daemons"
+DESCRIPTION="RDMA core userspace libraries and daemons"
 HOMEPAGE="https://github.com/linux-rdma/rdma-core"
 if [[ ${PV} == "9999" ]]; then
 	inherit git-r3
