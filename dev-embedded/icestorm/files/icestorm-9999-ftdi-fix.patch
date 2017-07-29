@@ -1,7 +1,7 @@
-From 1fc49043abf1763df38629ff91e7a417a8cc03e3 Mon Sep 17 00:00:00 2001
+From 9f696b95a7263458df48d4f3b4319323e5610ee0 Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
 Date: Tue, 27 Jun 2017 10:32:51 -0400
-Subject: [PATCH] FTDI fix
+Subject: [PATCH 4/4] FTDI fix
 
 Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/iceprog/Makefile b/iceprog/Makefile
-index 3b3ecc9..0f41686 100644
+index 6d32a93..85ec80f 100644
 --- a/iceprog/Makefile
 +++ b/iceprog/Makefile
 @@ -12,8 +12,8 @@ LDFLAGS += -static
@@ -23,6 +23,3 @@ index 3b3ecc9..0f41686 100644
  endif
  
  all: iceprog$(EXE)
--- 
-Daniel M. Weeks
-

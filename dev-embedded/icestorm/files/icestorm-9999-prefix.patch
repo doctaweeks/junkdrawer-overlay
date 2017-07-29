@@ -1,7 +1,7 @@
-From ff6e06174ac04b8ca61295044744c1e3f9ba799e Mon Sep 17 00:00:00 2001
+From b62dde89cdff134349ec449587d47b80cb8edf69 Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
 Date: Mon, 20 Mar 2017 16:42:11 -0400
-Subject: [PATCH 1/3] prefix
+Subject: [PATCH 1/4] prefix
 
 Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
 ---

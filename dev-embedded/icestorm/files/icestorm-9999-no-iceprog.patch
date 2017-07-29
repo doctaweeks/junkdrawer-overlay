@@ -1,7 +1,7 @@
-From 867470f8ed261c54f810ea4e73fe63e9ce302b62 Mon Sep 17 00:00:00 2001
+From e0e390b43f6cda45fb5e7f1f41aeeb2c89ae7d12 Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
 Date: Mon, 20 Mar 2017 16:51:37 -0400
-Subject: [PATCH 3/3] No iceprog
+Subject: [PATCH 3/4] No iceprog
 
 Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
 ---
