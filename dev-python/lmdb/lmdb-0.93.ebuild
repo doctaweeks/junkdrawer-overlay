@@ -1,29 +1,24 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
-PYTHON_COMPAT=( python2_7 python3_{4,5} )
+PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
 
 inherit distutils-r1
 
-MY_PN=lmdb
-MY_P=${MY_PN}-${PV}
+DESCRIPTION="Python bindings for the Lightning Database"
+HOMEPAGE="https://github.com/dw/py-lmdb/"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
-DESCRIPTION="Python binding for the LMDB 'Lightning' Database"
-HOMEPAGE="https://pypi.python.org/pypi/lmdb https://github.com/dw/py-lmdb"
-SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz -> ${P}.tar.gz"
-
-SLOT="0"
 LICENSE="OPENLDAP"
-KEYWORDS="~amd64 ~x86"
+SLOT="0"
+KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
+IUSE=""
 
-RDEPEND="dev-db/lmdb"
+RDEPEND="dev-db/lmdb:="
 DEPEND="${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]
-"
-
-S="${WORKDIR}/${MY_P}"
+	dev-python/setuptools[${PYTHON_USEDEP}]"
 
 python_compile() {
 	LMDB_FORCE_SYSTEM=1 distutils-r1_python_compile
