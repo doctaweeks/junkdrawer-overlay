@@ -20,7 +20,9 @@ DEPEND="dev-libs/protobuf
 	"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${P}-fix-libzmq-linking.patch" "${FILESDIR}/${P}-remove-PARENT_SCOPE-hack.patch" "${FILESDIR}/${P}-cmake-linking.patch" )
+PATCHES=( "${FILESDIR}/${P}-actually-link-libraries.patch"
+	"${FILESDIR}/${P}-link-protobuf-lib.patch"
+	"${FILESDIR}/${P}-remove-PARENT_SCOPE-hack.patch" )
 
 src_prepare() {
 	default
