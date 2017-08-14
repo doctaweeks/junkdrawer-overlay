@@ -18,7 +18,9 @@ IUSE="openmp"
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${P}-shared.patch" "${FILESDIR}/${P}-no-doc.patch" )
+PATCHES=( "${FILESDIR}/${P}-multilib-strict.patch"
+	"${FILESDIR}/${P}-shared.patch"
+	"${FILESDIR}/${P}-no-doc.patch" )
 
 pkg_pretend() {
 	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
