@@ -21,6 +21,7 @@ CDEPEND="sci-libs/fftw:3.0[threads]
 	>=media-libs/hamlib-3.1
 	dev-qt/qtmultimedia:5
 	dev-qt/qtwidgets:5
+	dev-qt/qtprintsupport:5
 	dev-qt/qtserialport:5
 	dev-qt/qtconcurrent:5"
 DEPEND="${CDEPEND}
