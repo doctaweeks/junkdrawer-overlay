@@ -7,7 +7,7 @@ inherit flag-o-matic multilib toolchain-funcs
 
 DESCRIPTION="modular and portable cryptographic toolkit"
 HOMEPAGE="http://libtom.net/?page=features&whatfile=crypt"
-SRC_URI="http://libtom.net/files/crypt-${PV}.tar.bz2"
+SRC_URI="https://github.com/libtom/${PN}/releases/download/${PV}/crypt-${PV}.tar.bz2"
 
 LICENSE="WTFPL-2"
 SLOT="0"
