@@ -24,10 +24,6 @@ DEPEND="app-arch/bzip2
 		system-libtomcrypt? ( dev-libs/libtomcrypt )"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-1.00-use-LIB_SUFFIX.patch" )
-
-S="${WORKDIR}/CascLib-${PV}"
-
 src_configure() {
 	local mycmakeargs=(
 		$(cmake-utils_use_with system-libtomcrypt LIBTOMCRYPT)
