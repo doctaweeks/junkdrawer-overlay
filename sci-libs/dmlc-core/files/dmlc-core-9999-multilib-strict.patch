@@ -1,7 +1,7 @@
-From 137b4df562d4bd5996e2967fee7f5e2589042c45 Mon Sep 17 00:00:00 2001
+From 9df67420ca638437de470de2494ac8db09745bae Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
 Date: Sun, 13 Aug 2017 22:50:39 -0400
-Subject: [PATCH 1/3] Installed into correct lib
+Subject: [PATCH 1/2] Install into correct lib suffix
 
 Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
 ---
@@ -9,15 +9,15 @@ Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0b3b3ec..557965a 100644
+index f038dcb..ecde5ea 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -130,7 +130,7 @@ if(INSTALL_INCLUDE_DIR)
+@@ -131,7 +131,7 @@ if(INSTALL_INCLUDE_DIR)
  endif()
  
  # ---[ Install the archive static lib and header files
--install(TARGETS dmlc ARCHIVE DESTINATION lib) 
-+install(TARGETS dmlc ARCHIVE DESTINATION lib${LIB_SUFFIX})
+-install(TARGETS dmlc ARCHIVE DESTINATION lib LIBRARY DESTINATION lib) 
++install(TARGETS dmlc ARCHIVE DESTINATION lib${LIB_SUFFIX} LIBRARY DESTINATION lib${LIB_SUFFIX})
  install(DIRECTORY include DESTINATION .)
  install(DIRECTORY doc DESTINATION .)
  

@@ -19,7 +19,6 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${P}-multilib-strict.patch"
-	"${FILESDIR}/${P}-shared.patch"
 	"${FILESDIR}/${P}-no-doc.patch" )
 
 pkg_pretend() {
