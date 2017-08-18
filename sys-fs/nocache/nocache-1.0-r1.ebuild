@@ -7,13 +7,8 @@ inherit multilib
 
 DESCRIPTION="nocache - minimize filesystem caching effects"
 HOMEPAGE="https://github.com/Feh/nocache"
-if [ "${PV}" == "9999" ]; then
-	inherit git-r3
-	EGIT_REPO_URI="https://github.com/Feh/${PN}"
-else
-	SRC_URI="https://github.com/Feh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
-fi
+SRC_URI="https://github.com/Feh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+KEYWORDS="amd64 ~x86"
 
 LICENSE="BSD"
 SLOT="0"
