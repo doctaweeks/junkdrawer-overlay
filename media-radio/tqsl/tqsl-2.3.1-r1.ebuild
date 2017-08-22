@@ -6,8 +6,8 @@ EAPI=5
 inherit cmake-utils wxwidgets
 
 DESCRIPTION="TrustedQSL log signing for the ARRL Logbook of the World (LoTW)"
-HOMEPAGE="http://sourceforge.net/projects/trustedqsl/"
-SRC_URI="http://www.arrl.org/files/file/LoTW%20Instructions/${P}.tar.gz"
+HOMEPAGE="https://sourceforge.net/projects/trustedqsl"
+SRC_URI="https://www.arrl.org/files/file/LoTW%20Instructions/${P}.tar.gz"
 
 LICENSE="tqsl"
 SLOT="0"

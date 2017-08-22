@@ -7,7 +7,7 @@ EAPI=5
 inherit ${live} eutils
 
 DESCRIPTION="Slingshot releases rocks! Build framework for Lua"
-HOMEPAGE="http://github.com/gvvaughan/slingshot"
+HOMEPAGE="https://github.com/gvvaughan/slingshot"
 if [[ "${PV}" = *9999* ]] ; then
 	EGIT_REPO_URI="https://github.com/gvvaughan/${PN}.git"
 else
