@@ -22,3 +22,5 @@ IUSE=""
 DEPEND="!sys-fabric/libibverbs"
 RDEPEND="${DEPEND}
 	sys-apps/ethtool"
+
+PATCHES=( "${FILESDIR}/${PN}-14-fix-SYSCONFDIR-use.patch" )

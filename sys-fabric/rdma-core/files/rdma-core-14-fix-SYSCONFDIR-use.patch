@@ -1,0 +1,62 @@
+From 6be02b2bd9010573279a5e474995c42ca9092842 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Mon, 21 Aug 2017 19:42:06 -0400
+Subject: [PATCH] Fix SYSCONFDIR use
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ CMakeLists.txt                      | 2 +-
+ iwpmd/CMakeLists.txt                | 2 +-
+ providers/ipathverbs/CMakeLists.txt | 2 +-
+ srp_daemon/CMakeLists.txt           | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 29c61644..c96dec3c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -65,7 +65,7 @@ set(BUILD_LIB ${CMAKE_BINARY_DIR}/lib)
+ # Used for IN_PLACE configuration
+ set(BUILD_ETC ${CMAKE_BINARY_DIR}/etc)
+ 
+-set(CMAKE_INSTALL_INITDDIR "${CMAKE_INSTALL_SYSCONFDIR}/init.d"
++set(CMAKE_INSTALL_INITDDIR "${CMAKE_INSTALL_FULL_SYSCONFDIR}/init.d"
+   CACHE PATH "Location for init.d files")
+ set(CMAKE_INSTALL_SYSTEMD_SERVICEDIR "${CMAKE_INSTALL_PREFIX}/lib/systemd/system"
+   CACHE PATH "Location for systemd service files")
+diff --git a/iwpmd/CMakeLists.txt b/iwpmd/CMakeLists.txt
+index ee9e5a3d..b98b3e44 100644
+--- a/iwpmd/CMakeLists.txt
++++ b/iwpmd/CMakeLists.txt
+@@ -18,4 +18,4 @@ install(FILES "iwpmd_init"
+   DESTINATION "${CMAKE_INSTALL_INITDDIR}"
+   RENAME "iwpmd"
+   PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+-install(FILES "iwpmd.conf" DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}")
++install(FILES "iwpmd.conf" DESTINATION "${CMAKE_INSTALL_FULL_SYSCONFDIR}")
+diff --git a/providers/ipathverbs/CMakeLists.txt b/providers/ipathverbs/CMakeLists.txt
+index 9031b86d..060037e8 100644
+--- a/providers/ipathverbs/CMakeLists.txt
++++ b/providers/ipathverbs/CMakeLists.txt
+@@ -4,7 +4,7 @@ rdma_provider(ipathverbs
+   )
+ 
+ rdma_subst_install(FILES "truescale.conf.in"
+-  DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}/modprobe.d/"
++  DESTINATION "${CMAKE_INSTALL_FULL_SYSCONFDIR}/modprobe.d/"
+   RENAME "truescale.conf")
+ install(FILES truescale-serdes.cmds
+   DESTINATION "${CMAKE_INSTALL_LIBEXECDIR}"
+diff --git a/srp_daemon/CMakeLists.txt b/srp_daemon/CMakeLists.txt
+index 62e91bb0..41382ca2 100644
+--- a/srp_daemon/CMakeLists.txt
++++ b/srp_daemon/CMakeLists.txt
+@@ -41,7 +41,7 @@ rdma_subst_install(FILES srp_daemon_port@.service.in
+   RENAME srp_daemon_port@.service
+   PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ)
+ 
+-install(FILES srp_daemon.conf DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}")
++install(FILES srp_daemon.conf DESTINATION "${CMAKE_INSTALL_FULL_SYSCONFDIR}")
+ 
+ install(FILES srp_daemon.rules DESTINATION "${CMAKE_INSTALL_UDEV_RULESDIR}")
+ 

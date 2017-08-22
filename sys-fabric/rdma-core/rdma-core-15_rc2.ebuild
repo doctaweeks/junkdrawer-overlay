@@ -14,7 +14,7 @@ if [[ ${PV} == "9999" ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/linux-rdma/rdma-core"
 else
-	SRC_URI="https://github.com/linux-rdma/${PN}/releases/download/v${MY_PV}/${MY_P}.tar.gz"
+	SRC_URI="https://github.com/linux-rdma/${PN}/archive/v${MY_PV}.tar.gz -> ${MY_P}.tar.gz"
 	KEYWORDS="~amd64 ~x86"
 fi
 
@@ -27,3 +27,5 @@ RDEPEND="${DEPEND}
 	sys-apps/ethtool"
 
 S="${WORKDIR}/${MY_P}"
+
+PATCHES=( "${FILESDIR}/${PN}-15_rc2-fix-SYSCONFDIR-use.patch" )
