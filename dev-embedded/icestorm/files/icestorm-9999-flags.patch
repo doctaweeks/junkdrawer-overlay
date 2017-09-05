@@ -1,4 +1,4 @@
-From b6580c62acd4f5720532b5f1d7de4459be2821d7 Mon Sep 17 00:00:00 2001
+From e3e2fe2829040c10b9fe6bdf29b382f7ccbed627 Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
 Date: Mon, 20 Mar 2017 16:50:06 -0400
 Subject: [PATCH 2/4] flags
@@ -10,22 +10,22 @@ Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/config.mk b/config.mk
-index 364f8bc..7f0455e 100644
+index d6daca6..44f9cee 100644
 --- a/config.mk
 +++ b/config.mk
-@@ -1,8 +1,8 @@
- CXX ?= clang++
- CC ?= clang
+@@ -10,8 +10,8 @@ OPT_LEVEL ?= 0
+ WARN_LEVEL ?= all
+ 
  LDLIBS = -lm -lstdc++
--CFLAGS += -MD -O0 -ggdb -Wall -std=c99 -I/usr/local/include
--CXXFLAGS += -MD -O0 -ggdb -Wall -std=c++11 -I/usr/local/include
-+override CFLAGS += -std=c99
-+override CXXFLAGS += -std=c++11
- PKG_CONFIG ?= pkg-config
+-CFLAGS += -MD -O$(OPT_LEVEL) -ggdb -W$(WARN_LEVEL) -std=$(C_STD) -I$(PREFIX)/include
+-CXXFLAGS += -MD -O$(OPT_LEVEL) -ggdb -W$(WARN_LEVEL) -std=$(CXX_STD) -I$(PREFIX)/include
++CFLAGS += -MD -W$(WARN_LEVEL) -std=$(C_STD) -I$(PREFIX)/include
++CXXFLAGS += -MD -W$(WARN_LEVEL) -std=$(CXX_STD) -I$(PREFIX)/include
+ 
  DESTDIR ?=
- PREFIX ?= /usr/local
+ CHIPDB_SUBDIR ?= icebox
 diff --git a/iceprog/Makefile b/iceprog/Makefile
-index d71a9b7..6d32a93 100644
+index 8739ba6..03b4b8b 100644
 --- a/iceprog/Makefile
 +++ b/iceprog/Makefile
 @@ -4,7 +4,7 @@ ifneq ($(shell uname -s),Darwin)

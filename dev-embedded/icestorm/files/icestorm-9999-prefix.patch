@@ -1,4 +1,4 @@
-From b62dde89cdff134349ec449587d47b80cb8edf69 Mon Sep 17 00:00:00 2001
+From da06ef794ed6e34a592d41c57a568a1213f1ec07 Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
 Date: Mon, 20 Mar 2017 16:42:11 -0400
 Subject: [PATCH 1/4] prefix
@@ -9,7 +9,7 @@ Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/icebox/icebox_vlog.py b/icebox/icebox_vlog.py
-index 4033f01..ac6502e 100755
+index 1b19d10..25eec43 100755
 --- a/icebox/icebox_vlog.py
 +++ b/icebox/icebox_vlog.py
 @@ -369,7 +369,7 @@ def seg_to_net(seg, default=None):
