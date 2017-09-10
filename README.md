@@ -1,4 +1,4 @@
-#Gentoo junkdrawer overlay
+# Gentoo junkdrawer overlay
 
 A Gentoo overlay with a random assortment of development tools, libraries, and
 patches not in the Gentoo tree (yet).
