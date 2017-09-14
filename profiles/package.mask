@@ -5,6 +5,10 @@
 # NOTE: Please add your entry at the top!
 #
 
+# Daniel M. Weeks <dan@danweeks.net> (14 Sep 2017)
+# Database upgrade after 1.7.0 can not be used with previous versions
+=net-p2p/go-ethereum-1.7.0
+
 # Daniel M. Weeks <dan@danweeks.net> (20 Dec 2016)
 # 0.12.1 was created as a separate branch
 # latest 0.12.0 builds are more up-to-date
