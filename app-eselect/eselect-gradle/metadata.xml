@@ -2,7 +2,10 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
-		<email>flo@geekplace.eu</email>
-		<description>Maintainer, CC him on bugs</description>
+		<email>dan@danweeks.net</email>
+		<name>Daniel M. Weeks</name>
 	</maintainer>
+	<upstream>
+		<bugs-to>mailto:flo@geekplace.eu</bugs-to>
+	</upstream>
 </pkgmetadata>
