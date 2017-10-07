@@ -13,6 +13,7 @@
 	<use>
 		<flag name="distributed">Use sci-libs/ps-lite for distributed key-value store</flag>
 		<flag name="cuda">Enable NVIDIA Cuda support</flag>
+		<flag name="cudnn">Use NVIDIA CUDA Deep Neural Network library</flag>
 		<flag name="opencv">Use media-libs/opencv for image processing</flag>
 	</use>
 </pkgmetadata>
