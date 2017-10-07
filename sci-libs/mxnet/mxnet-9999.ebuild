@@ -28,7 +28,7 @@ DEPEND="${RDEPEND}
 	python? ( dev-python/setuptools[${PYTHON_USEDEP}] )"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
-PATCHES=( "${FILESDIR}/${P}-build-fix.patch" "${FILESDIR}/${P}-fix-python-stupid.patch" )
+PATCHES=( "${FILESDIR}/${P}-python-fix-library-load-and-install.patch" )
 
 pkg_setup() {
 	lsmod|grep -q '^nvidia_uvm'
@@ -39,18 +39,15 @@ pkg_setup() {
 }
 
 src_prepare() {
-	default
+	cmake-utils_src_prepare
 	if use python; then
 		cd "${S}"/python
 		distutils-r1_src_prepare
 	fi
-	if use cuda; then
-		cd "${S}"/mshadow
-		epatch "${FILESDIR}/${P}-fix-c++11.patch"
-	fi
 	if use distributed; then
 		cd "${S}"
-		epatch "${FILESDIR}/${P}-link-shared-zmq.patch"
+		epatch "${FILESDIR}/${P}-Use-zmq-shared-library.patch"
+		epatch "${FILESDIR}/${P}-Use-shared-pslite.patch"
 	fi
 }
 
