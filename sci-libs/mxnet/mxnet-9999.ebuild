@@ -15,7 +15,7 @@ EGIT_SUBMODULES=( "*" "-dmlc-core" "-nnvm" "-ps-lite" )
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS=""
-IUSE="cuda cudnn distributed opencv openmp python"
+IUSE="cuda cudnn distributed jemalloc opencv openmp python"
 
 RDEPEND="sci-libs/dmlc-core
 	sci-libs/nnvm
@@ -24,6 +24,7 @@ RDEPEND="sci-libs/dmlc-core
 		cudnn? ( dev-libs/cudnn )
 	)
 	distributed? ( sci-libs/ps-lite )
+	jemalloc? ( dev-libs/jemalloc )
 	opencv? ( media-libs/opencv )
 	python? ( ${PYTHON_DEPS} dev-python/numpy[${PYTHON_USEDEP}] )"
 DEPEND="${RDEPEND}
@@ -58,6 +59,7 @@ src_configure() {
 		-DBUILD_SHARED_LIBS=ON
 		-DUSE_CUDA=$(usex cuda)
 		-DUSE_CUDNN=$(usex cudnn)
+		-DUSE_JEMALLOC=$(usex jemalloc)
 		-DUSE_OPENCV=$(usex opencv)
 		-DUSE_OPENMP=$(usex openmp)
 		-DBLAS=Atlas
