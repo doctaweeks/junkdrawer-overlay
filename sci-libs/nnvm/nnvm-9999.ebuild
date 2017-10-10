@@ -16,7 +16,8 @@ KEYWORDS=""
 IUSE=""
 
 # TODO: fusion/cuda submodule plugin
-DEPEND="sci-libs/dmlc-core"
+DEPEND="sci-libs/dmlc-core
+	sci-libs/tvm"
 RDEPEND="${DEPEND}"
 
 src_configure() {
