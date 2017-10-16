@@ -1,0 +1,24 @@
+From 61fb9a6c2adad3365c5aac86b5c98af3aa637b27 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Tue, 22 Aug 2017 15:39:05 -0400
+Subject: [PATCH] No pandoc
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ setup.py | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 837506d..ddbbc18 100644
+--- a/setup.py
++++ b/setup.py
+@@ -67,6 +67,5 @@ setup(
+                  'Topic :: Utilities'],
+     license='GPLv3',
+     keywords='radio librtlsdr rtlsdr sdr',
+-    setup_requires=['pypandoc'],
+     platforms=['any'],
+     packages=find_packages(exclude=['tests*']))
+-- 
+Daniel M. Weeks
+

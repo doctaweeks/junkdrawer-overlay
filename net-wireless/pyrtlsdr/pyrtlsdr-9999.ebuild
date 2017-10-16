@@ -25,4 +25,4 @@ RDEPEND="net-wireless/rtl-sdr"
 DEPEND="${RDEPEND}
 		dev-python/setuptools[${PYTHON_USEDEP}]"
 
-PATCHES=( "${FILESDIR}/${PN}-0.2.5-no-pandoc.patch" )
+PATCHES=( "${FILESDIR}/${P}-no-pandoc.patch" )
