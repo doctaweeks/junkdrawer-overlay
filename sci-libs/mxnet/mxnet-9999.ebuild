@@ -20,6 +20,7 @@ IUSE="cuda cudnn distributed jemalloc opencv openmp python"
 RDEPEND="sci-libs/dmlc-core
 	sci-libs/nnvm
 	sci-libs/atlas
+	virtual/lapack
 	cuda? ( dev-util/nvidia-cuda-toolkit
 		cudnn? ( dev-libs/cudnn )
 	)
