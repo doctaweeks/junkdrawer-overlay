@@ -42,7 +42,8 @@ src_compile() {
 
 src_install() {
 	echo "\"${WAF_BINARY}\" --destdir=\"${D}\" install"
-	"${WAF_BINARY}" --destdir="${D}" install --no-install-gschema || die "Make install failed"
+	"${WAF_BINARY}" --destdir="${D}" install || die "Make install failed"
+	rm "${D}"/usr/share/glib-2.0/schemas/gschemas.compiled
 
 	einstalldocs
 }
