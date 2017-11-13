@@ -23,4 +23,11 @@ DEPEND="!sys-fabric/libibverbs"
 RDEPEND="${DEPEND}
 	sys-apps/ethtool"
 
-PATCHES=( "${FILESDIR}/${PN}-14-fix-SYSCONFDIR-use.patch" )
+src_configure() {
+	local mycmakeargs=(
+		-DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}"/etc
+		-DCMAKE_INSTALL_UDEV_RULESDIR="$(get_udevdir)"/rules.d
+	)
+
+	cmake-utils_src_configure
+}

@@ -28,4 +28,11 @@ RDEPEND="${DEPEND}
 
 S="${WORKDIR}/${MY_P}"
 
-PATCHES=( "${FILESDIR}/${PN}-15_rc2-fix-SYSCONFDIR-use.patch" )
+src_configure() {
+	local mycmakeargs=(
+		-DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}"/etc
+		-DCMAKE_INSTALL_UDEV_RULESDIR="$(get_udevdir)"/rules.d
+	)
+
+	cmake-utils_src_configure
+}
