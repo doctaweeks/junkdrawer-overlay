@@ -6,7 +6,7 @@ EAPI=5
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_OPTIONAL=1
 
-inherit autotools distutils-r1 eutils multilib systemd
+inherit autotools distutils-r1 eutils flag-o-matic multilib systemd
 
 DESCRIPTION="A scalable distributed monitoring system for clusters and grids"
 HOMEPAGE="http://ganglia.sourceforge.net/"
@@ -29,6 +29,7 @@ DEPEND="dev-libs/confuse:=
 	dev-libs/expat
 	>=dev-libs/apr-1.0
 	!dev-db/firebird
+	net-libs/libtirpc:=
 	pcre? ( dev-libs/libpcre )
 	python? ( ${PYTHON_DEPS} )"
 
@@ -53,6 +54,8 @@ src_configure() {
 		python_setup
 	fi
 
+	append-ldflags -ltirpc
+	append-cppflags -I/usr/include/tirpc
 	econf \
 		--with-systemdsystemunitdir=$(systemd_get_unitdir) \
 		--enable-gexec \
