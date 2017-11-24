@@ -1,4 +1,4 @@
-From f679b3c6e4e862f37a27986480639611c8d4cf8a Mon Sep 17 00:00:00 2001
+From 918bc74bacb526575c6f3fe7c0122a79b1566ed7 Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
 Date: Tue, 27 Jun 2017 10:32:51 -0400
 Subject: [PATCH 4/4] FTDI fix
