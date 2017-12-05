@@ -5,6 +5,11 @@
 # NOTE: Please add your entry at the top!
 #
 
+# Daniel M. Weeks <dan@danweeks.net> (5 Dec 2017)
+# Appears to be broken internally
+# Potentially fixed upstream in untagged 1.0.2
+=dev-python/pychromecast-1.0.1
+
 # Daniel M. Weeks <dan@danweeks.net> (20 Dec 2016)
 # 0.12.1 was created as a separate branch
 # latest 0.12.0 builds are more up-to-date
