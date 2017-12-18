@@ -59,6 +59,7 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=ON
 		-DUSE_CUDA=$(usex cuda)
+		-DUSE_OLDCMAKECUDA=1
 		-DUSE_CUDNN=$(usex cudnn)
 		-DUSE_JEMALLOC=$(usex jemalloc)
 		-DUSE_OPENCV=$(usex opencv)
