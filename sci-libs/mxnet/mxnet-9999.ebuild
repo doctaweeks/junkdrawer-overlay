@@ -15,7 +15,7 @@ EGIT_SUBMODULES=( "*" "-dmlc-core" "-nnvm" "-ps-lite" )
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS=""
-IUSE="cuda cudnn distributed jemalloc lapack opencv openmp python"
+IUSE="cuda cudnn distributed examples jemalloc lapack opencv openmp python"
 
 RDEPEND="sci-libs/dmlc-core
 	sci-libs/nnvm
@@ -67,6 +67,7 @@ src_configure() {
 		-DUSE_OPENMP=$(usex openmp)
 		-DBLAS=Atlas
 		-DUSE_DIST_KVSTORE=$(usex distributed)
+		-DINSTALL_EXAMPLES=$(usex examples)
 	)
 
 	addwrite /dev/nvidia-uvm
