@@ -1,10 +1,9 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
-AUTOTOOLS_AUTORECONF=1
-inherit autotools-utils
+inherit autotools
 
 DESCRIPTION="Library for outputting to a file, console, and/or syslog simultaneously"
 HOMEPAGE="https://github.com/doctaweeks/liblog"
@@ -20,3 +19,8 @@ fi
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="static-libs"
+
+src_prepare() {
+	default
+	eautoreconf
+}
