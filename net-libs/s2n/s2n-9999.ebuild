@@ -24,8 +24,8 @@ RDEPEND="${DEPEND}"
 src_configure() {
 	sed -i \
 		-e 's:-I/usr/include::' \
-        -e 's:-Werror:-Wno-error:g' \
-        s2n.mk || die
+		-e 's:-Werror:-Wno-error:g' \
+		s2n.mk || die
 }
 
 src_compile() {
