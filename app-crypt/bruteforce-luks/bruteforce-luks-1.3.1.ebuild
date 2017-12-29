@@ -1,10 +1,9 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="5"
+EAPI=6
 
-AUTOTOOLS_AUTORECONF=1
-inherit autotools-utils
+inherit autotools
 
 DESCRIPTION="A bruteforce cracker for LUKS encrypted volumes."
 HOMEPAGE="https://github.com/glv2/bruteforce-luks"
@@ -18,3 +17,8 @@ DEPEND="sys-fs/cryptsetup"
 RDEPEND="${DEPEND}"
 
 DOCS=(AUTHORS ChangeLog NEWS README)
+
+src_prepare() {
+	default
+	eautoreconf
+}
