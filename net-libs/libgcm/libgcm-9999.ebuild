@@ -1,10 +1,9 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
-AUTOTOOLS_AUTORECONF=1
-inherit autotools-utils
+inherit autotools
 
 DESCRIPTION="Google Cloud Messaging C library"
 HOMEPAGE="https://github.com/doctaweeks/libgcm"
@@ -24,3 +23,8 @@ IUSE="static-libs"
 DEPEND="dev-libs/json-c
 	net-misc/curl"
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	default
+	eautoreconf
+}
