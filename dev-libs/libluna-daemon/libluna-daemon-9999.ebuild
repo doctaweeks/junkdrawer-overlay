@@ -1,10 +1,9 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
-AUTOTOOLS_AUTORECONF=1
-inherit autotools-utils
+inherit autotools
 
 DESCRIPTION="a dead simple library for daemonizing"
 HOMEPAGE="https://github.com/doctaweeks/libluna-daemon"
@@ -24,3 +23,8 @@ IUSE="static-libs"
 RDEPEND="sys-libs/libcap-ng"
 DEPEND="${RDEPEND}
 		virtual/pkgconfig"
+
+src_prepare() {
+	default
+	eautoreconf
+}
