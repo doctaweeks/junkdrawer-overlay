@@ -1,16 +1,15 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
-inherit autotools-utils git-r3
+inherit autotools git-r3
 
 DESCRIPTION="A command queue"
 HOMEPAGE="https://github.com/RPI-HPC/cq"
 
 if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/RPI-HPC/${PN}"
-	AUTOTOOLS_AUTORECONF=1
 else
 	SRC_URI=""
 fi
@@ -24,3 +23,8 @@ DEPEND="dev-libs/protobuf-c
 		net-libs/zeromq
 		>=sys-auth/munge-0.5.11"
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	default
+	eautoreconf
+}
