@@ -1,7 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="4"
+EAPI=6
 
 inherit webapp eutils
 
@@ -33,6 +33,7 @@ src_prepare() {
 	if [[ ${PV} == 9999 ]]; then
 		find -name '\.git*' -exec rm -rf {} \;
 	fi
+	default
 }
 
 src_install() {
