@@ -31,7 +31,7 @@ pkg_setup() {
 
 src_prepare() {
 	if [[ ${PV} == 9999 ]]; then
-		find -name '\.git*' -exec rm -rf {} \;
+		find -name '\.git*' -print0 | xargs -r0 rm -rf
 	fi
 	default
 }
