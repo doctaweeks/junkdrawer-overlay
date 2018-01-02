@@ -1,11 +1,10 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
-AUTOTOOLS_AUTORECONF=1
 AT_M4DIR="config"
-inherit autotools-utils
+inherit autotools
 
 DESCRIPTION="Parallel filesystem I/O benchmark"
 HOMEPAGE="https://github.com/LLNL/ior"
@@ -23,3 +22,8 @@ IUSE=""
 
 DEPEND="virtual/mpi"
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	default
+	eautoreconf
+}
