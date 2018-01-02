@@ -25,5 +25,3 @@ DEPEND="media-sound/jack-audio-connection-kit
 		sndfile? ( media-libs/libsndfile )
 		twolame? ( media-sound/twolame )"
 RDEPEND="${DEPEND}"
-
-PATCHES=( "${FILESDIR}/${PN}-0.9-manpage.diff" )
