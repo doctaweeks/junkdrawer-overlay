@@ -18,7 +18,7 @@ IUSE="cuda llvm opencl"
 DEPEND="sci-libs/dmlc-core
 	dev-libs/halideir
 	cuda? ( dev-util/nvidia-cuda-toolkit )
-	llvm? ( sys-devel/llvm )
+	llvm? ( sys-devel/llvm:= )
 	opencl? ( virtual/opencl )"
 RDEPEND="${DEPEND}"
 
