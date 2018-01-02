@@ -1,10 +1,9 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
-AUTOTOOLS_AUTORECONF=1
-inherit autotools-utils
+inherit autotools
 
 DESCRIPTION="Rotter is a Recording of Transmission / Audio Logger for JACK"
 HOMEPAGE="http://www.aelius.com/njh/rotter/"
@@ -27,3 +26,8 @@ DEPEND="media-sound/jack-audio-connection-kit
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${PN}-0.9-manpage.diff" )
+
+src_prepare() {
+	default
+	eautoreconf
+}
