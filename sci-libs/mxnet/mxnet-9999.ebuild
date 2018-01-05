@@ -15,7 +15,7 @@ EGIT_SUBMODULES=( "*" "-dmlc-core" "-nnvm" "-ps-lite" )
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS=""
-IUSE="cuda cudnn distributed examples jemalloc lapack opencv openmp python"
+IUSE="cuda cudnn distributed examples jemalloc lapack opencv openmp python tcmalloc"
 
 RDEPEND="sci-libs/dmlc-core
 	sci-libs/nnvm
@@ -27,10 +27,12 @@ RDEPEND="sci-libs/dmlc-core
 	jemalloc? ( dev-libs/jemalloc )
 	lapack? ( virtual/lapack )
 	opencv? ( media-libs/opencv )
-	python? ( ${PYTHON_DEPS} dev-python/numpy[${PYTHON_USEDEP}] )"
+	python? ( ${PYTHON_DEPS} dev-python/numpy[${PYTHON_USEDEP}] )
+	tcmalloc? ( dev-util/google-perftools )"
 DEPEND="${RDEPEND}
 	python? ( dev-python/setuptools[${PYTHON_USEDEP}] )"
-REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )
+	?? ( tcmalloc jemalloc )"
 
 PATCHES=( "${FILESDIR}/${P}-python-fix-library-load-and-install.patch" )
 
@@ -61,6 +63,7 @@ src_configure() {
 		-DUSE_CUDA=$(usex cuda)
 		-DUSE_OLDCMAKECUDA=1
 		-DUSE_CUDNN=$(usex cudnn)
+		-DUSE_GPERFTOOLS=$(usex tcmalloc)
 		-DUSE_JEMALLOC=$(usex jemalloc)
 		-DUSE_LAPACK=$(usex lapack)
 		-DUSE_OPENCV=$(usex opencv)
