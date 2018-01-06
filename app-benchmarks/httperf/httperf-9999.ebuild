@@ -1,11 +1,9 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
-AUTOTOOLS_AUTORECONF=1
-
-inherit autotools-utils
+inherit autotools
 
 DESCRIPTION="A tool from HP for measuring web server performance"
 HOMEPAGE="https://github.com/httperf/httperf"
@@ -26,3 +24,8 @@ RDEPEND="!libressl? ( dev-libs/openssl:0= )
 DEPEND="${RDEPEND}"
 
 DOCS=( AUTHORS ChangeLog NEWS README.md TODO )
+
+src_prepare() {
+	default
+	eautoreconf
+}
