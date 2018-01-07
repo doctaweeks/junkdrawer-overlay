@@ -26,7 +26,7 @@ src_prepare() {
 src_configure() {
 	# only docs installed are doxygen ones, so use /html
 	econf \
-		--docdir=/usr/share/doc/${PF}/html \
+		--docdir='$(datarootdir)'/doc/${PF}/html \
 		$(use_enable doc doxygen)
 }
 
