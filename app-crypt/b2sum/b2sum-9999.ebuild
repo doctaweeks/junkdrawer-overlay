@@ -19,7 +19,7 @@ LICENSE="|| ( CC0-1.0 openssl Apache-2.0 )"
 SLOT="0"
 IUSE="openmp"
 
-DEPEND=""
+DEPEND="<sys-apps/coreutils-8.26"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${P}/${PN}"
