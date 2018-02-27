@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="dev-libs/protobuf
+DEPEND="dev-libs/protobuf:=
 	net-libs/zeromq
 	sci-libs/dmlc-core
 	"
