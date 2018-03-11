@@ -24,7 +24,7 @@ RDEPEND="dev-libs/libzip
 		>=media-libs/glfw-3.0
 		media-libs/assimp
 		net-libs/enet:1.3
-		net-libs/civetweb
+		www-servers/civetweb
 		media-gfx/qrencode
 		X? ( x11-libs/libX11 )"
 DEPEND="${RDEPEND}
