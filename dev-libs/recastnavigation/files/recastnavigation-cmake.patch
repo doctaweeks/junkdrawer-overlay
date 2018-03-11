@@ -41,7 +41,7 @@ index 0000000..7737743
 +
 +add_library(Detour ${Detour_SRCS})
 +
-+install(TARGETS Detour DESTINATION lib)
++install(TARGETS Detour DESTINATION lib${LIB_SUFFIX})
 +install(FILES ${Detour_HEADERS} DESTINATION include)
 diff --git a/Recast/CMakeLists.txt b/Recast/CMakeLists.txt
 new file mode 100644
@@ -72,5 +72,5 @@ index 0000000..93d0847
 +
 +add_library(Recast ${Recast_SRCS})
 +
-+install(TARGETS Recast DESTINATION lib)
++install(TARGETS Recast DESTINATION lib${LIB_SUFFIX})
 +install(FILES ${Recast_HEADERS} DESTINATION include)
