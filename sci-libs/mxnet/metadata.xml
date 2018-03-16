@@ -8,7 +8,7 @@
 	<longdescription lang="en">
 	</longdescription>
 	<upstream>
-		<remote-id type="github">dmlc/mxnet</remote-id>
+		<remote-id type="github">apache/incubator-mxnet</remote-id>
 	</upstream>
 	<use>
 		<flag name="distributed">Use sci-libs/ps-lite for distributed key-value store</flag>
