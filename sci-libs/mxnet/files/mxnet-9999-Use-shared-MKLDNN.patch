@@ -1,0 +1,29 @@
+From 1d8ddcc2775faf5ae704647a600eaea1cf3350eb Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Tue, 20 Mar 2018 12:57:12 -0400
+Subject: [PATCH 2/2] Use shared MKLDNN
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ CMakeLists.txt | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3e03eac2..eaf44a66 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -156,11 +156,6 @@ if(USE_VTUNE)
+ endif()
+ 
+ if(USE_MKL_IF_AVAILABLE)
+-  if(USE_MKLDNN)
+-    add_subdirectory(3rdparty/mkldnn)
+-    include_directories(3rdparty/mkldnn/include)
+-    list(APPEND mxnet_LINKER_LIBS mkldnn)
+-  endif()
+   find_package(MKL)
+ 
+   if(MKL_FOUND)
+-- 
+Daniel M. Weeks
+

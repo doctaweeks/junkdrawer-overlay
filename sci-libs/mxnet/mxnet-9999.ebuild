@@ -10,31 +10,36 @@ inherit cmake-utils eutils distutils-r1 git-r3
 DESCRIPTION="Flexible and Efficient Library for Deep Learning"
 HOMEPAGE="http://mxnet.io/"
 EGIT_REPO_URI="https://github.com/dmlc/mxnet"
-EGIT_SUBMODULES=( "*" "-dmlc-core" "-nnvm" "-ps-lite" )
+EGIT_SUBMODULES=( "*" "-dmlc-core" "-nnvm" "-ps-lite" "-3rdparty/openmp" "-3rdparty/googletest" "-3rdparty/mkldnn" )
 
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS=""
-IUSE="cuda cudnn distributed examples jemalloc lapack opencv openmp python tcmalloc"
+IUSE="cuda cudnn distributed examples jemalloc lapack mkldnn opencv openmp python tcmalloc test"
 
 RDEPEND="sci-libs/dmlc-core
 	sci-libs/nnvm
 	sci-libs/atlas
+	sys-libs/libomp
 	cuda? ( dev-util/nvidia-cuda-toolkit
 		cudnn? ( dev-libs/cudnn )
 	)
 	distributed? ( sci-libs/ps-lite )
 	jemalloc? ( dev-libs/jemalloc )
 	lapack? ( virtual/lapack )
+	mkldnn? ( sci-libs/mkl-dnn )
 	opencv? ( media-libs/opencv )
 	python? ( ${PYTHON_DEPS} dev-python/numpy[${PYTHON_USEDEP}] )
 	tcmalloc? ( dev-util/google-perftools )"
 DEPEND="${RDEPEND}
-	python? ( dev-python/setuptools[${PYTHON_USEDEP}] )"
+	python? ( dev-python/setuptools[${PYTHON_USEDEP}] )
+	test? ( dev-cpp/gtest ) "
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )
 	?? ( tcmalloc jemalloc )"
 
-PATCHES=( "${FILESDIR}/${P}-python-fix-library-load-and-install.patch" )
+PATCHES=( "${FILESDIR}/${P}-python-fix-library-load-and-install.patch"
+	"${FILESDIR}/${P}-Use-shared-gtest.patch"
+	"${FILESDIR}/${P}-Use-shared-MKLDNN.patch" )
 
 pkg_setup() {
 	lsmod|grep -q '^nvidia_uvm'
