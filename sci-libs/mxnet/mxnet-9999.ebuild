@@ -25,7 +25,7 @@ RDEPEND="sci-libs/dmlc-core
 		cudnn? ( dev-libs/cudnn )
 	)
 	distributed? ( sci-libs/ps-lite )
-	jemalloc? ( dev-libs/jemalloc )
+	jemalloc? ( <dev-libs/jemalloc-5.0.0 )
 	lapack? ( virtual/lapack )
 	mkldnn? ( sci-libs/mkl-dnn )
 	opencv? ( media-libs/opencv )
