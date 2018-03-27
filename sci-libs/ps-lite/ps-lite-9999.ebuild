@@ -25,7 +25,7 @@ PATCHES=( "${FILESDIR}/${P}-actually-link-libraries.patch"
 	"${FILESDIR}/${P}-remove-PARENT_SCOPE-hack.patch" )
 
 src_prepare() {
-	default
+	cmake-utils_src_prepare
 	rm -rf include/dmlc
 }
 
