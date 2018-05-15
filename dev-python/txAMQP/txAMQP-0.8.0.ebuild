@@ -19,7 +19,7 @@ IUSE="test"
 
 # TODO: split twisted-core gives minor test failure, get rid of it
 # when we port revdeps
-RDEPEND="
+RDEPEND="dev-python/six[${PYTHON_USEDEP}]
 	|| (
 		dev-python/twisted[${PYTHON_USEDEP}]
 		dev-python/twisted-core[${PYTHON_USEDEP}]
