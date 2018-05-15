@@ -17,6 +17,7 @@ IUSE=""
 
 RDEPEND="dev-python/pyramid[${PYTHON_USEDEP}]
 	dev-python/simplejson[${PYTHON_USEDEP}]
+	dev-python/six[${PYTHON_USEDEP}]
 	dev-python/venusian[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]"
