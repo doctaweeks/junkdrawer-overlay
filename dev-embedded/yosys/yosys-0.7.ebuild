@@ -31,14 +31,15 @@ DEPEND="
 	${RDEPEND}"
 
 S="${WORKDIR}/${PN}-${P}"
-
-src_prepare() {
-	epatch "${FILESDIR}"/${PN}-0.7-prefix.patch
-
-	eapply_user
-}
-
 src_configure() {
 	emake config-gcc
 	echo "ENABLE_ABC := 0" >> "${S}/Makefile.conf"
+}
+
+src_compile() {
+	emake PREFIX="${EPREFIX}/usr"
+}
+
+src_install() {
+	emake PREFIX="${ED}/usr" install
 }
