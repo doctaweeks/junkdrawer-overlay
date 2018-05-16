@@ -12,7 +12,7 @@ SRC_URI="https://github.com/davisking/dlib/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="Boost-1.0"
 SLOT="0/${PV}"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
-IUSE="cblas debug cuda examples gif jpeg lapack mkl png sqlite static-libs test X"
+IUSE="cblas debug cuda examples gif jpeg lapack mkl png sqlite test X"
 
 # doc needs a bunch of deps not in portage
 
@@ -37,6 +37,8 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DLIB_INSTALL_DIR="$(get_libdir)"
+		-DBUILD_SHARED_LIBS=ON
+		-DDLIB_IN_PROJECT_BUILD=false
 		-DDLIB_ENABLE_ASSERTS="$(usex debug)"
 		-DDLIB_ENABLE_STACK_TRACE="$(usex debug)"
 		-DDLIB_GIF_SUPPORT="$(usex gif)"
@@ -62,7 +64,6 @@ src_test() {
 src_install() {
 	cmake-utils_src_install
 	dodoc docs/README.txt
-	use static-libs || rm -f "${ED}"/usr/$(get_libdir)/*.a
 	if use examples; then
 		dodoc -r examples
 		docompress -x /usr/share/doc/${PF}
