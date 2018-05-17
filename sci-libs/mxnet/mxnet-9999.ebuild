@@ -9,8 +9,9 @@ inherit cmake-utils eutils distutils-r1 git-r3
 
 DESCRIPTION="Flexible and Efficient Library for Deep Learning"
 HOMEPAGE="http://mxnet.io/"
-EGIT_REPO_URI="https://github.com/dmlc/mxnet"
-EGIT_SUBMODULES=( "*" "-dmlc-core" "-nnvm" "-ps-lite" "-3rdparty/openmp" "-3rdparty/googletest" "-3rdparty/mkldnn" )
+EGIT_REPO_URI="https://github.com/apache/incubator-mxnet"
+# keep: cub mshadow dlpack
+EGIT_SUBMODULES=( "*" "-3rdparty/dmlc-core" "-3rdparty/nnvm" "-3rdparty/ps-lite" "-3rdparty/openmp" "-3rdparty/googletest" "-3rdparty/mkldnn" )
 
 LICENSE="Apache-2.0"
 SLOT="0"
