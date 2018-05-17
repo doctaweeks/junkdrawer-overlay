@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
+PYTHON_COMPAT=( python{2_7,3_5,3_6} )
 DISTUTILS_OPTIONAL=1
 inherit cmake-utils eutils distutils-r1 git-r3
 
@@ -30,7 +30,15 @@ RDEPEND="sci-libs/dmlc-core
 	lapack? ( virtual/lapack )
 	mkldnn? ( sci-libs/mkl-dnn )
 	opencv? ( media-libs/opencv )
-	python? ( ${PYTHON_DEPS} dev-python/numpy[${PYTHON_USEDEP}] )
+	python? (
+		${PYTHON_DEPS}
+		>=dev-python/numpy-1.8.2[${PYTHON_USEDEP}]
+		<=dev-python/numpy-1.15.0[${PYTHON_USEDEP}]
+		>=dev-python/requests-2.18.4[${PYTHON_USEDEP}]
+		<dev-python/requests-2.19.0[${PYTHON_USEDEP}]
+		>=dev-python/graphviz-0.8.1[${PYTHON_USEDEP}]
+		<dev-python/graphviz-0.9.0[${PYTHON_USEDEP}]
+	)
 	tcmalloc? ( dev-util/google-perftools )"
 DEPEND="${RDEPEND}
 	python? ( dev-python/setuptools[${PYTHON_USEDEP}] )
