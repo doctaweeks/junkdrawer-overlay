@@ -40,5 +40,5 @@ src_compile() {
 }
 
 src_install() {
-	emake PREFIX="${ED}/usr" install
+	emake PREFIX="${ED}/usr" STRIP=true install
 }
