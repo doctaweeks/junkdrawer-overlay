@@ -16,7 +16,7 @@ EGIT_SUBMODULES=( "*" "-3rdparty/dmlc-core" "-3rdparty/nnvm" "-3rdparty/ps-lite"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS=""
-IUSE="cuda cudnn distributed examples jemalloc lapack mkldnn opencv openmp python tcmalloc test"
+IUSE="cuda cudnn distributed examples jemalloc lapack mkldnn opencv openmp python tcmalloc"
 
 RDEPEND="sci-libs/dmlc-core
 	sci-libs/nnvm
@@ -42,7 +42,7 @@ RDEPEND="sci-libs/dmlc-core
 	tcmalloc? ( dev-util/google-perftools )"
 DEPEND="${RDEPEND}
 	python? ( dev-python/setuptools[${PYTHON_USEDEP}] )
-	test? ( dev-cpp/gtest ) "
+	dev-cpp/gtest"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )
 	?? ( tcmalloc jemalloc )"
 
