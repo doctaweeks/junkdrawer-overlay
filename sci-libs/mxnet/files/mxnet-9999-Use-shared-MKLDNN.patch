@@ -1,29 +1,34 @@
-From 1d8ddcc2775faf5ae704647a600eaea1cf3350eb Mon Sep 17 00:00:00 2001
+From d2bcb1605aff078da93673d9030554853ead3eea Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
-Date: Tue, 20 Mar 2018 12:57:12 -0400
-Subject: [PATCH 2/2] Use shared MKLDNN
+Date: Wed, 9 May 2018 16:58:18 -0400
+Subject: [PATCH] Use shared MKLDNN
 
 Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
 ---
- CMakeLists.txt | 5 -----
- 1 file changed, 5 deletions(-)
+ CMakeLists.txt | 10 ----------
+ 1 file changed, 10 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3e03eac2..eaf44a66 100644
+index 246ae995..e47ff8cc 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -156,11 +156,6 @@ if(USE_VTUNE)
+@@ -185,16 +185,6 @@ if(USE_VTUNE)
  endif()
  
- if(USE_MKL_IF_AVAILABLE)
--  if(USE_MKLDNN)
--    add_subdirectory(3rdparty/mkldnn)
--    include_directories(3rdparty/mkldnn/include)
--    list(APPEND mxnet_LINKER_LIBS mkldnn)
+ if(USE_MKLDNN)
+-  include(cmake/MklDnn.cmake)
+-  # CPU architecture (e.g., C5) can't run on another architecture (e.g., g3).
+-  if(NOT MSVC)
+-    set(ARCH_OPT_FLAGS "-mtune=generic")
 -  endif()
-   find_package(MKL)
- 
-   if(MKL_FOUND)
+-  set(WITH_TEST OFF)
+-  set(WITH_EXAMPLE OFF)
+-  add_subdirectory(3rdparty/mkldnn)
+-  
+-  include_directories(3rdparty/mkldnn/include)
+   add_definitions(-DUSE_MKL=1)
+   add_definitions(-DCUB_MKL=1)
+   add_definitions(-DMXNET_USE_MKLDNN=1)
 -- 
 Daniel M. Weeks
 

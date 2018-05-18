@@ -80,6 +80,7 @@ src_configure() {
 		-DUSE_GPERFTOOLS=$(usex tcmalloc)
 		-DUSE_JEMALLOC=$(usex jemalloc)
 		-DUSE_LAPACK=$(usex lapack)
+		-DUSE_MKLDNN=$(usex mkldnn)
 		-DUSE_OPENCV=$(usex opencv)
 		-DUSE_OPENMP=$(usex openmp)
 		-DBLAS=Atlas
