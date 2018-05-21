@@ -21,6 +21,7 @@ IUSE="cuda cudnn distributed examples jemalloc lapack mkldnn opencv openmp pytho
 RDEPEND="sci-libs/dmlc-core
 	sci-libs/nnvm
 	sci-libs/atlas
+	sci-libs/cblas-reference
 	sys-libs/libomp
 	cuda? ( dev-util/nvidia-cuda-toolkit
 		cudnn? ( dev-libs/cudnn )
