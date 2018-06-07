@@ -23,7 +23,7 @@ RDEPEND="sci-libs/dmlc-core
 	sci-libs/atlas
 	sci-libs/cblas-reference
 	sys-libs/libomp
-	cuda? ( dev-util/nvidia-cuda-toolkit
+	cuda? ( dev-util/nvidia-cuda-toolkit:=
 		cudnn? ( dev-libs/cudnn )
 	)
 	distributed? ( sci-libs/ps-lite )
