@@ -26,10 +26,10 @@ RDEPEND="${DEPEND}"
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=ON
-		-DUSE_CUDA=$(usex cuda)
+		-DUSE_CUDA=$(usex cuda ON OFF)
 		-DUSE_LLVM=$(usex llvm ON OFF)
-		-DUSE_OPENCL=$(usex opencl)
-		-DUSE_OPENGL=$(usex opengl)
+		-DUSE_OPENCL=$(usex opencl ON OFF)
+		-DUSE_OPENGL=$(usex opengl ON OFF)
 		-DINSTALL_DEV=ON
 	)
 
