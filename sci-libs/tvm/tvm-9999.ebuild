@@ -26,7 +26,7 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=ON
 		-DUSE_CUDA=$(usex cuda)
-		-DUSE_LLVM=$(usex llvm)
+		-DUSE_LLVM=$(usex llvm ON OFF)
 		-DUSE_OPENCL=$(usex opencl)
 		-DINSTALL_DEV=ON
 	)
