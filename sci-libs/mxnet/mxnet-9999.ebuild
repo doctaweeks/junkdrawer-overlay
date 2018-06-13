@@ -30,7 +30,7 @@ RDEPEND="sci-libs/dmlc-core
 	jemalloc? ( <dev-libs/jemalloc-5.0.0 )
 	lapack? ( virtual/lapack )
 	mkldnn? ( sci-libs/mkl-dnn )
-	opencv? ( media-libs/opencv )
+	opencv? ( media-libs/opencv:= )
 	python? (
 		${PYTHON_DEPS}
 		>=dev-python/numpy-1.8.2[${PYTHON_USEDEP}]
