@@ -11,7 +11,7 @@ DESCRIPTION="Flexible and Efficient Library for Deep Learning"
 HOMEPAGE="http://mxnet.io/"
 EGIT_REPO_URI="https://github.com/apache/incubator-mxnet"
 # keep: cub mshadow dlpack
-EGIT_SUBMODULES=( "*" "-3rdparty/dmlc-core" "-3rdparty/nnvm" "-3rdparty/ps-lite" "-3rdparty/openmp" "-3rdparty/googletest" "-3rdparty/mkldnn" )
+EGIT_SUBMODULES=( "*" "-3rdparty/dmlc-core" "-3rdparty/tvm" "-3rdparty/ps-lite" "-3rdparty/openmp" "-3rdparty/googletest" "-3rdparty/mkldnn" )
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -19,7 +19,7 @@ KEYWORDS=""
 IUSE="cuda cudnn distributed examples jemalloc lapack mkldnn opencv openmp python tcmalloc"
 
 RDEPEND="sci-libs/dmlc-core
-	sci-libs/nnvm
+	sci-libs/tvm
 	sci-libs/atlas
 	sci-libs/cblas-reference
 	sys-libs/libomp
