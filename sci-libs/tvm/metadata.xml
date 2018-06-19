@@ -14,5 +14,6 @@
 		<flag name="cuda">Enable NVIDIA Cuda support</flag>
 		<flag name="llvm">Enable LLVM support</flag>
 		<flag name="opencl">Enable OpenCL support</flag>
+		<flag name="vulkan">Enable Vulkan support</flag>
 	</use>
 </pkgmetadata>

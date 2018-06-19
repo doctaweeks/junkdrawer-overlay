@@ -13,14 +13,15 @@ EGIT_SUBMODULES=( '*' '-dmlc-core' '-HalideIR' )
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS=""
-IUSE="cuda llvm opencl opengl"
+IUSE="cuda llvm opencl opengl vulkan"
 
 DEPEND="sci-libs/dmlc-core
 	dev-libs/halideir
 	cuda? ( dev-util/nvidia-cuda-toolkit:= )
 	llvm? ( sys-devel/llvm:= )
 	opencl? ( virtual/opencl )
-	opengl? ( media-libs/glfw )"
+	opengl? ( media-libs/glfw )
+	vulkan? ( media-libs/vulkan-loader dev-util/spirv-tools )"
 RDEPEND="${DEPEND}"
 
 src_configure() {
@@ -30,6 +31,7 @@ src_configure() {
 		-DUSE_LLVM=$(usex llvm ON OFF)
 		-DUSE_OPENCL=$(usex opencl ON OFF)
 		-DUSE_OPENGL=$(usex opengl ON OFF)
+		-DUSE_VULKAN=$(usex vulkan ON OFF)
 		-DINSTALL_DEV=ON
 	)
 
