@@ -28,6 +28,7 @@ IUSE="minimal pcre python examples"
 DEPEND="dev-libs/confuse:=
 	dev-libs/expat
 	>=dev-libs/apr-1.0
+	net-libs/libnsl:0=
 	!dev-db/firebird
 	net-libs/libtirpc:=
 	pcre? ( dev-libs/libpcre )
