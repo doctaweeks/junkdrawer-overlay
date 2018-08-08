@@ -74,6 +74,8 @@ src_install() {
 
 	emake DESTDIR="${D}" install || die
 
+	find "${D}" -name '*.la' -delete || die
+
 	newinitd "${FILESDIR}"/gmond.rc-2 gmond
 	doman {mans/*.1,gmond/*.5} || die "Failed to install manpages"
 	dodoc AUTHORS INSTALL NEWS || die
