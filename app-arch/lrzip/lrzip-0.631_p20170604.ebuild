@@ -3,14 +3,14 @@
 
 EAPI=6
 
-inherit autotools eutils git-r3
+inherit autotools eutils
+
+EGIT_COMMIT=1510f4a26a31479084c3d8e47543d2657a3935ad
 
 DESCRIPTION="Long Range ZIP or Lzma RZIP optimized for compressing large files"
 HOMEPAGE="https://github.com/ckolivas/lrzip"
-#SRC_URI="http://ck.kolivas.org/apps/${PN}/${P}.tar.bz2"
-
-EGIT_REPO_URI="https://github.com/ckolivas/lrzip"
-EGIT_COMMIT="1510f4a26a31479084c3d8e47543d2657a3935ad"
+#SRC_URI="http://ck.kolivas.org/apps/${PN}/${P}.tar.gz"
+SRC_URI="https://github.com/ckolivas/${PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -28,6 +28,8 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-missing-stdarg_h.patch
 	"${FILESDIR}"/${PN}-0.631-solaris.patch
 )
+
+S="${WORKDIR}/${PN}-${EGIT_COMMIT}"
 
 src_prepare() {
 	default
