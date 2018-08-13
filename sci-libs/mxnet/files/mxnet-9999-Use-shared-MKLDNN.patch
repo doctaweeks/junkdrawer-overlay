@@ -1,6 +1,6 @@
-From d2bcb1605aff078da93673d9030554853ead3eea Mon Sep 17 00:00:00 2001
+From 6f175149448d2cf826e517e614a81c8b19403697 Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
-Date: Wed, 9 May 2018 16:58:18 -0400
+Date: Thu, 2 Aug 2018 01:13:29 -0400
 Subject: [PATCH] Use shared MKLDNN
 
 Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
@@ -9,10 +9,10 @@ Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
  1 file changed, 10 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 246ae995..e47ff8cc 100644
+index 8c3e63568..68538502b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -185,16 +185,6 @@ if(USE_VTUNE)
+@@ -217,16 +217,6 @@ if(USE_TENSORRT)
  endif()
  
  if(USE_MKLDNN)
@@ -24,7 +24,7 @@ index 246ae995..e47ff8cc 100644
 -  set(WITH_TEST OFF)
 -  set(WITH_EXAMPLE OFF)
 -  add_subdirectory(3rdparty/mkldnn)
--  
+-
 -  include_directories(3rdparty/mkldnn/include)
    add_definitions(-DUSE_MKL=1)
    add_definitions(-DCUB_MKL=1)
