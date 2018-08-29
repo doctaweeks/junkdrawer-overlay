@@ -12,7 +12,7 @@ if [ ${PV} == "9999" ]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/Xaroth/libzfs-python"
 else
-	EGIT_COMMIT=""
+	EGIT_COMMIT="146e5f28de5971bb6eb64fd82b098c5f302f0b33"
 	SRC_URI="https://github.com/Xaroth/${PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"
 	S="${WORKDIR}/${PN}-${EGIT_COMMIT}"
