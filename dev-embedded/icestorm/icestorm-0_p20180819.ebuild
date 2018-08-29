@@ -13,7 +13,7 @@ if [ ${PV} == "9999" ]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/cliffordwolf/icestorm.git"
 else
-	EGIT_COMMIT=""
+	EGIT_COMMIT="c02a4000f4cef8d4d9e76757f55ea4920667e1e8"
 	SRC_URI="https://github.com/cliffordwolf/${PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"
 	S="${WORKDIR}/${PN}-${EGIT_COMMIT}"
