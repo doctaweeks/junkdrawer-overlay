@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 python3_4 )
+PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
 inherit distutils-r1
 
 DESCRIPTION="The rendering HTTP API from Graphite-web, without the interface"
@@ -15,13 +15,13 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND=""
-RDEPEND="${DEPEND}
-	dev-python/cairocffi
-	dev-python/flask
-	>=dev-python/pyparsing-1.5.7
-	dev-python/pytz
-	dev-python/pyyaml
-	dev-python/six
-	dev-python/structlog
-	dev-python/tzlocal"
+RDEPEND="dev-python/cairocffi[${PYTHON_USEDEP}]
+	dev-python/flask[${PYTHON_USEDEP}]
+	>=dev-python/pyparsing-1.5.7[${PYTHON_USEDEP}]
+	dev-python/pytz[${PYTHON_USEDEP}]
+	dev-python/pyyaml[${PYTHON_USEDEP}]
+	dev-python/six[${PYTHON_USEDEP}]
+	dev-python/structlog[${PYTHON_USEDEP}]
+	dev-python/tzlocal[${PYTHON_USEDEP}]"
+DEPEND="${RDEPEND}
+	dev-python/setuptools[${PYTHON_USEDEP}]"
