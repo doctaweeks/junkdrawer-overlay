@@ -17,6 +17,9 @@ IUSE="devtools"
 DEPEND="dev-lang/go:="
 RDEPEND="${DEPEND}"
 
+# Does all kinds of wonky stuff like connecting to Docker daemon, network activity, ...
+RESTRICT="test"
+
 src_compile() {
 	emake $(usex devtools all geth)
 }
