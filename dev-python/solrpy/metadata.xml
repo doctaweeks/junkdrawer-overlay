@@ -8,7 +8,7 @@
 	<longdescription lang="en">
 	</longdescription>
 	<upstream>
-		<remote-id type="github">edsu/solrpy</remote-id>
+		<remote-id type="github">search5/solrpy</remote-id>
 		<remote-id type="pypi">solrpy</remote-id>
 	</upstream>
 </pkgmetadata>
