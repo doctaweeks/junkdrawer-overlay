@@ -8,4 +8,7 @@
 	<upstream>
 		<remote-id type="github">recastnavigation/recastnavigation</remote-id>
 	</upstream>
+	<use>
+		<flag name="demo">Build Recast demo</flag>
+	</use>
 </pkgmetadata>

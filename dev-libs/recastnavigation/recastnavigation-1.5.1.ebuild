@@ -6,7 +6,7 @@ EAPI=5
 inherit cmake-utils
 
 DESCRIPTION="Navigation-mesh Toolset for Games"
-HOMEPAGE="http://digestingduck.blogspot.com"
+HOMEPAGE="http://digestingduck.blogspot.com https://github.com/recastnavigation/recastnavigation"
 
 if [[ $PV == 9999 ]]; then
 	inherit git-r3
