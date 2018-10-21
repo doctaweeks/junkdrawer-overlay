@@ -1,7 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 inherit cmake-multilib flag-o-matic multilib systemd
 
 DESCRIPTION="Run OpenGL applications remotely with full 3D hardware acceleration"
@@ -16,8 +16,8 @@ IUSE="debug libressl +server ssl +xv"
 
 RDEPEND="
 	ssl? (
-		!libressl? ( dev-libs/openssl:0[${MULTILIB_USEDEP}] )
-		libressl? ( dev-libs/libressl[${MULTILIB_USEDEP}] )
+		!libressl? ( dev-libs/openssl:0=[${MULTILIB_USEDEP}] )
+		libressl? ( dev-libs/libressl:0=[${MULTILIB_USEDEP}] )
 	)
 	media-libs/libjpeg-turbo[${MULTILIB_USEDEP}]
 	x11-libs/libX11[${MULTILIB_USEDEP}]
@@ -36,34 +36,33 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-pkg_setup() {
-	append-ldflags $(no-as-needed)
-}
-
 src_prepare() {
 	# Use /var/lib, bug #428122
 	sed -e "s#/etc/opt#/var/lib#g" -i doc/unixconfig.txt doc/index.html doc/advancedopengl.txt \
 		server/vglrun.in server/vglgenkey server/vglserver_config || die
 
-	default
+	cmake-utils_src_prepare
 }
 
 src_configure() {
+	# Completely breaks steam/wine for discrete graphics otherwise
+	# see https://github.com/VirtualGL/virtualgl/issues/16
+	append-ldflags "-Wl,--no-as-needed"
+
 	abi_configure() {
 		if use debug ; then
 			CMAKE_BUILD_TYPE="Debug"
 		fi
 
 		local mycmakeargs=(
-			$(cmake-utils_use ssl VGL_USESSL)
-			$(cmake-utils_use server VGL_BUILDSERVER)
-			$(cmake-utils_use xv VGL_USEXV)
-			-DVGL_DOCDIR=/usr/share/doc/"${PF}"
+			-DVGL_USESSL="$(usex ssl)"
+			-DVGL_BUILDSERVER="$(usex server)"
+			-DVGL_USEXV="$(usex xv)"
+			-DCMAKE_INSTALL_DOCDIR=/usr/share/doc/"${PF}"
 			-DTJPEG_INCLUDE_DIR=/usr/include
-			-DVGL_LIBDIR=/usr/$(get_libdir)
+			-DCMAKE_INSTALL_LIBDIR=/usr/$(get_libdir)
 			-DTJPEG_LIBRARY=/usr/$(get_libdir)/libturbojpeg.so
 			-DCMAKE_LIBRARY_PATH=/usr/$(get_libdir)
-			-DVGL_FAKELIBDIR=/usr/fakelib/${ABI}
 		)
 		cmake-utils_src_configure
 	}
