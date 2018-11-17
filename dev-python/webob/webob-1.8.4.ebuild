@@ -1,18 +1,17 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} pypy )
 
-inherit distutils-r1 versionator
+inherit distutils-r1
 
 MY_PN=WebOb
-MY_PV=${PV/_/}
-MY_P=${MY_PN}-${MY_PV}
+MY_P=${MY_PN}-${PV}
 
 DESCRIPTION="WSGI request and response object"
-HOMEPAGE="http://webob.org/ https://pypi.python.org/pypi/WebOb"
+HOMEPAGE="https://webob.org/ https://pypi.org/project/WebOb/"
 SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
 
 LICENSE="MIT"
@@ -21,7 +20,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc ~x8
 IUSE="doc test"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
-	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
+	doc? ( >=dev-python/sphinx-1.3.1[${PYTHON_USEDEP}] )
 	test? ( dev-python/nose[${PYTHON_USEDEP}]
 		dev-python/coverage[${PYTHON_USEDEP}] )"
 RDEPEND=""
