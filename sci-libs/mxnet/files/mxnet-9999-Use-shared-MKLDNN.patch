@@ -1,28 +1,30 @@
-From 6f175149448d2cf826e517e614a81c8b19403697 Mon Sep 17 00:00:00 2001
+From dccc719eac2d3f969c36dc25724b436f5544aaa1 Mon Sep 17 00:00:00 2001
 From: "Daniel M. Weeks" <dan@danweeks.net>
-Date: Thu, 2 Aug 2018 01:13:29 -0400
+Date: Mon, 19 Nov 2018 17:01:09 -0500
 Subject: [PATCH] Use shared MKLDNN
 
 Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
 ---
- CMakeLists.txt | 10 ----------
- 1 file changed, 10 deletions(-)
+ CMakeLists.txt | 12 ------------
+ 1 file changed, 12 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8c3e63568..68538502b 100644
+index 42f6bffb9..e5cd0d19f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -217,16 +217,6 @@ if(USE_TENSORRT)
+@@ -224,18 +224,6 @@ if(ENABLE_TESTCOVERAGE)
  endif()
  
  if(USE_MKLDNN)
--  include(cmake/MklDnn.cmake)
+-  include(cmake/DownloadMKLML.cmake)
 -  # CPU architecture (e.g., C5) can't run on another architecture (e.g., g3).
 -  if(NOT MSVC)
 -    set(ARCH_OPT_FLAGS "-mtune=generic")
 -  endif()
--  set(WITH_TEST OFF)
--  set(WITH_EXAMPLE OFF)
+-  set(WITH_TEST OFF CACHE INTERNAL "" FORCE)
+-  set(WITH_EXAMPLE OFF CACHE INTERNAL "" FORCE)
+-  set(ARCH_OPT_FLAGS "" CACHE INTERNAL "" FORCE)
+-
 -  add_subdirectory(3rdparty/mkldnn)
 -
 -  include_directories(3rdparty/mkldnn/include)
