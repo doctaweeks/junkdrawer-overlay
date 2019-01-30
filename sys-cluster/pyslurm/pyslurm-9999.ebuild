@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python2_7 python3_4 )
 inherit distutils-r1
 
 DESCRIPTION="Python interface to Slurm"
@@ -21,7 +21,8 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE=""
 
-RDEPEND=">=sys-cluster/slurm-16.05.0
-	<=sys-cluster/slurm-16.05.3"
-DEPEND="${DEPEND}
-	dev-python/cython"
+RDEPEND=">=sys-cluster/slurm-17.11
+	<sys-cluster/slurm-18.08"
+DEPEND="${RDEPEND}
+	dev-python/cython[${PYTHON_USEDEP}]
+	dev-python/setuptools[${PYTHON_USEDEP}]"
