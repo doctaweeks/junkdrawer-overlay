@@ -27,6 +27,9 @@ IUSE="3d examples georeferencer grass mapserver opencl oracle polar postgres pyt
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE} mapserver? ( python )"
 
+# NOTE: upstream has made qtserialport optional on master branch
+# NOTE: built-in mdal automagically depends on netcdf[hdf5], forcing it for a fully featured build
+
 COMMON_DEPEND="
 	app-crypt/qca:2[qt5(+),ssl]
 	>=dev-db/spatialite-4.2.0
@@ -41,11 +44,13 @@ COMMON_DEPEND="
 	>=dev-qt/qtnetwork-${QT_MIN_VER}:5[ssl]
 	>=dev-qt/qtpositioning-${QT_MIN_VER}:5
 	>=dev-qt/qtprintsupport-${QT_MIN_VER}:5
+	>=dev-qt/qtserialport-${QT_MIN_VER}:5
 	>=dev-qt/qtsvg-${QT_MIN_VER}:5
 	>=dev-qt/qtsql-${QT_MIN_VER}:5
 	>=dev-qt/qtwidgets-${QT_MIN_VER}:5
 	>=dev-qt/qtxml-${QT_MIN_VER}:5
 	>=sci-libs/gdal-2.2.3:=[geos]
+	sci-libs/netcdf:=[hdf5]
 	sci-libs/geos
 	sci-libs/libspatialindex:=
 	sci-libs/proj
@@ -132,6 +137,7 @@ src_configure() {
 		-DQWT_INCLUDE_DIR=/usr/include/qwt6
 		-DQWT_LIBRARY=/usr/$(get_libdir)/libqwt6-qt5.so
 		-DPEDANTIC=OFF
+		-DUSE_CCACHE=OFF
 		-DWITH_APIDOC=OFF
 		-DWITH_QSPATIALITE=ON
 		-DENABLE_TESTS=OFF
