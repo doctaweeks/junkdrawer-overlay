@@ -107,7 +107,6 @@ RESTRICT="test"
 PATCHES=(
 	# git master
 	"${FILESDIR}/${PN}-2.18.12-cmake-lib-suffix.patch"
-	"${FILESDIR}/${P}-sip-4.19.4-fixes.patch"
 )
 
 pkg_setup() {
@@ -172,6 +171,18 @@ src_configure() {
 
 src_install() {
 	cmake-utils_src_install
+
+	domenu "${BUILD_DIR}/org.qgis.qgis.desktop"
+
+	local size type
+	for size in 16 22 24 32 48 64 96 128 256; do
+		newicon -s ${size} linux/icons/${PN}-icon${size}x${size}.png ${PN}.png
+		newicon -c mimetypes -s ${size} linux/icons/${PN}-mime-icon${size}x${size}.png ${PN}-mime.png
+		for type in qgs qml qlr qpt; do
+			newicon -c mimetypes -s ${size} linux/icons/${PN}-${type}${size}x${size}.png ${PN}-${type}.png
+		done
+	done
+	newicon -s scalable images/icons/qgis_icon.svg qgis.svg
 
 	insinto /usr/share/mime/packages
 	doins debian/qgis.xml
