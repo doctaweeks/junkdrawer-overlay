@@ -29,6 +29,13 @@ src_prepare() {
 	eautoreconf
 }
 
+src_configure() {
+	local myeconfargs=(
+		$(use_enable static-libs static)
+	)
+	econf "${myeconfargs[@]}"
+}
+
 src_install() {
 	default
 	if ! use static-libs ; then
