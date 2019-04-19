@@ -28,3 +28,10 @@ src_prepare() {
 	default
 	eautoreconf
 }
+
+src_install() {
+	default
+	if ! use static-libs ; then
+		find "${ED}" -name "*.la" -delete || die
+	fi
+}
