@@ -21,6 +21,8 @@ RDEPEND="${DEPEND}"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
+PATCHES=( "${FILESDIR}/${P}-newer-python.patch" )
+
 src_prepare() {
 	default
 	sed -i -e 's/python2/python-2.7/' configure.ac || die
