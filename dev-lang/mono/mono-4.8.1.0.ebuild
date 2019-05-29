@@ -6,8 +6,8 @@ EAPI=6
 inherit autotools eutils linux-info mono-env flag-o-matic pax-utils versionator multilib-minimal
 
 DESCRIPTION="Mono runtime and class libraries, a C# compiler/interpreter"
-HOMEPAGE="http://www.mono-project.com/Main_Page"
-SRC_URI="http://download.mono-project.com/sources/${PN}/${P}.tar.bz2"
+HOMEPAGE="https://www.mono-project.com/Main_Page"
+SRC_URI="https://download.mono-project.com/sources/${PN}/${P}.tar.bz2"
 
 LICENSE="MIT LGPL-2.1 GPL-2 BSD-4 NPL-1.1 Ms-PL GPL-2-with-linking-exception IDPL"
 SLOT="0"
@@ -48,7 +48,7 @@ pkg_pretend() {
 			# https://github.com/gentoo/gentoo/blob/f200e625bda8de696a28338318c9005b69e34710/eclass/linux-info.eclass#L686
 			ewarn "kernel config not found"
 			ewarn "If CONFIG_SYSVIPC is not set in your kernel .config, mono will hang while compiling."
-			ewarn "See http://bugs.gentoo.org/261869 for more info."
+			ewarn "See https://bugs.gentoo.org/261869 for more info."
 		fi
 	fi
 }
