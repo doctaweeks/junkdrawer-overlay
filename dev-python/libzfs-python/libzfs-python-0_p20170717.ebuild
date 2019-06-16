@@ -22,6 +22,7 @@ LICENSE="MIT"
 SLOT="0"
 IUSE=""
 
-DEPEND="sys-fs/zfs
+RDEPEND="sys-fs/zfs
 	dev-python/cffi[${PYTHON_USEDEP}]"
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	dev-python/setuptools[${PYTHON_USEDEP}]"
