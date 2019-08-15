@@ -1,0 +1,26 @@
+From afb44ad8404744c642b088f796e8cccee36150d2 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Thu, 15 Aug 2019 11:37:07 -0400
+Subject: [PATCH] Exclude tests from packaging
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 0f27940..c35952d 100644
+--- a/setup.py
++++ b/setup.py
+@@ -40,7 +40,7 @@ setup(
+     ],
+     keywords="multihash hash digest format ASCII encoding",
+ 
+-    packages=find_packages(),
++    packages=find_packages(exclude=["tests"]),
+     install_requires=[],
+     extras_require={
+         'sha3': ['pysha3'],
+-- 
+Daniel M. Weeks
+
