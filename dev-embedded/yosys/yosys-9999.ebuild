@@ -19,8 +19,7 @@ RDEPEND="
 	sys-libs/readline:=
 	virtual/libffi
 	dev-vcs/git
-	dev-lang/tcl:=
-	dev-vcs/mercurial"
+	dev-lang/tcl:="
 
 DEPEND="
 	${PYTHON_DEPS}
