@@ -13,7 +13,7 @@ if [ ${PV} == "9999" ]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/cliffordwolf/icestorm.git"
 else
-	EGIT_COMMIT="c02a4000f4cef8d4d9e76757f55ea4920667e1e8"
+	EGIT_COMMIT="ed978e24e2874ba20e16da18d735f414680c34be"
 	SRC_URI="https://github.com/cliffordwolf/${PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"
 	S="${WORKDIR}/${PN}-${EGIT_COMMIT}"
@@ -32,14 +32,16 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-9999-prefix.patch
 	epatch "${FILESDIR}"/${PN}-9999-flags.patch
 	epatch "${FILESDIR}"/${PN}-9999-ftdi-fix.patch
-	if ! use ftdi; then
-		epatch "${FILESDIR}"/${PN}-9999-no-iceprog.patch
-	fi
 
 	eapply_user
 }
 
 src_compile() {
 	export PREFIX=/usr
-	emake CC=$(tc-getCC) CXX=$(tc-getCXX) CFLAGS="$CFLAGS"
+	emake CC=$(tc-getCC) CXX=$(tc-getCXX) CFLAGS="$CFLAGS" ICEPROG=$(usex ftdi 1 0)
+}
+
+src_install() {
+	emake DESTDIR="${D}" ICEPROG=$(usex ftdi 1 0) install
+	einstalldocs
 }

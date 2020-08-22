@@ -32,14 +32,16 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-9999-prefix.patch
 	epatch "${FILESDIR}"/${PN}-9999-flags.patch
 	epatch "${FILESDIR}"/${PN}-9999-ftdi-fix.patch
-	if ! use ftdi; then
-		epatch "${FILESDIR}"/${PN}-9999-no-iceprog.patch
-	fi
 
 	eapply_user
 }
 
 src_compile() {
 	export PREFIX=/usr
-	emake CC=$(tc-getCC) CXX=$(tc-getCXX) CFLAGS="$CFLAGS"
+	emake CC=$(tc-getCC) CXX=$(tc-getCXX) CFLAGS="$CFLAGS" ICEPROG=$(usex ftdi 1 0)
+}
+
+src_install() {
+	emake DESTDIR="${D}" ICEPROG=$(usex ftdi 1 0) install
+	einstalldocs
 }
