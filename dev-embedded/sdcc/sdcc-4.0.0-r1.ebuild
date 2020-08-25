@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -12,7 +12,7 @@ else
 		mirror://sourceforge/sdcc/${PN}-src-${PV}.tar.bz2
 		doc? ( mirror://sourceforge/sdcc/${PN}-doc-${PV}.tar.bz2 )
 	"
-	KEYWORDS="amd64 x86"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 DESCRIPTION="Small device C compiler (for various microprocessors)"
@@ -24,9 +24,21 @@ LICENSE="
 	packihx? ( public-domain )
 "
 SLOT="0"
+# in order of configure.ac's AC_DO_PORT stanzas
 SDCC_PORTS="
-	avr ds390 ds400 ez80 gbz80 hc08 mcs51 pdk13 pdk14 pdk15 pic14 pic16 r2k
-	r3ka s08 stm8 tlcs90 z180 z80
+	avr
+	mcs51
+	z80 z180
+	r2k r3ka
+	gbz80
+	tlcs90
+	ez80-z80
+	ds390 ds400
+	pic14 pic16
+	hc08
+	s08
+	stm8
+	pdk13 pdk14 pdk15 pdk16
 "
 IUSE="
 	${SDCC_PORTS}
@@ -68,17 +80,16 @@ src_prepare() {
 			-e 's:\<(PORTDIR|ARCH)\>:SDCC\1:g' \
 			{} + || die
 
-	# https://sourceforge.net/p/sdcc/bugs/2398/
-	sed -i -e '1iAR = @AR@' Makefile.common.in || die
-	sed -i \
-		-e "/^AR =/s:=.*:=$(tc-getAR):" \
-		support/cpp/Makefile.in || die
-
 	# Make sure timestamps don't get messed up.
 	[[ ${PV} == "9999" ]] && find "${S}" -type f -exec touch -r . {} +
 
 	default
 	eautoreconf
+
+	# Avoid 'bfd.info' rebuild with 'makeinfo': bug #705424
+	# Build dependencies are: eautoreconf->Makefile.in->bfdver.texi->bfd.info
+	touch support/sdbinutils/bfd/doc/bfdver.texi || die
+	touch support/sdbinutils/bfd/doc/bfd.info || die
 }
 
 src_configure() {
@@ -89,35 +100,37 @@ src_configure() {
 		ac_cv_prog_AR="$(tc-getAR)" \
 		ac_cv_prog_AS="$(tc-getAS)" \
 		ac_cv_prog_STRIP=true \
-		$(use_enable avr avr-port) \
 		$(use_enable boehm-gc libgc) \
 		$(use_enable device-lib) \
-		$(use_enable ds390 ds390-port) \
-		$(use_enable ds400 ds400-port) \
-		$(use_enable ez80 ez80_z80-port) \
-		$(use_enable gbz80 gbz80-port) \
-		$(use_enable hc08 hc08-port) \
-		$(use_enable mcs51 mcs51-port) \
 		$(use_enable non-free) \
 		$(use_enable packihx) \
-		$(use_enable pdk13 pdk13-port) \
-		$(use_enable pdk14 pdk14-port) \
-		$(use_enable pdk15 pdk15-port) \
-		$(use_enable pic14 pic14-port) \
-		$(use_enable pic16 pic16-port) \
-		$(use_enable r2k r2k-port) \
-		$(use_enable r3ka r3ka-port) \
-		$(use_enable s08 s08-port) \
 		$(use_enable sdbinutils) \
 		$(use_enable sdcdb) \
 		$(use_enable sdcpp) \
-		$(use_enable stm8 stm8-port) \
-		$(use_enable tlcs90 tlcs90-port) \
 		$(use_enable ucsim) \
-		$(use_enable z180 z180-port) \
+		\
+		$(use_enable avr avr-port) \
+		$(use_enable mcs51 mcs51-port) \
 		$(use_enable z80 z80-port) \
+		$(use_enable z180 z180-port) \
+		$(use_enable r2k r2k-port) \
+		$(use_enable r3ka r3ka-port) \
+		$(use_enable gbz80 gbz80-port) \
+		$(use_enable tlcs90 tlcs90-port) \
+		$(use_enable ez80-z80 ez80_z80-port) \
+		$(use_enable ds390 ds390-port) \
+		$(use_enable ds400 ds400-port) \
+		$(use_enable pic14 pic14-port) \
+		$(use_enable pic16 pic16-port) \
+		$(use_enable hc08 hc08-port) \
+		$(use_enable s08 s08-port) \
+		$(use_enable stm8 stm8-port) \
+		$(use_enable pdk13 pdk13-port) \
+		$(use_enable pdk14 pdk14-port) \
+		$(use_enable pdk15 pdk15-port) \
+		$(use_enable pdk16 pdk16-port) \
+		\
 		--disable-doc \
-		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
 		--without-ccache
 }
 
