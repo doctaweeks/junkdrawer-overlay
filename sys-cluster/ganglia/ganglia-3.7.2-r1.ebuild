@@ -17,18 +17,19 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="minimal pcre python examples"
 
-DEPEND="dev-libs/confuse:=
+RDEPEND="dev-libs/confuse:=
 	dev-libs/expat
 	>=dev-libs/apr-1.0
 	net-libs/libnsl:0=
 	!dev-db/firebird
 	net-libs/libtirpc:=
 	pcre? ( dev-libs/libpcre )
-	python? ( ${PYTHON_DEPS} )"
-
-RDEPEND="
-	${DEPEND}
+	python? ( ${PYTHON_DEPS} )
 	!minimal? ( net-analyzer/rrdtool )"
+
+DEPEND="
+	${RDEPEND}
+	>=net-libs/rpcsvc-proto-1"
 
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
