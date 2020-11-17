@@ -1,0 +1,238 @@
+From 75afeca9717fab51ca8eb5fc276c2e3602a35cc7 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Mon, 16 Nov 2020 21:14:51 -0500
+Subject: [PATCH 3/3] Support python 3 only in examples
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ examples/TestNflog.py     | 14 +++++++-----
+ examples/example-scapy.py | 34 ++++++++++++++---------------
+ examples/example.py       | 46 +++++++++++++++++++++------------------
+ 3 files changed, 50 insertions(+), 44 deletions(-)
+ mode change 100644 => 100755 examples/TestNflog.py
+
+diff --git a/examples/TestNflog.py b/examples/TestNflog.py
+old mode 100644
+new mode 100755
+index 101aeb6..85e1824
+--- a/examples/TestNflog.py
++++ b/examples/TestNflog.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/python3
++
+ import os
+ import pwd
+ import grp
+@@ -30,7 +32,7 @@ def dropPrivileges( uid_name, gid_name):
+ 
+     # Ensure a very conservative umask
+     old_umask = os.umask(077)
+-    print "now running as non-root: u=%s, g=%s" % (uid_name, gid_name)
++    print("now running as non-root: u=%s, g=%s" % (uid_name, gid_name))
+ 
+ 
+ def callback(pkt):
+@@ -39,10 +41,10 @@ def callback(pkt):
+         count += 1
+         payload = pkt.get_data()
+         #time.sleep(0.2) # TODO: enable this to enforce SIGINT in callback
+-        print "callback #%06d - %d bytes" % (count, len(payload))
++        print("callback #%06d - %d bytes" % (count, len(payload)))
+     except KeyboardInterrupt:
+         global l
+-        print "SIGINT in callback(), calling stop_loop()"
++        print("SIGINT in callback(), calling stop_loop()")
+         l.stop_loop()
+ 
+ 
+@@ -55,15 +57,15 @@ def main():
+     l.prepare()
+     # TODO: change this to users with reduced privileges on your system
+     dropPrivileges('nobody', 'nogroup')
+-    print "calling loop()"
++    print("calling loop()")
+     try:
+         l.loop()
+     except KeyboardInterrupt:
+-        print "SIGINT caught in main thread"
++        print("SIGINT caught in main thread")
+         l.stop_loop()
+         pass # normal; sometimes happens in callback handler, sometimes here
+     finally:
+-        print "returned from loop(), will now tear down"
++        print("returned from loop(), will now tear down")
+         #l.unbind(socket.AF_INET) # l.unbind() is privileged (requires root)
+         l.close()
+ 
+diff --git a/examples/example-scapy.py b/examples/example-scapy.py
+index 9b5ce2d..44de192 100755
+--- a/examples/example-scapy.py
++++ b/examples/example-scapy.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # need root privileges
+ 
+@@ -18,51 +18,51 @@ l = nflog.log()
+ 
+ def cb(payload):
+     try:
+-        print ""
+-        print "Packet received [%d]" % payload.get_seq()
++        print("")
++        print("Packet received [%d]" % payload.get_seq())
+ 
+         try:
+             tv = payload.get_timestamp()
+             d = datetime.fromtimestamp(tv.tv_sec + (tv.tv_usec / 1000000.))
+-            print "timestamp: ", d
+-        except RuntimeError, e:
+-            #print e.args[0]
++            print("timestamp: ", d)
++        except RuntimeError as e:
++            #print(e.args[0])
+             pass
+         data = payload.get_data()
+         pkt = IP(data)
+         if pkt:
+             pkt.show()
+         else:
+-            print "Error decoding packet"
++            print("Error decoding packet")
+ 
+         sys.stdout.flush()
+         return 1
+     except KeyboardInterrupt:
+-        print "interrupted in callback"
++        print("interrupted in callback")
+         global l
+-        print "stop the loop"
++        print("stop the loop")
+         l.stop_loop()
+ 
+-print "setting callback"
++print("setting callback")
+ l.set_callback(cb)
+ 
+-print "open"
++print("open")
+ l.fast_open(1, AF_INET)
+ l.set_flags(nflog.CfgSeq)
+ 
+-print "prepare"
++print("prepare")
+ l.prepare()
+ 
+-print "loop nflog device until SIGINT"
++print("loop nflog device until SIGINT")
+ try:
+     l.loop()
+-except KeyboardInterrupt, e:
+-	print "loop() was interrupted"
++except KeyboardInterrupt as e:
++	print("loop() was interrupted")
+ 
+ 
+-print "unbind"
++print("unbind")
+ l.unbind(AF_INET)
+ 
+-print "close"
++print("close")
+ l.close()
+ 
+diff --git a/examples/example.py b/examples/example.py
+index 45f7bc6..a85349c 100755
+--- a/examples/example.py
++++ b/examples/example.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # need root privileges
+ 
+@@ -19,56 +19,60 @@ l = nflog.log()
+ 
+ def cb(payload):
+     try:
+-        print "Packet received"
+-        print "seq: [%d]" % payload.get_seq()
++        print("Packet received")
++        print("seq: [%d]" % payload.get_seq())
+ 
+-        print "  payload len ", payload.get_length()
++        print("  payload len ", payload.get_length())
+         try:
+             tv = payload.get_timestamp()
+             d = datetime.fromtimestamp(tv.tv_sec + (tv.tv_usec / 1000000.))
+-            print "  timestamp: ", d
+-        except RuntimeError, e:
+-            #print e.args[0]
++            print("  timestamp: ", d)
++        except RuntimeError as e:
++            #print(e.args[0])
+             pass
+         data = payload.get_data()
+         pkt = ip.IP(data)
+         if pkt.p == ip.IP_PROTO_ICMP:
+-            print "  ICMP:  %s > %s type %d code %d" % (inet_ntoa(pkt.src),inet_ntoa(pkt.dst),pkt.icmp.type,pkt.icmp.code)
++            print("  ICMP:  %s > %s type %d code %d" %
++                (inet_ntoa(pkt.src),inet_ntoa(pkt.dst),pkt.icmp.type,pkt.icmp.code))
+         elif pkt.p == ip.IP_PROTO_TCP:
+-            print "  TCP:  %s:%d > %s:%d" % (inet_ntoa(pkt.src),pkt.tcp.sport,inet_ntoa(pkt.dst),pkt.tcp.dport)
++            print("  TCP:  %s:%d > %s:%d" %
++                (inet_ntoa(pkt.src),pkt.tcp.sport,inet_ntoa(pkt.dst),pkt.tcp.dport))
+         elif pkt.p == ip.IP_PROTO_UDP:
+-            print "  UDP:  %s:%d > %s:%d" % (inet_ntoa(pkt.src),pkt.udp.sport,inet_ntoa(pkt.dst),pkt.udp.dport)
++            print("  UDP:  %s:%d > %s:%d" %
++                (inet_ntoa(pkt.src),pkt.udp.sport,inet_ntoa(pkt.dst),pkt.udp.dport))
+         else:
+-            print "  unknown proto %d:  %s > %s" % (pkt.p,inet_ntoa(pkt.src),inet_ntoa(pkt.dst))
++            print("  unknown proto %d:  %s > %s" %
++                (pkt.p,inet_ntoa(pkt.src),inet_ntoa(pkt.dst)))
+ 
+         sys.stdout.flush()
+         return 1
+     except KeyboardInterrupt:
+-        print "interrupted in callback"
++        print("interrupted in callback")
+         global l
+-        print "stop the loop"
++        print("stop the loop")
+         l.stop_loop()
+ 
+-print "setting callback"
++print("setting callback")
+ l.set_callback(cb)
+ 
+-print "open"
++print("open")
+ l.fast_open(1, AF_INET)
+ l.set_flags(nflog.CfgSeq)
+ 
+-print "prepare"
++print("prepare")
+ l.prepare()
+ 
+-print "loop nflog device until SIGINT"
++print("loop nflog device until SIGINT")
+ try:
+     l.loop()
+-except KeyboardInterrupt, e:
+-	print "loop() was interrupted"
++except KeyboardInterrupt as e:
++	print("loop() was interrupted")
+ 
+ 
+-print "unbind"
++print("unbind")
+ l.unbind(AF_INET)
+ 
+-print "close"
++print("close")
+ l.close()
+ 
+-- 
+Daniel M. Weeks
+
