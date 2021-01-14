@@ -1,0 +1,26 @@
+From 66927d6d58766ba1911a6dae31979edb6d9ff5a5 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <weeksd2@rpi.edu>
+Date: Wed, 13 Jan 2021 23:24:09 -0500
+Subject: [PATCH] install target should NEVER remove files
+
+Signed-off-by: Daniel M. Weeks <weeksd2@rpi.edu>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 90c3897..208cae4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -115,7 +115,7 @@ deps:
+ depsclean:
+ 	$(MAKE) -C deps clean
+ 
+-install: all uninstall
++install: all
+ 	install -d -m 755 $(SYSCONFDIR) $(LIBDIR) $(BINDIR) $(DATADIR)
+ 	install -d -m 755 $(addprefix $(SYSCONFDIR)/, environ.d mounts.d hooks.d)
+ 	install -d -m 755 $(addprefix $(DATADIR)/, environ.d mounts.d hooks.d)
+-- 
+Daniel M. Weeks
+
