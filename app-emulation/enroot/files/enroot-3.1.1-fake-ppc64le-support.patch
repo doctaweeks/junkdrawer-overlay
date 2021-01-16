@@ -1,0 +1,29 @@
+From a84b734269c9f9e57da0fe79d7928d237fc2c13f Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <weeksd2@rpi.edu>
+Date: Thu, 14 Jan 2021 16:52:16 -0500
+Subject: [PATCH] Fake ppc64le support
+
+This doesn't allow full support for ppc64le but it does allow importing
+ppc64le images.
+
+Signed-off-by: Daniel M. Weeks <weeksd2@rpi.edu>
+---
+ src/common.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/common.sh b/src/common.sh
+index 4131a0d..fde64a1 100644
+--- a/src/common.sh
++++ b/src/common.sh
+@@ -257,6 +257,8 @@ common::debarch() {
+         printf "amd64" ;;
+     aarch64)
+         printf "arm64" ;;
++    ppc64le)
++        printf "ppc64le" ;;
+     *)
+         common::err "Unsupported architecture: ${arch}" ;;
+     esac
+-- 
+Daniel M. Weeks
+
