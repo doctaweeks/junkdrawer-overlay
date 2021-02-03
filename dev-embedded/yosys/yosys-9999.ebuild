@@ -17,7 +17,7 @@ IUSE="+abc"
 
 RDEPEND="
 	sys-libs/readline:=
-	virtual/libffi:=
+	dev-libs/libffi:=
 	dev-vcs/git
 	dev-lang/tcl:="
 
