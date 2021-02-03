@@ -1,9 +1,11 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python3_{4,5,6,7} )
+PYTHON_COMPAT=( python3_{7,8} )
+DISTUTILS_USE_SETUPTOOLS=bdepend
+
 inherit distutils-r1
 
 DESCRIPTION="Py3 parser for Android XML"
@@ -17,5 +19,4 @@ IUSE=""
 
 RDEPEND=">=dev-python/click-6.7[${PYTHON_USEDEP}]
 	dev-python/lxml[${PYTHON_USEDEP}]"
-DEPEND="${RDEPENDS}
-	dev-python/setuptools[${PYTHON_USEDEP}]"
+DEPEND="${RDEPEND}"
