@@ -1,0 +1,96 @@
+From 143538c1e4a1360f86abfd95754974310a03a269 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Sat, 6 Feb 2021 10:09:24 -0500
+Subject: [PATCH] python3 support
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ misc/easytags/highlight.py      |  4 ++--
+ misc/easytags/normalize-tags.py | 10 +++++-----
+ misc/easytags/why-so-slow.py    |  4 ++--
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/misc/easytags/highlight.py b/misc/easytags/highlight.py
+index 1c391a3..04536ba 100644
+--- a/misc/easytags/highlight.py
++++ b/misc/easytags/highlight.py
+@@ -16,7 +16,7 @@ import vim
+ import sys
+ 
+ def easytags_ping():
+-    print 'it works!'
++    print('it works!')
+ 
+ def easytags_gensyncmd(tagsfiles, filetype, tagkinds, syntaxgroup, prefix, suffix, filters, ignoresyntax):
+     # Get arguments from Vim.
+@@ -38,7 +38,7 @@ def easytags_gensyncmd(tagsfiles, filetype, tagkinds, syntaxgroup, prefix, suffi
+     patterns, commands = [], []
+     counter, limit = 0, 1024 * 20
+     to_escape = re.compile(r'[.*^$/\\~\[\]]')
+-    for ident in matches.keys():
++    for ident in list(matches.keys()):
+         escaped = to_escape.sub(r'\\\g<0>', ident)
+         patterns.append(escaped)
+         counter += len(escaped)
+diff --git a/misc/easytags/normalize-tags.py b/misc/easytags/normalize-tags.py
+index a96ed3f..4a0f04e 100755
+--- a/misc/easytags/normalize-tags.py
++++ b/misc/easytags/normalize-tags.py
+@@ -16,7 +16,7 @@ import os, sys, time
+ def main(arguments):
+   for tagsfile in arguments or [os.path.expanduser('~/.vimtags')]:
+     normalize(tagsfile)
+-  print "Done!"
++  print("Done!")
+ 
+ def normalize(tagsfile):
+ 
+@@ -50,7 +50,7 @@ def normalize(tagsfile):
+   infile.close()
+ 
+   # Sort tags.
+-  lines = results.keys()
++  lines = list(results.keys())
+   if fold_case:
+     lines.sort(key=str.lower)
+   else:
+@@ -63,16 +63,16 @@ def normalize(tagsfile):
+ 
+   # Backup old tags file.
+   backup = '%s-backup-%d' % (tagsfile, time.time())
+-  print "Making a backup of %s as %s" % (tagsfile, backup)
++  print("Making a backup of %s as %s" % (tagsfile, backup))
+   os.rename(tagsfile, backup)
+ 
+   # Replace tags file.
+-  print "Replacing old", tagsfile, "with new one"
++  print("Replacing old", tagsfile, "with new one")
+   os.rename(tempname, tagsfile)
+ 
+   # Report results.
+   nfiltered = nprocessed - len(lines)
+-  print "Filtered %d out of %d entries" % (nfiltered, nprocessed)
++  print("Filtered %d out of %d entries" % (nfiltered, nprocessed))
+ 
+ if __name__ == '__main__':
+   main(sys.argv[1:])
+diff --git a/misc/easytags/why-so-slow.py b/misc/easytags/why-so-slow.py
+index ead62f2..1878692 100755
+--- a/misc/easytags/why-so-slow.py
++++ b/misc/easytags/why-so-slow.py
+@@ -30,10 +30,10 @@ for line in infile:
+   counters[filename] = counters.get(filename, 0) + len(line)
+ infile.close()
+ 
+-sortedfiles = sorted([(s, n) for (n, s) in counters.iteritems()], reverse=True)
++sortedfiles = sorted([(s, n) for (n, s) in counters.items()], reverse=True)
+ for filesize, filename in sortedfiles[:topfiles]:
+   if filename.startswith(os.environ['HOME']):
+     filename = filename.replace(os.environ['HOME'], '~')
+-  print '%i KB - %s' % (filesize / 1024, filename)
++  print('%i KB - %s' % (filesize / 1024, filename))
+ 
+ # vim: ts=2 sw=2 et
+-- 
+Daniel M. Weeks
+
