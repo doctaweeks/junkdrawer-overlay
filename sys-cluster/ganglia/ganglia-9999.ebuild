@@ -1,12 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 
-PYTHON_COMPAT=( python2_7 )
-DISTUTILS_OPTIONAL=1
-
-inherit autotools distutils-r1 eutils flag-o-matic multilib systemd
+inherit autotools flag-o-matic systemd toolchain-funcs
 
 DESCRIPTION="A scalable distributed monitoring system for clusters and grids"
 HOMEPAGE="http://ganglia.sourceforge.net/"
@@ -25,68 +22,51 @@ LICENSE="BSD"
 SLOT="0"
 IUSE="minimal pcre python examples"
 
-DEPEND="dev-libs/confuse:=
+RDEPEND="dev-libs/confuse:=
 	dev-libs/expat
 	>=dev-libs/apr-1.0
 	net-libs/libnsl:0=
 	!dev-db/firebird
 	net-libs/libtirpc:=
 	pcre? ( dev-libs/libpcre )
-	python? ( ${PYTHON_DEPS} )"
-
-RDEPEND="
-	${DEPEND}
+	python? ( dev-lang/python:2.7 )
 	!minimal? ( net-analyzer/rrdtool )"
 
-REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+DEPEND="
+	${RDEPEND}
+	>=net-libs/rpcsvc-proto-1"
+
+BDEPEND="virtual/pkgconfig"
 
 src_prepare() {
 	eautoreconf
 
-	if use python && ! use minimal; then
-		pushd gmetad-python >/dev/null || die
-		distutils-r1_src_prepare
-		popd >/dev/null || die
-	fi
+	default
 }
 
 src_configure() {
-	if use python; then
-		python_setup
-	fi
+	append-flags $("$(tc-getPKG_CONFIG)" --cflags libtirpc)
+	append-libs $("$(tc-getPKG_CONFIG)" --libs libtirpc)
 
-	append-ldflags -ltirpc
-	append-cppflags -I/usr/include/tirpc
 	econf \
-		--with-systemdsystemunitdir=$(systemd_get_unitdir) \
+		--with-systemdsystemunitdir=$(systemd_get_systemunitdir) \
 		--enable-gexec \
 		--sysconfdir="${EPREFIX}"/etc/${PN} \
 		--enable-static=no \
+		--with-python="${EPREFIX}"/usr/bin/python2 \
 		$(use_enable python) \
 		$(use_with pcre libpcre) \
 		$(use_with !minimal gmetad)
 }
 
-src_compile() {
-	default_src_compile
-
-	if use python && ! use minimal; then
-		pushd gmetad-python >/dev/null || die
-		distutils-r1_src_compile
-		popd >/dev/null || die
-	fi
-}
-
 src_install() {
 	local exdir=/usr/share/doc/${P}
 
-	emake DESTDIR="${D}" install || die
-
-	find "${D}" -name '*.la' -delete || die
+	emake DESTDIR="${D}" install
 
 	newinitd "${FILESDIR}"/gmond.rc-2 gmond
-	doman {mans/*.1,gmond/*.5} || die "Failed to install manpages"
-	dodoc AUTHORS INSTALL NEWS || die
+	doman {mans/*.1,gmond/*.5}
+	dodoc AUTHORS INSTALL NEWS
 
 	dodir /etc/ganglia/conf.d
 	use python && dodir /usr/$(get_libdir)/ganglia/python_modules
@@ -112,23 +92,6 @@ src_install() {
 		newinitd "${FILESDIR}"/gmetad.rc-2 gmetad
 		keepdir /var/lib/ganglia/rrds
 		fowners nobody:nobody /var/lib/ganglia/rrds
-
-		if use python; then
-			pushd gmetad-python >/dev/null || die
-			distutils-r1_src_install
-			popd >/dev/null || die
-			newinitd "${FILESDIR}"/gmetad-python.rc gmetad-python
-		fi
-	fi
-}
-
-src_test() {
-	default_src_test
-
-	if use python && ! use minimal; then
-		pushd gmetad-python >/dev/null || die
-		distutils-r1_src_test
-		popd >/dev/null || die
 	fi
 }
 
