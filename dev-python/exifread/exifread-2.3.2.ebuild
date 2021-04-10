@@ -1,9 +1,10 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{4,5,6,7} )
+PYTHON_COMPAT=( python3_{7,8} )
+DISTUTILS_USE_SETUPTOOLS=bdepend
 
 inherit distutils-r1
 
@@ -18,7 +19,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE=""
-
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
