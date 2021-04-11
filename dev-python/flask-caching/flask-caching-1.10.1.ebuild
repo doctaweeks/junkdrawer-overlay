@@ -1,9 +1,10 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python{2_7,3_4,3_5} )
+PYTHON_COMPAT=( python3_{6..9} )
+DISTUTILS_USE_SETUPTOOLS=bdepend
 
 inherit distutils-r1
 
@@ -19,5 +20,4 @@ IUSE=""
 
 RDEPEND="dev-python/flask[${PYTHON_USEDEP}]
 	>=dev-python/werkzeug-0.12[${PYTHON_USEDEP}]"
-DEPEND="${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]"
+DEPEND="${RDEPEND}"
