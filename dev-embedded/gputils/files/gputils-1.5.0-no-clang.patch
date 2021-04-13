@@ -1,0 +1,12 @@
+--- gputils-1.5.0/configure.ac	2016-10-12 15:01:18.264043945 -0400
++++ gputils-1.5.0/configure.ac	2016-10-12 15:01:31.608135014 -0400
+@@ -48,8 +48,7 @@
+ 
+ # Checks for programs.
+ AC_PROG_AWK
+-# Primary compiler the clang and secondary the gcc.
+-AC_PROG_CC([clang gcc])
++AC_PROG_CC
+ AC_PROG_RANLIB
+ AC_PROG_YACC
+ AM_PROG_LEX
