@@ -1,10 +1,10 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{6,7,8} )
-
+PYTHON_COMPAT=( python3_8 )
+DISTUTILS_USE_SETUPTOOLS=no
 inherit distutils-r1
 
 DESCRIPTION="Find problems in C++ source that slow development of large code bases"
@@ -20,5 +20,3 @@ fi
 LICENSE="Apache-2.0"
 SLOT="0"
 IUSE=""
-
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
