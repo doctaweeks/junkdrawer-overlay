@@ -1,14 +1,14 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="C++ cross-platform file system watcher and notifier"
-HOMEPAGE="https://bitbucket.org/SpartanJ/efsw"
+HOMEPAGE="https://github.com/SpartanJ/efsw"
 
 if [[ ${PV} == 9999 ]]; then
-	inherit mercurial
-	EHG_REPO_URI="https://bitbucket.org/SpartanJ/efsw"
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/SpartanJ/efsw"
 else
 	SRC_URI=""
 	KEYWORDS="~amd64"
@@ -37,9 +37,9 @@ src_install() {
 	insinto /usr/include/efsw
 	doins include/efsw/*.h
 
-	dolib lib/libefsw.so*
+	dolib.so lib/libefsw.so*
 
 	if use static-libs ; then
-		dolib lib/libefsw.a
+		dolib.a lib/libefsw.a
 	fi
 }
