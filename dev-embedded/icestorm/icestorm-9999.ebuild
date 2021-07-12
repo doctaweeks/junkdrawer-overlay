@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="6"
+EAPI=7
 
 PYTHON_COMPAT=( python3_{7,8} )
 inherit eutils python-any-r1 toolchain-funcs
@@ -28,13 +28,9 @@ DEPEND="
 		virtual/pkgconfig
 		${RDEPEND}"
 
-src_prepare() {
-	epatch "${FILESDIR}"/${PN}-9999-prefix.patch
-	epatch "${FILESDIR}"/${PN}-9999-flags.patch
-	epatch "${FILESDIR}"/${PN}-9999-ftdi-fix.patch
-
-	eapply_user
-}
+PATCHES=( "${FILESDIR}"/${PN}-9999-prefix.patch
+	"${FILESDIR}"/${PN}-9999-flags.patch
+	"${FILESDIR}"/${PN}-9999-ftdi-fix.patch )
 
 src_compile() {
 	export PREFIX=/usr
