@@ -29,7 +29,6 @@ DEPEND="
 		${RDEPEND}"
 
 PATCHES=( "${FILESDIR}"/${PN}-9999-prefix.patch
-	"${FILESDIR}"/${PN}-9999-flags.patch
 	"${FILESDIR}"/${PN}-9999-ftdi-fix.patch )
 
 src_compile() {
