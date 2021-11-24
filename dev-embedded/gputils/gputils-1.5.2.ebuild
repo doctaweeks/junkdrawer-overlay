@@ -9,7 +9,7 @@ inherit autotools flag-o-matic toolchain-funcs
 
 DESCRIPTION="Tools including assembler, linker and librarian for PIC microcontrollers"
 HOMEPAGE="https://gputils.sourceforge.io"
-SRC_URI="https://danweeks.net/distfiles/${P}.tar.gz"
+SRC_URI="https://le.danweeks.net/distfiles/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
