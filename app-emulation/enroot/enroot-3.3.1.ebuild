@@ -7,7 +7,7 @@ inherit fcaps toolchain-funcs
 
 DESCRIPTION="tool to turn traditional container/OS images into unprivileged sandboxes"
 HOMEPAGE="https://github.com/NVIDIA/enroot"
-SRC_URI="https://danweeks.net/distfiles/${P}.tar.xz"
+SRC_URI="https://le.danweeks.net/distfiles/${P}.tar.xz"
 
 LICENSE="Apache-2.0 GPL-2 MIT || ( BSD ISC )"
 SLOT="0"
