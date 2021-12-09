@@ -1,0 +1,36 @@
+From 36c250add7103e2cebe10353df492c344e184f6b Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Thu, 9 Dec 2021 13:58:18 -0500
+Subject: [PATCH] Do not force compressed manpages
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ man/meson.build | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/man/meson.build b/man/meson.build
+index 04489d4..1d15944 100644
+--- a/man/meson.build
++++ b/man/meson.build
+@@ -5,16 +5,14 @@ manpages = [
+ 	'bst-unpersist.1.scd',
+ ]
+ 
+-gzip = find_program('gzip')
+-
+ foreach manpage : manpages
+ 	section = manpage.split('.')[-2]
+-	target = '.gz'.join(manpage.split('.scd'))
++	target = manpage.split('.scd')[0]
+ 	custom_target(target,
+ 		input: manpage,
+ 		output: target,
+ 
+-		command: [sh, '-c', '@0@ <$1 | @1@ -c >$2'.format(scdoc.path(), gzip.path()), '-', '@INPUT@', '@OUTPUT@'],
++		command: [sh, '-c', '@0@ <$1 >$2'.format(scdoc.path()), '-', '@INPUT@', '@OUTPUT@'],
+ 		install_dir: join_paths(get_option('mandir'), 'man' + section),
+ 		install: true)
+ endforeach
+-- 
+Daniel M. Weeks
+
