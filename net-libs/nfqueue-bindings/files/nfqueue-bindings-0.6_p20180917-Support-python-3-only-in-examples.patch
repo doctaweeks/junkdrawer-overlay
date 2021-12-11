@@ -1,0 +1,302 @@
+From b48c4e2b05acbab1a04e4a0607bb8988f10eaef0 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Sat, 11 Dec 2021 10:25:56 -0500
+Subject: [PATCH 2/2] Support python 3 only in examples
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ examples/example.py       | 24 ++++++++---------
+ examples/nfq_asyncore.py  | 18 ++++++-------
+ examples/nfq_dump_pcap.py |  8 +++---
+ examples/rewrite.py       | 54 +++++++++++++++++++--------------------
+ examples/za.py            | 24 ++++++++---------
+ 5 files changed, 64 insertions(+), 64 deletions(-)
+
+diff --git a/examples/example.py b/examples/example.py
+index 40e1e21..f59803e 100755
+--- a/examples/example.py
++++ b/examples/example.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # need root privileges
+ 
+@@ -20,15 +20,15 @@ count = 0
+ def cb(payload):
+ 	global count
+ 
+-	print "python callback called !"
++	print("python callback called !")
+ 	count += 1
+ 
+ 	data = payload.get_data()
+ 	pkt = ip.IP(data)
+ 	if pkt.p == ip.IP_PROTO_TCP:
+-		print "  len %d proto %s src: %s:%s    dst %s:%s " % (payload.get_length(),pkt.p,inet_ntoa(pkt.src),pkt.tcp.sport,inet_ntoa(pkt.dst),pkt.tcp.dport)
++		print("  len %d proto %s src: %s:%s    dst %s:%s " % (payload.get_length(),pkt.p,inet_ntoa(pkt.src),pkt.tcp.sport,inet_ntoa(pkt.dst),pkt.tcp.dport))
+ 	else:
+-		print "  len %d proto %s src: %s    dst %s " % (payload.get_length(),pkt.p,inet_ntoa(pkt.src),inet_ntoa(pkt.dst))
++		print("  len %d proto %s src: %s    dst %s " % (payload.get_length(),pkt.p,inet_ntoa(pkt.src),inet_ntoa(pkt.dst)))
+ 
+ 	payload.set_verdict(nfqueue.NF_ACCEPT)
+ 
+@@ -37,25 +37,25 @@ def cb(payload):
+ 
+ q = nfqueue.queue()
+ 
+-print "setting callback"
++print("setting callback")
+ q.set_callback(cb)
+ 
+-print "open"
++print("open")
+ q.fast_open(0, AF_INET)
+ 
+ q.set_queue_maxlen(50000)
+ 
+-print "trying to run"
++print("trying to run")
+ try:
+ 	q.try_run()
+-except KeyboardInterrupt, e:
+-	print "interrupted"
++except KeyboardInterrupt as e:
++	print("interrupted")
+ 
+-print "%d packets handled" % count
++print("%d packets handled" % count)
+ 
+-print "unbind"
++print("unbind")
+ q.unbind(AF_INET)
+ 
+-print "close"
++print("close")
+ q.close()
+ 
+diff --git a/examples/nfq_asyncore.py b/examples/nfq_asyncore.py
+index 4adeee3..802a7b8 100755
+--- a/examples/nfq_asyncore.py
++++ b/examples/nfq_asyncore.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # need root privileges
+ 
+@@ -17,17 +17,17 @@ sys.path.append('dpkt-1.6')
+ from dpkt import ip
+ 
+ def cb(payload):
+-  print "python callback called !"
++  print("python callback called !")
+ 
+-  print "payload len ", payload.get_length()
++  print("payload len ", payload.get_length())
+   data = payload.get_data()
+   pkt = ip.IP(data)
+-  print "proto:", pkt.p
+-  print "source: %s" % inet_ntoa(pkt.src)
+-  print "dest: %s" % inet_ntoa(pkt.dst)
++  print("proto:", pkt.p)
++  print("source: %s" % inet_ntoa(pkt.src))
++  print("dest: %s" % inet_ntoa(pkt.dst))
+   if pkt.p == ip.IP_PROTO_TCP:
+-    print "  sport: %s" % pkt.tcp.sport
+-    print "  dport: %s" % pkt.tcp.dport
++    print("  sport: %s" % pkt.tcp.sport)
++    print("  dport: %s" % pkt.tcp.dport)
+     payload.set_verdict(nfqueue.NF_DROP)
+ 
+   sys.stdout.flush()
+@@ -48,7 +48,7 @@ class AsyncNfQueue(asyncore.file_dispatcher):
+     self._q.set_mode(nfqueue.NFQNL_COPY_PACKET)
+ 
+   def handle_read(self):
+-    print "Processing at most 5 events"
++    print("Processing at most 5 events")
+     self._q.process_pending(5)
+ 
+   # We don't need to check for the socket to be ready for writing
+diff --git a/examples/nfq_dump_pcap.py b/examples/nfq_dump_pcap.py
+index 970d7fd..285898c 100755
+--- a/examples/nfq_dump_pcap.py
++++ b/examples/nfq_dump_pcap.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # need root privileges
+ 
+@@ -38,13 +38,13 @@ writer = PcapWriter(outputfilename)
+ 
+ q.set_callback(cb)
+ 
+-print "open"
++print("open")
+ q.fast_open(0, AF_INET)
+ 
+-print "try_run"
++print("try_run")
+ try:
+     q.try_run()
+-except KeyboardInterrupt, e:
++except KeyboardInterrupt as e:
+     pass
+ 
+ 
+diff --git a/examples/rewrite.py b/examples/rewrite.py
+index 48caf08..c9d472f 100755
+--- a/examples/rewrite.py
++++ b/examples/rewrite.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # need root privileges
+ 
+@@ -16,55 +16,55 @@ sys.path.append('dpkt-1.6')
+ from dpkt import ip, tcp, hexdump
+ 
+ def cb(payload):
+-	print "payload len ", payload.get_length()
++	print("payload len ", payload.get_length())
+ 	data = payload.get_data()
+ 	pkt = ip.IP(data)
+-	print "proto:", pkt.p
+-	print "source: %s" % inet_ntoa(pkt.src)
+-	print "dest: %s" % inet_ntoa(pkt.dst)
++	print("proto:", pkt.p)
++	print("source: %s" % inet_ntoa(pkt.src))
++	print("dest: %s" % inet_ntoa(pkt.dst))
+ 	if pkt.p == ip.IP_PROTO_TCP:
+-	 	print "  sport: %s" % pkt.tcp.sport
+-	 	print "  dport: %s" % pkt.tcp.dport
+-	 	print "  flags: %s" % pkt.tcp.flags
+-                if pkt.tcp.flags & tcp.TH_PUSH:
++		print("  sport: %s" % pkt.tcp.sport)
++		print("  dport: %s" % pkt.tcp.dport)
++		print("  flags: %s" % pkt.tcp.flags)
++		if pkt.tcp.flags & tcp.TH_PUSH:
+ 			pkt2 = pkt
+-                        print "PUSH *****"
+-                        print pkt2.tcp.data
++			print("PUSH *****")
++			print(pkt2.tcp.data)
+ 			old_len = len(pkt2.tcp.data)
+-                        #pkt2.tcp.data = "GET /\r\n"
+-                        pkt2.tcp.data = str(pkt2.tcp.data).replace('love','hate')
+-                        print pkt2.tcp.data
++			#pkt2.tcp.data = "GET /\r\n"
++			pkt2.tcp.data = str(pkt2.tcp.data).replace('love','hate')
++			print(pkt2.tcp.data)
+ 			pkt2.len = pkt2.len - old_len + len(pkt2.tcp.data)
+-                        pkt2.tcp.sum = 0
+-                        pkt2.sum = 0
++			pkt2.tcp.sum = 0
++			pkt2.sum = 0
+ 
+-                        ret = payload.set_verdict_modified(nfqueue.NF_ACCEPT,str(pkt2),len(pkt2))
+-                        print "ret = ",ret
++			ret = payload.set_verdict_modified(nfqueue.NF_ACCEPT,str(pkt2),len(pkt2))
++			print("ret = ",ret)
+ 
+-                        return 0
+-        payload.set_verdict(nfqueue.NF_ACCEPT)
++			return 0
++	payload.set_verdict(nfqueue.NF_ACCEPT)
+ 
+ 	sys.stdout.flush()
+ 	return 1
+ 
+ q = nfqueue.queue()
+ 
+-print "setting callback"
++print("setting callback")
+ q.set_callback(cb)
+ 
+-print "open"
++print("open")
+ q.fast_open(0, AF_INET)
+ 
+-print "trying to run"
++print("trying to run")
+ try:
+ 	q.try_run()
+-except KeyboardInterrupt, e:
+-	print "interrupted"
++except KeyboardInterrupt as e:
++	print("interrupted")
+ 
+ 
+-print "unbind"
++print("unbind")
+ q.unbind(AF_INET)
+ 
+-print "close"
++print("close")
+ q.close()
+ 
+diff --git a/examples/za.py b/examples/za.py
+index 3c45af8..215aa38 100755
+--- a/examples/za.py
++++ b/examples/za.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # need root privileges
+ 
+@@ -22,14 +22,14 @@ decisions = dict()
+ def cb(payload):
+ 	data = payload.get_data()
+ 	pkt = ip.IP(data)
+-	print ""
+-	print "proto:", pkt.p
+-	print "source: %s" % inet_ntoa(pkt.src)
+-	print "dest: %s" % inet_ntoa(pkt.dst)
++	print("")
++	print("proto:", pkt.p)
++	print("source: %s" % inet_ntoa(pkt.src))
++	print("dest: %s" % inet_ntoa(pkt.dst))
+ 	text_dst = None
+ 	if pkt.p == ip.IP_PROTO_TCP:
+-	 	print "  sport: %s" % pkt.tcp.sport
+-	 	print "  dport: %s" % pkt.tcp.dport
++		print("  sport: %s" % pkt.tcp.sport)
++		print("  dport: %s" % pkt.tcp.dport)
+ 		text = "%s:%s => %s:%s" % (inet_ntoa(pkt.src),pkt.tcp.sport, inet_ntoa(pkt.dst), pkt.tcp.dport)
+ 		text_dst = "%s:%s" % (inet_ntoa(pkt.dst), pkt.tcp.dport)
+ 		if (not (pkt.tcp.flags & tcp.TH_SYN)):
+@@ -37,8 +37,8 @@ def cb(payload):
+ 	else:
+ 		text = "%s => %s" % (inet_ntoa(pkt.src), inet_ntoa(pkt.dst))
+ 	
+-	if text_dst and decisions.has_key(text_dst):
+-		print "shortcut: %s (%d)" % (text_dst,decisions[text_dst])
++	if text_dst and text_dst in decisions:
++		print("shortcut: %s (%d)" % (text_dst,decisions[text_dst]))
+ 		return payload.set_verdict(decisions[text_dst])
+ 
+ 	reply = QMessageBox.question(None,'accept packet ?',text,QMessageBox.Yes, QMessageBox.No)
+@@ -60,13 +60,13 @@ q.set_callback(cb)
+ 
+ ret = q.fast_open(0, AF_INET)
+ if ret != 0:
+-	print "could not open queue %d" % 0
++	print("could not open queue %d" % 0)
+ 	sys.exit(-1)
+ 
+ try:
+ 	q.try_run()
+-except KeyboardInterrupt, e:
+-	print "interrupted"
++except KeyboardInterrupt as e:
++	print("interrupted")
+ 
+ 
+ q.unbind(AF_INET)
+-- 
+Daniel M. Weeks
+

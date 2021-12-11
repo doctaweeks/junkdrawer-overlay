@@ -1,0 +1,43 @@
+From 74616f9ac3310456809ad3ffe3cace07ddb6c83c Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Sat, 11 Dec 2021 09:10:19 -0500
+Subject: [PATCH 1/2] Support python 3 only
+
+This introduces python 3 support but also drops python 2 support since it is no
+longer supported.
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ python/CMakeLists.txt              | 2 +-
+ python/libnetfilter_queue_python.i | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/python/CMakeLists.txt b/python/CMakeLists.txt
+index e57930d..42049ac 100644
+--- a/python/CMakeLists.txt
++++ b/python/CMakeLists.txt
+@@ -3,7 +3,7 @@ FIND_PACKAGE(PythonLibs)
+ INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
+ 
+ IF ( PYTHON_EXECUTABLE )
+-	EXEC_PROGRAM( ${PYTHON_EXECUTABLE} ARGS "-c \"import sys; print sys.version[:3]\"" OUTPUT_VARIABLE PYTHON_VERSION )
++	EXEC_PROGRAM( ${PYTHON_EXECUTABLE} ARGS "-c \"import sys; print(sys.version[:3])\"" OUTPUT_VARIABLE PYTHON_VERSION )
+ 	STRING( REGEX REPLACE "[\r\n]" " " PYTHON_VERSION "${PYTHON_VERSION}"  )
+ ENDIF ( PYTHON_EXECUTABLE )
+ 
+diff --git a/python/libnetfilter_queue_python.i b/python/libnetfilter_queue_python.i
+index 137df21..07a9589 100644
+--- a/python/libnetfilter_queue_python.i
++++ b/python/libnetfilter_queue_python.i
+@@ -91,7 +91,7 @@ int set_callback(PyObject *pyfunc)
+ };
+ 
+ %typemap (out) const char* get_data {
+-        $result = PyString_FromStringAndSize($1,arg1->len); // blah
++        $result = PyBytes_FromStringAndSize($1,arg1->len); // blah
+ }
+ 
+ %extend payload {
+-- 
+Daniel M. Weeks
+
