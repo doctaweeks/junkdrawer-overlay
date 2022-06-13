@@ -1,0 +1,47 @@
+From 39bba7f8f4d7f82097aaf1e975c2ca51a457286b Mon Sep 17 00:00:00 2001
+From: Tim McMullan <mcmullan@schedmd.com>
+Date: Tue, 12 Jan 2021 09:47:13 -0500
+Subject: [PATCH] Change behavior of --without-nvml
+
+Bug 10291
+
+---
+ auxdir/x_ac_nvml.m4 | 6 +++++-
+ configure           | 6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/auxdir/x_ac_nvml.m4 b/auxdir/x_ac_nvml.m4
+index 9bf78d82d0..aa6bdd5cf1 100644
+--- a/auxdir/x_ac_nvml.m4
++++ b/auxdir/x_ac_nvml.m4
+@@ -34,7 +34,11 @@ AC_DEFUN([X_AC_NVML],
+       NVML_CPPFLAGS="$nvml_includes"
+       AC_DEFINE(HAVE_NVML, 1, [Define to 1 if NVML library found])
+     else
+-      AC_MSG_WARN([unable to locate libnvidia-ml.so and/or nvml.h])
++      if test -z "$with_nvml"; then
++        AC_MSG_WARN([unable to locate libnvidia-ml.so and/or nvml.h])
++      else
++        AC_MSG_ERROR([unable to locate libnvidia-ml.so and/or nvml.h])
++      fi
+     fi
+     AC_SUBST(NVML_LIBS)
+     AC_SUBST(NVML_CPPFLAGS)
+diff --git a/configure b/configure
+index 0c1b6a15d2..d60449ec37 100755
+--- a/configure
++++ b/configure
+@@ -21545,8 +21545,12 @@ fi
+ $as_echo "#define HAVE_NVML 1" >>confdefs.h
+ 
+     else
+-      { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unable to locate libnvidia-ml.so and/or nvml.h" >&5
++      if test -z "$with_nvml"; then
++        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unable to locate libnvidia-ml.so and/or nvml.h" >&5
+ $as_echo "$as_me: WARNING: unable to locate libnvidia-ml.so and/or nvml.h" >&2;}
++      else
++        as_fn_error $? "unable to locate libnvidia-ml.so and/or nvml.h" "$LINENO" 5
++      fi
+     fi
+ 
+ 
