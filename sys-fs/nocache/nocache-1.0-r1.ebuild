@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=8
 
 inherit multilib
 
@@ -21,5 +21,5 @@ src_compile(){
 }
 
 src_install(){
-	einstall PREFIX=/usr DESTDIR="${D}" LIBDIR="/$(get_libdir)"
+	emake PREFIX=/usr DESTDIR="${D}" LIBDIR="/$(get_libdir)" install
 }
