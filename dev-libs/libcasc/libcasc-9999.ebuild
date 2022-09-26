@@ -1,9 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=8
 
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="Library for reading CASC storage from Blizzard games since 2014"
 HOMEPAGE="http://www.zezula.net/en/casc/main.html"
@@ -17,17 +17,7 @@ fi
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="system-libtomcrypt"
 
 DEPEND="app-arch/bzip2
-		sys-libs/zlib
-		system-libtomcrypt? ( dev-libs/libtomcrypt )"
+		sys-libs/zlib"
 RDEPEND="${DEPEND}"
-
-src_configure() {
-	local mycmakeargs=(
-		$(cmake-utils_use_with system-libtomcrypt LIBTOMCRYPT)
-	)
-
-	cmake-utils_src_configure
-}
