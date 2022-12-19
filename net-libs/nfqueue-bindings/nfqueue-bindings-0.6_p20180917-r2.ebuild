@@ -4,6 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{8,9,10} )
+GENTOO_DEPEND_ON_PERL=no
 
 inherit cmake perl-module linux-info python-single-r1
 
