@@ -75,5 +75,5 @@ src_install() {
 	default
 
 	# Tools building is broken in this release
-	#use tools && emake DESTDIR="${D}" -rC "${S}"/tools install
+	use tools && emake DESTDIR="${D}" -rC "${S}"/tools install
 }
