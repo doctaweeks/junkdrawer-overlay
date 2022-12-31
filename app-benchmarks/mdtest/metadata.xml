@@ -5,8 +5,6 @@
 		<email>dan@danweeks.net</email>
 		<name>Daniel M. Weeks</name>
 	</maintainer>
-	<longdescription lang="en">
-	</longdescription>
 	<upstream>
 		<remote-id type="github">MDTEST-LANL/mdtest</remote-id>
 		<remote-id type="sourceforge">mdtest</remote-id>

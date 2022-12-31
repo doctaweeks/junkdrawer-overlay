@@ -5,8 +5,6 @@
 		<email>dan@danweeks.net</email>
 		<name>Daniel M. Weeks</name>
 	</maintainer>
-	<longdescription lang="en">
-	</longdescription>
 	<use>
 		<flag name='twolame'>Enables twolame support (MPEG Audio Layer 2 encoder)</flag>
 	</use>

@@ -5,8 +5,6 @@
 		<email>dan@danweeks.net</email>
 		<name>Daniel M. Weeks</name>
 	</maintainer>
-	<longdescription lang="en">
-	</longdescription>
 	<upstream>
 		<remote-id type="github">vutran1710/PyrateLimiter</remote-id>
 		<remote-id type="pypi">pyrate-limiter</remote-id>
