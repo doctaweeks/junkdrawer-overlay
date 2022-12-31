@@ -6,6 +6,6 @@
 		<name>Daniel M. Weeks</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="bitbucket">SpartanJ/efsw</remote-id>
+		<remote-id type="github">SpartanJ/efsw</remote-id>
 	</upstream>
 </pkgmetadata>
