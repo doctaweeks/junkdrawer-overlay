@@ -3,16 +3,16 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7,8} )
-DISTUTILS_USE_SETUPTOOLS=bdepend
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit distutils-r1
 
 MY_PN="exif-py"
 
 DESCRIPTION="Easy to use Python module to extract Exif metadata from tiff and jpeg files"
-HOMEPAGE="https://github.com/ianare/exif-py"
-SRC_URI="https://github.com/ianare/${MY_PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://pypi.org/project/ExifRead https://github.com/ianare/exif-py"
+SRC_URI="https://github.com/ianare/${MY_PN}/archive/${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
