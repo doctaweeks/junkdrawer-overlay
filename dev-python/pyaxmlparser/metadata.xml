@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">appknox/pyaxmlparser</remote-id>
+		<remote-id type="pypi">pyaxmlparser</remote-id>
 	</upstream>
 </pkgmetadata>
