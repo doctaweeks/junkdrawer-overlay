@@ -3,8 +3,8 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8,9,10} )
-inherit eutils python-any-r1 toolchain-funcs
+PYTHON_COMPAT=( python3_{9..11} )
+inherit python-any-r1 toolchain-funcs
 
 DESCRIPTION="IceStorm - tools for analyzing and creating bitstreams for Lattice iCE40 FPGAs"
 HOMEPAGE="http://www.clifford.at/icestorm/"
