@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=8
 
 DESCRIPTION="A Fast, Multicore-Scalable, Low-Fragmentation Memory Allocator"
 HOMEPAGE="http://scalloc.cs.uni-salzburg.at/"
@@ -19,6 +19,8 @@ IUSE="debug"
 
 DEPEND="dev-util/gyp"
 RDEPEND=""
+
+PATCHES=( "${FILESDIR}/${PN}-no-Werror.patch" )
 
 src_configure() {
 	gyp --depth=. scalloc.gyp || die

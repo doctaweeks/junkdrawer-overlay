@@ -1,0 +1,34 @@
+From d6a5a76572085f301ee0c00bdb7ba0871c4dd82b Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Sat, 18 Mar 2023 10:28:52 -0400
+Subject: [PATCH] Don't treat warnings as errors
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ common.gypi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/common.gypi b/common.gypi
+index d04510b..a98a383 100644
+--- a/common.gypi
++++ b/common.gypi
+@@ -2,7 +2,6 @@
+   'variables': {
+     'default_cflags' : [
+       '-Wall',
+-      '-Werror',
+       '-fPIC',
+       '-m64',
+       '-std=c++11',
+@@ -27,7 +26,7 @@
+           'USE_HEADERMAP': 'NO',
+           'CLANG_CXX_LANGUAGE_STANDARD': "c++0x",
+           'CLANG_CXX_LIBRARY': "libc++",
+-          'GCC_TREAT_WARNINGS_AS_ERRORS': 'YES', # -Werror
++          'GCC_TREAT_WARNINGS_AS_ERRORS': 'NO', # No -Werror
+           'GCC_ENABLE_CPP_EXCEPTIONS': 'NO', # -fno-exceptions
+           'GCC_ENABLE_CPP_RTTI': 'NO', # -fno-rtti
+           'ONLY_ACTIVE_ARCH': 'YES',
+-- 
+Daniel M. Weeks
+
