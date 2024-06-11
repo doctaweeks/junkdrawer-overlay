@@ -3,7 +3,7 @@
 
 EAPI=6
 WEBAPP_MANUAL_SLOT="yes"
-inherit webapp eutils
+inherit webapp
 
 DESCRIPTION="Web frontend for sys-cluster/ganglia"
 HOMEPAGE="http://ganglia.sourceforge.net"
