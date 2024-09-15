@@ -3,8 +3,6 @@
 
 EAPI=8
 
-inherit multilib
-
 DESCRIPTION="nocache - minimize filesystem caching effects"
 HOMEPAGE="https://github.com/Feh/nocache"
 if [ "${PV}" == "9999" ]; then
@@ -17,9 +15,6 @@ fi
 
 LICENSE="BSD"
 SLOT="0"
-IUSE=""
-DEPEND=""
-RDEPEND="${DEPEND}"
 
 src_compile(){
 	emake PREFIX=/usr
