@@ -13,9 +13,11 @@ HOMEPAGE="https://github.com/chifflier/nfqueue-bindings"
 MY_COMMIT=9bf0c343be1effa25f668d5e4efe92effa7e5d4e
 SRC_URI="https://github.com/chifflier/nfqueue-bindings/archive/${MY_COMMIT}.tar.gz -> ${P}.tar.gz"
 
-KEYWORDS="~amd64 ~x86"
-SLOT="0"
+S="${WORKDIR}/${PN}-${MY_COMMIT}"
+
 LICENSE="GPL-3"
+SLOT="0"
+KEYWORDS="~amd64 ~x86"
 IUSE="perl python examples"
 REQUIRED_USE="|| ( perl python ) python? ( ${PYTHON_REQUIRED_USE} )"
 
@@ -37,8 +39,6 @@ DEPEND="${RDEPEND}
 
 PATCHES=( "${FILESDIR}/${P}-Support-python-3-only.patch"
 	"${FILESDIR}/${P}-Support-python-3-only-in-examples.patch" )
-
-S="${WORKDIR}/${PN}-${MY_COMMIT}"
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
