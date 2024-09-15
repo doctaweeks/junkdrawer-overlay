@@ -1,9 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{10,11} )
+PYTHON_COMPAT=( python3_{10,11,12,13} )
 DISTUTILS_USE_SETUPTOOLS=no
 inherit distutils-r1
 
@@ -19,4 +19,3 @@ fi
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE=""
