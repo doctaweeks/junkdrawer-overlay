@@ -7,15 +7,14 @@ DESCRIPTION="an MPI-coordinated metadata benchmark"
 HOMEPAGE="https://sourceforge.net/projects/mdtest"
 SRC_URI="https://downloads.sourceforge.net/${PN}/${PN}%20latest/${P}/${P}.tgz"
 
+S=${WORKDIR}
+
 LICENSE="mdtest"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 
 DEPEND="virtual/mpi"
 RDEPEND="${DEPEND}"
-
-S=${WORKDIR}
 
 src_compile() {
 	emake MPI_CC=mpicc
