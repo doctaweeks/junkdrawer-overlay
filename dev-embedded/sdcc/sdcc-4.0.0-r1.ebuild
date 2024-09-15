@@ -62,7 +62,6 @@ RDEPEND="
 	sys-libs/readline:0=
 	>=dev-embedded/gputils-0.13.7
 	boehm-gc? ( dev-libs/boehm-gc:= )
-	!dev-embedded/sdcc-svn
 "
 DEPEND="
 	${RDEPEND}

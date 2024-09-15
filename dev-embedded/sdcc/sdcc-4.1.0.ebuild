@@ -18,6 +18,8 @@ fi
 DESCRIPTION="Small device C compiler (for various microprocessors)"
 HOMEPAGE="http://sdcc.sourceforge.net/"
 
+S="${WORKDIR}/${PN}"
+
 LICENSE="
 	GPL-2 ZLIB
 	non-free? ( MicroChip-SDCC )
@@ -62,7 +64,6 @@ RDEPEND="
 	sys-libs/readline:0=
 	>=dev-embedded/gputils-0.13.7
 	boehm-gc? ( dev-libs/boehm-gc:= )
-	!dev-embedded/sdcc-svn
 "
 DEPEND="
 	${RDEPEND}
@@ -71,8 +72,6 @@ DEPEND="
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.8.0-override-override.patch
 )
-
-S="${WORKDIR}/${PN}"
 
 src_prepare() {
 	# Fix conflicting variable names between Gentoo and sdcc
