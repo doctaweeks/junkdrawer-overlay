@@ -13,9 +13,11 @@ HOMEPAGE="https://github.com/chifflier/nflog-bindings"
 MY_COMMIT="f3eda3551820e52d4c2fc82547b89d39c4a02125"
 SRC_URI="https://github.com/chifflier/nflog-bindings/archive/${MY_COMMIT}.tar.gz -> ${P}.tar.gz"
 
-KEYWORDS="~amd64 ~x86"
-SLOT="0"
+S="${WORKDIR}/${PN}-${MY_COMMIT}"
+
 LICENSE="GPL-3"
+SLOT="0"
+KEYWORDS="~amd64 ~x86"
 IUSE="perl python examples"
 REQUIRED_USE="|| ( perl python ) python? ( ${PYTHON_REQUIRED_USE} )"
 
@@ -37,8 +39,6 @@ DEPEND="${RDEPEND}
 
 PATCHES=( "${FILESDIR}/${P}-Support-python-3-only.patch"
 	"${FILESDIR}/${P}-Support-python-3-only-in-examples.patch" )
-
-S="${WORKDIR}/${PN}-${MY_COMMIT}"
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
