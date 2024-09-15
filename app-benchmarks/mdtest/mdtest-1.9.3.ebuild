@@ -5,7 +5,7 @@ EAPI=5
 
 DESCRIPTION="an MPI-coordinated metadata benchmark"
 HOMEPAGE="https://sourceforge.net/projects/mdtest"
-SRC_URI="mirror://sourceforge/${PN}/${PN}%20latest/${P}/${P}.tgz"
+SRC_URI="https://downloads.sourceforge.net/${PN}/${PN}%20latest/${P}/${P}.tgz"
 
 LICENSE="mdtest"
 SLOT="0"
