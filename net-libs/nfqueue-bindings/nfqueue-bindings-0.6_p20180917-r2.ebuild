@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10,11} )
+PYTHON_COMPAT=( python3_{10..12} )
 GENTOO_DEPEND_ON_PERL=no
 
 inherit cmake perl-module linux-info python-single-r1
