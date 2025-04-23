@@ -9,8 +9,7 @@ DISTUTILS_EXT=1
 
 inherit distutils-r1
 
-# 1.6.1 was re-packaged; drop -re in next version
-MY_PV="${PV/_beta/b}-re"
+MY_PV="${PV/_beta/b}"
 MY_P="${PN}-${MY_PV}"
 
 DESCRIPTION="Python IP address to Autonomous System Number lookup module"
@@ -24,3 +23,5 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 S=${WORKDIR}/${MY_P}
+
+PATCHES=( "${FILESDIR}/pyasn-1.6.2-Raw-string-for-pattern.patch" )

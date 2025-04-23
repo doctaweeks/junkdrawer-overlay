@@ -1,0 +1,28 @@
+From 60ae6c5664c6056b7da83970a95d55ddb813a916 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Wed, 23 Apr 2025 11:57:45 -0400
+Subject: [PATCH] Raw string for pattern
+
+Avoid errors from \. being treated as an escape sequence.
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ pyasn/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyasn/__init__.py b/pyasn/__init__.py
+index 7fea326..5208029 100644
+--- a/pyasn/__init__.py
++++ b/pyasn/__init__.py
+@@ -228,7 +228,7 @@ class pyasn(object):
+         :param asdot:  "AS[Number].[Number]" representation of an autonomous system
+         :return: 32bit AS number
+         """
+-        pattern = re.compile("^[AS]|[as]|[aS]|[As]][0-9]*(\.)?[0-9]+")
++        pattern = re.compile(r"^[AS]|[as]|[aS]|[As]][0-9]*(\.)?[0-9]+")
+         match = pattern.match(asdot)
+         if not match:
+             raise ValueError("Invalid asdot format for input. input format must be something like"
+-- 
+Daniel M. Weeks
+

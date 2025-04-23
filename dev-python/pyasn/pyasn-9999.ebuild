@@ -18,3 +18,5 @@ SLOT="0"
 KEYWORDS=""
 
 IUSE=""
+
+PATCHES=( "${FILESDIR}/pyasn-1.6.2-Raw-string-for-pattern.patch" )
