@@ -4,7 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python3_{10,11} )
-DISTUTILS_USE_SETUPTOOLS=bdepend
+DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1
 
@@ -20,4 +20,3 @@ IUSE=""
 
 RDEPEND="dev-python/flask[${PYTHON_USEDEP}]
 	>=dev-python/werkzeug-0.12[${PYTHON_USEDEP}]"
-DEPEND="${RDEPEND}"
