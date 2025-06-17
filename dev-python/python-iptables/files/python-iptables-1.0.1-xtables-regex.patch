@@ -1,0 +1,22 @@
+From fc15a4a85b9a175a45052c4f0dda9b6dc6dab44c Mon Sep 17 00:00:00 2001
+From: David White <david@runonflux.io>
+Date: Sat, 17 May 2025 14:52:17 +0100
+Subject: [PATCH] Add raw string for xtables regex
+
+---
+ iptc/xtables.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/iptc/xtables.py b/iptc/xtables.py
+index 024779c..1674cc4 100644
+--- a/iptc/xtables.py
++++ b/iptc/xtables.py
+@@ -805,7 +805,7 @@ class xtables_target(ct.Union):
+ _xtables_libdir = os.getenv("XTABLES_LIBDIR")
+ if _xtables_libdir is None:
+     import re
+-    ldconfig_path_regex = re.compile('^(/.*):($| \(.*\)$)')
++    ldconfig_path_regex = re.compile(r'^(/.*):($| \(.*\)$)')
+     import subprocess
+     ldconfig = subprocess.Popen(
+         ('/sbin/ldconfig', '-N', '-v'),

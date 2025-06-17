@@ -1,0 +1,22 @@
+From f5beb3e2f7a773b6cd13ee872718e2a72e18334a Mon Sep 17 00:00:00 2001
+From: David White <david@runonflux.io>
+Date: Sat, 17 May 2025 14:10:48 +0100
+Subject: [PATCH] Fix syntax warning on python 3.12
+
+---
+ iptc/ip4tc.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/iptc/ip4tc.py b/iptc/ip4tc.py
+index 90f5ee7..c4ba58c 100644
+--- a/iptc/ip4tc.py
++++ b/iptc/ip4tc.py
+@@ -262,7 +262,7 @@ class iptc(object):
+ class IPTCModule(object):
+     """Superclass for Match and Target."""
+     pattern = re.compile(
+-        '\s*(!)?\s*--([-\w]+)\s+(!)?\s*"?([^"]*?)"?(?=\s*(?:!?\s*--|$))')
++        r'\s*(!)?\s*--([-\w]+)\s+(!)?\s*"?([^"]*?)"?(?=\s*(?:!?\s*--|$))')
+ 
+     def __init__(self):
+         self._name = None

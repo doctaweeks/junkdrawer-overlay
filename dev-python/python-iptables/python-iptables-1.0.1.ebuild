@@ -2,9 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} )
 DISTUTILS_USE_PEP517=setuptools
 PYPI_NO_NORMALIZE=1
+DISTUTILS_EXT=1
 inherit distutils-r1 pypi
 
 DESCRIPTION="Python bindings for iptables"
@@ -20,7 +21,9 @@ RDEPEND="net-firewall/iptables"
 RESTRICT="test"
 
 distutils_enable_sphinx doc
-distutils_enable_tests setup.py
+distutils_enable_tests unittest
+
+PATCHES=( "${FILESDIR}/${P}-xtables-regex.patch"  "${FILESDIR}/${P}-ip4tc-regex.patch" )
 
 python_prepare_all() {
 	# Prevent un-needed d'loading during doc build
