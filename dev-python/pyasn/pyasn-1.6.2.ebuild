@@ -16,12 +16,10 @@ DESCRIPTION="Python IP address to Autonomous System Number lookup module"
 HOMEPAGE="https://github.com/hadiasghari/pyasn"
 SRC_URI="https://github.com/hadiasghari/${PN}/archive/${MY_PV}.tar.gz -> ${MY_P}.tar.gz"
 
+S=${WORKDIR}/${MY_P}
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-
-IUSE=""
-
-S=${WORKDIR}/${MY_P}
 
 PATCHES=( "${FILESDIR}/pyasn-1.6.2-Raw-string-for-pattern.patch" )
